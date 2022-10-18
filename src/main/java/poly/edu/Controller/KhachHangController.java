@@ -48,26 +48,21 @@ public class KhachHangController {
     }
 
     @GetMapping("/khachhang/delete/{makh}")
-    public String delete(@PathVariable(name = "makh") int manv) {
-        khachHangDAO.deleteById(manv);
+    public String delete(@PathVariable(name = "makh") int makh) {
+        khachHangDAO.deleteById(makh);
         return "redirect:/khachhang/index";
     }
 
     @PostMapping("/savekh")
     public String savenv(@Valid @ModelAttribute("khachhang")   KhachHang khachHang, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("Form ko hợp lệ");
-            return ("/khachhang/create");
-        } else {
-            try {
-                khachHangDAO.save(khachHang);
-                return "redirect:/khachhang/index";
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            return ("/khachhang/create");
+            return "khachhang/save";
         }
 
+        khachHangDAO.save(khachHang);
+        return "redirect:/khachhang/index";
     }
 
 }
+
+

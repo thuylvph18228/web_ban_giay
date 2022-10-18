@@ -3,10 +3,14 @@ package poly.edu.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -23,6 +27,7 @@ public class KhachHang {
     @Column(name="ten")
     private String ten;
 
+
     @NotBlank(message = "Không được để trống ngày sinh")
     @Column(name="ngaysinh")
     private String ngaysinh;
@@ -36,10 +41,13 @@ public class KhachHang {
     @Column(name="diachi")
     private String diachi;
 
+
+    @Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "Sai định dạng")
     @NotBlank(message = "Không được để trống sđt")
     @Column(name="sdt")
     private String sdt;
 
+    @Size(min=5, max=40,message = "Mật khẩu quá yếu")
     @NotBlank(message = "Không được để trống mật khẩu")
     @Column(name="matkhau")
     private String matkhau;
