@@ -29,7 +29,10 @@
             <td th:text="${nv.ten}"></td>
             <td th:each="cv: ${listcv}" th:if="${nv.macv}==${cv.macv}" th:text="${cv.tencv}"></td>
             <td th:text="${#dates.format(nv.ngaysinh, 'dd/MM/yyyy')}"></td>
-            <td th:text="${nv.gioitinh}"></td>
+            <td>
+                <p th:if="${nv.gioitinh}==1">Nam</p>
+                <p th:if="${nv.gioitinh}==0">Nữ</p>
+            </td>
             <td th:text="${nv.email}"></td>
             <td th:text="${nv.diachi}"></td>
             <td th:text="${nv.sdt}"></td>
