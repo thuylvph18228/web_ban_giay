@@ -4,8 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
@@ -15,12 +22,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 
 public class NSX {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="mansx")
-    private int mas;
-
-    @NotBlank(message = "Không được để trống tên")
+    private int mansx;
+    
+    @NotBlank(message = "Không được để trống")
     @Column(name="ten")
     private String ten;
 
