@@ -3,25 +3,38 @@ package poly.edu.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "giay")
+@Table(name = "chitietgiay")
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Giay implements Serializable {
+public class ChiTietGiay implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="mactg")
+    private int mactg;
+
+    @Column(name="mas")
+    private int mas;
+
+    @Column(name="mansx")
+    private int mansx;
+
+    @Column(name="mams")
+    private int mams;
+
+    @Column(name="malg")
+    private int malg;
+
     @Column(name="mag")
     private int mag;
     
@@ -29,17 +42,7 @@ public class Giay implements Serializable {
     @Column(name="ten")
     private String ten;
 
-    @NotNull(message = "Không được để trống")
-    @Min(value = 1, message = "Giá phải lớn hơn 0")
-    @Column(name="gia")
-    private double gia;
-
-    @NotNull(message = "Không được để trống")
-    @Min(value = 1, message = "Số lượng phải lớn hơn 0")
-    @Column(name="soluong")
-    private int soluong;
-
-    @Column(name="trangthai")
-    private int trangthai;
-
+    @NotBlank(message = "Không được để trống")
+    @Column(name="mota")
+    private String mota;
 }

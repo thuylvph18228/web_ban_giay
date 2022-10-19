@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Giày</title>
+
+</head>
+<body>
+<form method="post" th:action="${savectg}" th:object="${chitietgiay}">
+    <h1>Chi Tiết Giày</h1>
+    <input hidden type="text" th:field="*{mactg}">
+    <div>
+        <label>Tên chi tiết giày:</label>
+        <input type="text" th:field="*{ten}" name="ten">
+        <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+    </div>
+    <div>
+        <label>Size:</label>
+        <select th:field="*{mas}" name="mas">
+            <option th:each="size : ${listsize}" th:value="${size.mas}" th:text="${size.ten}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Nsx:</label>
+        <select th:field="*{mansx}" name="mansx">
+            <option th:each="nsx : ${listnsx}" th:value="${nsx.mansx}" th:text="${nsx.ten}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Màu sắc:</label>
+        <select th:field="*{mams}" name="mams">
+            <option th:each="ms : ${listms}" th:value="${ms.mams}" th:text="${ms.ten}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Loại giày:</label>
+        <select th:field="*{malg}" name="malg">
+            <option th:each="lg : ${listlg}" th:value="${lg.malg}" th:text="${lg.ten}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Giày:</label>
+        <select th:field="*{mag}" name="mag">
+            <option th:each="g : ${listg}" th:value="${g.mag}" th:text="${g.ten}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Mô tả:</label>
+        <input type="text" th:field="*{mota}" name="mota">
+        <span th:if="${#fields.hasErrors('mota')}" th:errors="*{mota}"></span>
+    </div>
+
+    <button type="submit">Save</button>
+
+</form>
+</body>
+</html>
