@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -13,11 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class NXS {
+public class NSX {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="mas")
+    @Column(name="mansx")
     private int mas;
+
+    @NotBlank(message = "Không được để trống tên")
     @Column(name="ten")
     private String ten;
 

@@ -7,30 +7,34 @@
 </head>
 <body>
 <h1>Khách Hàng</h1>
-<a class="btn btn-primary" th:href="@{/khachhang/create}">Thêm mới</a>
 <form>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Họ và tên</th>
-            <th>Ngày sinh</th>
-            <th>Email</th>
+            <th>Nhân viên</th>
+            <th>Khách hàng</th>
+            <th>Hình thức</th>
+            <th>Ngày tạo</th>
+            <th>Ngày thanh toán</th>
+            <th>Ngày ship</th>
+            <th>Tên người nhận</th>
             <th>Địa chỉ</th>
-            <th>Sđt</th>
-            <th>Mật khẩu</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="kh : ${listkh}">
-            <td th:text="${kh.ten}"></td>
-            <td th:text="${kh.ngaysinh}"></td>
-            <td th:text="${kh.email}"></td>
-            <td th:text="${kh.diachi}"></td>
-            <td th:text="${kh.sdt}"></td>
-            <td th:text="${kh.matkhau}"></td>
+        <tr th:each="hd : ${listhd}">
+            <td th:each="nv:${listnv}" th:if="${nv.manv}==${hd.manv}" th:text="${nv.ten}"/>
+            <td th:each="kh:${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"/>
+            <td th:each="tt:${listhttt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${hd.ten}"/>
+            <td th:text="${hd.ngaytao}"></td>
+            <td th:text="${hd.ngaythanhtoan}"></td>
+            <td th:text="${hd.ngayship}"></td>
+            <td th:text="${hd.ngaynhan}"></td>
+            <td th:text="${hd.tennguoinhan}"></td>
+            <td th:text="${hd.diachi}"></td>
             <td colspan="2">
-                <a class="btn btn-outline-primary" th:href="@{'/khachhang/edit/'+${kh.makh}}">Sửa</a>
-                <a class="btn btn-outline-danger" th:href="@{'/khachhang/delete/'+${kh.makh}}">Xoá</a>
+                <a class="btn btn-outline-primary" th:href="@{'/hoadon/edit/'+${hd.mahd}}">Sửa</a>
+                <a class="btn btn-outline-danger" th:href="@{'/hoadon/delete/'+${hd.mahd}}">Xoá</a>
             </td>
         </tr>
         </tbody>

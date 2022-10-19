@@ -8,11 +8,11 @@
 
 </head>
 <body>
-<form method="post" th:action="${saves}" th:object="${size}">
-    <h1>Size</h1>
+<form method="post" th:action="${savensx}" th:object="${nsx}">
+    <h1>Nhà sản xuất </h1>
     <input hidden type="text" th:field="*{mas}">
     <div   class="form-check">
-        <label >Size:</label>
+        <label >Nhà sản xuất:</label>
         <input class="form-control" type="text" th:field="*{ten}" name="ten">
         <label  class="text-danger"  th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></label>
     </div>
