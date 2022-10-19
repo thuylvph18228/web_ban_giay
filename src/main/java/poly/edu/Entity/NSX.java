@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 
-import org.hibernate.validator.constraints.NotBlank;
+
 
 import javax.persistence.*;
 import java.io.Serializable;

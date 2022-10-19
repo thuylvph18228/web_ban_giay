@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import poly.edu.DAO.NSXDAO;
+
+import poly.edu.DAO.NsxDAO;
 import poly.edu.DAO.SizeDAO;
 import poly.edu.Entity.NSX;
 import poly.edu.Entity.Size;
@@ -19,12 +20,12 @@ import java.util.List;
 @Controller
 public class NsxController {
     @Autowired
-    private NSXDAO nsxdao;
+    private NsxDAO nsxDAO;
 
 
     @GetMapping("/nsx/index")
     public String listnsx(Model model) {
-        List<NSX> listnsx = nsxdao.findAll();
+        List<NSX> listnsx = nsxDAO.findAll();
         model.addAttribute("listnsx", listnsx);
         return ("nsx/index");
     }
@@ -40,7 +41,7 @@ public class NsxController {
     @GetMapping("/nsx/edit/{mansx}")
     public String edit(@PathVariable(name = "mansx") int mansx, Model model) {
         model.addAttribute("mansx", mansx);
-        NSX nsx =  nsxdao.getById(mansx);
+        NSX nsx =  nsxDAO.getById(mansx);
         model.addAttribute("nsx", nsx);
         model.addAttribute("savensx", "/savensx");
         return "nsx/save";
@@ -48,7 +49,7 @@ public class NsxController {
 
     @GetMapping("/nsx/delete/{mansx}")
     public String delete(@PathVariable(name = "mansx") int mansx) {
-        nsxdao.deleteById(mansx);
+        nsxDAO.deleteById(mansx);
         return "redirect:/nsx/index";
     }
 
@@ -57,7 +58,7 @@ public class NsxController {
         if (bindingResult.hasErrors()) {
             return "nsx/save";
         }
-        nsxdao.save(nsx);
+        nsxDAO.save(nsx);
         return "redirect:/nsx/index";
     }
 }
