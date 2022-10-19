@@ -3,10 +3,17 @@ package poly.edu.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 
 @Entity
 @Data
@@ -14,7 +21,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class NSX implements Serializable {
+public class NSX {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
