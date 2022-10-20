@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhân viên</title>
+
+</head>
+<body>
+<form method="post" th:action="${savenv}" th:object="${nhanvien}">
+    <h1>Nhân viên</h1>
+    <input hidden type="text" th:field="*{manv}">
+    <div>
+        <label>Chức vụ:</label>
+        <select th:field="*{macv}" name="macv">
+            <option th:each="cv : ${listcv}" th:value="${cv.macv}" th:text="${cv.tencv}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Họ và tên:</label>
+        <input type="text" th:field="*{ten}" name="ten">
+        <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+    </div>
+    <div>
+        <label>Ngày sinh:</label>
+        <input type="text" th:field="*{ngaysinh}" name="ngaysinh">
+        <span th:if="${#fields.hasErrors('ngaysinh')}" th:errors="*{ngaysinh}"></span>
+    </div>
+    <div>
+        <label>Giới tính:</label>
+        <div>
+            <label>Nam</label>
+            <input type="radio" th:field="*{gioitinh}" th:value="1" checked="checked" name="nam">
+            <label>Nữ</label>
+            <input type="radio" th:field="*{gioitinh}" th:value="0" name="nu">
+            <span th:if="${#fields.hasErrors('gioitinh')}" th:errors="*{gioitinh}"></span>
+        </div>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="text" th:field="*{email}" name="email">
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label>Địa chỉ:</label>
+        <input type="text" th:field="*{diachi}" name="diachi">
+        <span th:if="${#fields.hasErrors('diachi')}" th:errors="*{diachi}"></span>
+    </div>
+    <div>
+        <label>Sđt:</label>
+        <input type="text" th:field="*{sdt}" name="sdt">
+        <span th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></span>
+    </div>
+    <div>
+        <label>Mật khẩu:</label>
+        <input type="password" th:field="*{matkhau}" name="matkhau">
+        <span th:if="${#fields.hasErrors('matkhau')}" th:errors="*{matkhau}"></span>
+    </div>
+    <div>
+        <label>Trạng thái:</label>
+        <select th:field="*{trangthai}" name="trangthai">
+            <option th:value="1">Đang hoạt động</option>
+            <option th:value="0">Ngừng hoạt động</option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
+
+</form>
+</body>
+</html>

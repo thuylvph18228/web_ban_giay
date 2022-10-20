@@ -4,19 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Data
-@Table(name = "chucvu")
+@Table(name = "nsx")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChucVu implements Serializable {
+
+public class Nsx {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="macv")
-    private int macv;
-    @Column(name="tencv")
-    private String tencv;
+    @Column(name="mansx")
+    private int mansx;
+
+    @NotBlank(message = "Không được để trống")
+    @Column(name="ten")
+    private String ten;
+
 }

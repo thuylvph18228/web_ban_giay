@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loại Giày</title>
+
+</head>
+<body>
+<form method="post" th:action="${savelg}" th:object="${loaigiay}">
+    <h1>Loại Giày</h1>
+    <input hidden type="text" th:field="*{malg}">
+    <div>
+        <label>Tên loại giày:</label>
+        <input type="text" th:field="*{ten}" name="ten">
+        <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+    </div>
+    <button type="submit">Save</button>
+
+</form>
+</body>
+</html>
