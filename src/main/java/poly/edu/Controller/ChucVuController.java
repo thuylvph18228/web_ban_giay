@@ -47,7 +47,7 @@ public class ChucVuController {
         return "chucvu/save";
     }
 
-    @GetMapping("/chucvu/delete/{makh}")
+    @GetMapping("/chucvu/delete/{macv}")
     public String delete(@PathVariable(name = "macv") int macv) {
         chucVuDAO.deleteById(macv);
         return "redirect:/chucvu/index";
