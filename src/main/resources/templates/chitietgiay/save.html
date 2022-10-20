@@ -45,6 +45,11 @@
         </select>
     </div>
     <div>
+        <label>Giá:</label>
+        <input type="number" th:field="*{gia}" name="gia"><label>VNĐ</label>
+        <span th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}"></span>
+    </div>
+    <div>
         <label>Mô tả:</label>
         <input type="text" th:field="*{mota}" name="mota">
         <span th:if="${#fields.hasErrors('mota')}" th:errors="*{mota}"></span>

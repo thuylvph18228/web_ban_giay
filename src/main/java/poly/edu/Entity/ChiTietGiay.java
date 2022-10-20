@@ -45,4 +45,9 @@ public class ChiTietGiay implements Serializable {
     @NotBlank(message = "Không được để trống")
     @Column(name="mota")
     private String mota;
+
+    @NotNull(message = "Không được để trống")
+    @Min(value = 1, message = "Giá phải lớn hơn 0")
+    @Column(name="gia")
+    private double gia;
 }
