@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.GioHangDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.Entity.Giay;
-import poly.edu.Entity.GioHang;
-import poly.edu.Entity.KhachHang;
+import poly.edu.DAO.*;
+import poly.edu.Entity.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,6 +26,12 @@ public class GioHangController {
 
     @Autowired
     public GioHangDAO gioHangDAO;
+
+    @Autowired
+    ThanhToanDAO ttdao;
+
+    @Autowired
+    HoaDonDAO hddao;
 
     @GetMapping("/giohang/index")
     public String listkh(Model model) {
@@ -86,6 +88,53 @@ public class GioHangController {
         return "redirect:/giohang/index";
     }
 
+    @GetMapping("/giohang/thanhtoan/{magh}")
+    public String thanhtoan(@PathVariable(name = "magh") int magh, Model model) {
+        model.addAttribute("magh", magh);
+        GioHang gh = gioHangDAO.getById(magh);
+        List<Giay> listg =giayDAO.findAll();
+        model.addAttribute("listg", listg);
+        List<ThanhToan> listtt =ttdao.findAll();
+        model.addAttribute("listtt", listtt);
+        List<KhachHang> listkh =khachHangDAO.findAll();
+        model.addAttribute("listkh", listkh);
+        model.addAttribute("giohang", gh);
+        model.addAttribute("savetthd", "/savetthd");
+        return "giohang/thanhtoan";
+    }
+
+    @PostMapping("/savetthd")
+    public String savett(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Giay> listg =giayDAO.findAll();
+            model.addAttribute("listg", listg);
+            List<KhachHang> listkh =khachHangDAO.findAll();
+            model.addAttribute("listkh", listkh);
+            return "giohang/thanhtoan";
+        }else {
+            HoaDon hd = new HoaDon();
+            String date = String.valueOf(java.time.LocalDate.now());
+            if(gioHang.getTrangthai()==1){
+                hd.setMakh(gioHang.getMakh());
+                hd.setManv(1);
+                hd.setMahttt(2);
+                hd.setNgaytao(date);
+                hd.setNgaythanhtoan(date);
+                hd.setDiachi(gioHang.getDiachi());
+                hd.setTennguoinhan(gioHang.getTennguoinhan());
+            }else {
+                hd.setMakh(gioHang.getMakh());
+                hd.setManv(1);
+                hd.setMahttt(1);
+                hd.setNgaytao(date);
+                hd.setDiachi(gioHang.getDiachi());
+                hd.setTennguoinhan(gioHang.getTennguoinhan());
+            }
+            hddao.save(hd);
+            gioHangDAO.delete(gioHang);
+            return "redirect:/hoadon/index";
+        }
+    }
 }
 
 

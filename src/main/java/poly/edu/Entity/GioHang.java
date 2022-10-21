@@ -39,11 +39,12 @@ public class GioHang {
     @Column(name="sdt")
     private String sdt;
 
+//    @NotBlank(message = "Không được để trống địa tên người nhận")
+    private String tennguoinhan;
 
     @Min (value =1,message = "Số lượng phải lớn hơn 1")
     @Column(name="soluong")
     private int soluong;
-
 
     @Column(name="trangthai")
     private int trangthai;

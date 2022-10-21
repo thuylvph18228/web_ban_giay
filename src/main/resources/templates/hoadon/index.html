@@ -17,6 +17,7 @@
             <th>Ngày tạo</th>
             <th>Ngày thanh toán</th>
             <th>Ngày ship</th>
+            <th>Ngày nhận</th>
             <th>Tên người nhận</th>
             <th>Địa chỉ</th>
         </tr>
@@ -25,7 +26,7 @@
         <tr th:each="hd : ${listhd}">
             <td th:each="nv:${listnv}" th:if="${nv.manv}==${hd.manv}" th:text="${nv.ten}"/>
             <td th:each="kh:${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"/>
-            <td th:each="tt:${listhttt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${hd.ten}"/>
+            <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
             <td th:text="${hd.ngaytao}"></td>
             <td th:text="${hd.ngaythanhtoan}"></td>
             <td th:text="${hd.ngayship}"></td>
