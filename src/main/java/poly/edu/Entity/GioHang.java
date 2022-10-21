@@ -26,7 +26,7 @@ public class GioHang {
     @Column(name="mag")
     private int mag;
 
-    @NotBlank(message = "Không được để trống ngày tạo")
+   // @NotBlank(message = "Không được để trống ngày tạo")
     @Column(name="ngaytao")
     private String ngaytao;
 
@@ -34,13 +34,13 @@ public class GioHang {
     @Column(name="diachi")
     private String diachi;
 
-    @NotBlank(message = "Không được để trống sđt")
+   @NotBlank(message = "Không được để trống sđt")
     @Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "Sai định dạng")
-    @Column(name="sdt")
+   @Column(name="sdt")
     private String sdt;
 
 
-    @Min (value =1,message = "Số lượng phải lớn hơn 1")
+   @Min (value =0,message = "Số lượng phải lớn hơn 0")
     @Column(name="soluong")
     private int soluong;
 

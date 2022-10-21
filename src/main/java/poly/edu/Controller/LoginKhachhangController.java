@@ -41,7 +41,7 @@ public class LoginKhachhangController {
             if (email.equals(khachHang.getEmail())&& pw.equals( khachHang.getMatkhau())) {
 //                int admin  =acc.getAdmin();
 //                session.setAttribute("admin",admin);
-//                session.setAttribute("user", user);
+                httpSession.setAttribute("email", email);
 //                session.setAttribute("message", "Đăng nhập thành công")
 //                ;
 //                return "redirect:/admin/products/trangchu";
@@ -52,5 +52,10 @@ public class LoginKhachhangController {
             }
         }
 
+    }
+    @GetMapping("/logout")
+    public String logout() {
+        httpSession.removeAttribute("email");
+        return "redirect:/login";
     }
 }

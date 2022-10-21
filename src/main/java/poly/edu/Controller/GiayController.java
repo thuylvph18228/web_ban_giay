@@ -4,21 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.GiayDAO;
+import poly.edu.DAO.KhachHangDAO;
+import poly.edu.DAO.GioHangDAO;
 import poly.edu.Entity.Giay;
+import poly.edu.Entity.GioHang;
+import poly.edu.Entity.KhachHang;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class GiayController {
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    KhachHangDAO khachHangDao;
 
     @Autowired
     GiayDAO giaydao;
+
+    @Autowired
+    GioHangDAO gioHangDao;
 
     @GetMapping("/giay/index")
     public String index(Model model){
@@ -47,6 +58,38 @@ public class GiayController {
         giaydao.deleteById(mag);
         return "redirect:/giay/index";
     }
+//    @GetMapping("/giay/buy/{mag}")
+//    public String buy(@PathVariable(name="mag") int mag, Model model){
+//        model.addAttribute("mag", mag);
+//        String email = (String) httpSession.getAttribute("email");
+//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
+//        System.out.println(khachHang);
+//        model.addAttribute("khachHang", khachHang);
+//        Giay g = giaydao.getById(mag);
+//        httpSession.setAttribute(String.valueOf(mag),"mag");
+//        model.addAttribute("giay", g);
+//        model.addAttribute("savegiohang", "/savegiohang");
+//        return "giay/buy";
+//    }
+//
+//    @PostMapping("/savegiohang")
+//    public String savegh( @RequestParam("soluong") int soluong,@RequestParam("mag") int mag,
+//                          @RequestParam("diachi") String diachi,@RequestParam("sdt") String sdt,
+//                           GioHang gioHang, Model model){
+//        String email = (String) httpSession.getAttribute("email");
+//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
+//        gioHang.setMakh(khachHang.getMakh());
+//        String date = String.valueOf(java.time.LocalDate.now());
+//        gioHang.setMag(mag);
+//        gioHang.setSoluong(soluong);
+//        gioHang.setDiachi(diachi);
+//        gioHang.setSdt(sdt);
+//        gioHang.setNgaytao(String.valueOf(date));
+//        gioHang.setTrangthai(Integer.parseInt("0"));
+//        gioHangDao.save(gioHang);
+//        return "redirect:/giohang/index";
+//    }
+
 
     @PostMapping("/saveg")
     public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult){
@@ -57,4 +100,5 @@ public class GiayController {
             return "redirect:/giay/index";
         }
     }
+
 }
