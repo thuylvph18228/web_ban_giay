@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Giày</title>
+
+</head>
+<body>
+<form method="post" th:action="${savegiohang}" th:object="${giay}">
+  <h1>Them vao gio hang</h1>
+  <div  th:each="g : ${giay}">
+
+    <input style="display: none" th:value="${g.mag}" name="mag"></input>
+    <label>Giày :</label>
+  <input th:value="${g.ten}"  name="ten"  disabled>
+  </div>
+  <div>
+    <label>Giá</label>
+    <input th:each="g : ${giay}" th:value="${g.gia}"  name="gia" disabled>
+
+  </div>
+  <div>
+    <label>Số  lượng</label>
+    <input type="number"  name="soluong" >
+
+  </div>
+  <div>
+    <label>Số điện thoại</label>
+    <input type="text"  name="sdt" >
+  </div>
+  <div>
+    <label>Địa chỉ</label>
+    <input type="text"  name="diachi" >
+  </div>
+  <div>
+    <label>Khách hàng</label>
+    <input th:each="kh : ${khachHang}" th:value="${kh.ten}"  name="tenkh" disabled>
+  </div>
+  <button type="submit">Save</button>
+
+</form>
+</body>
+</html>

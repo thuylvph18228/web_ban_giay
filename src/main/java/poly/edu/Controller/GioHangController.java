@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 
 @Controller
 public class GioHangController {
 
+    HttpSession httpSession;
     @Autowired
     public GiayDAO giayDAO;
 
@@ -68,6 +71,8 @@ public class GioHangController {
         model.addAttribute("savegh", "/savegh");
         return "giohang/save";
     }
+
+
 
     @GetMapping("/giohang/delete/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {
