@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import poly.edu.DAO.*;
-import poly.edu.Entity.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import poly.edu.DAO.ChucVuDAO;
+
+import poly.edu.Entity.ChucVu;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,19 +38,21 @@ public class ChucVuController {
 
         return "chucvu/save";
     }
-
+    RedirectAttributes redirectAttributes;
     @GetMapping("/chucvu/edit/{macv}")
     public String edit(@PathVariable(name = "macv") int macv, Model model) {
         model.addAttribute("macv", macv);
         ChucVu cv = chucVuDAO.getById(macv);
         model.addAttribute("chucvu", cv);
         model.addAttribute("savecv", "/savecv");
+        redirectAttributes.addAttribute("message","Cập nhật thành công");
         return "chucvu/save";
     }
 
     @GetMapping("/chucvu/delete/{macv}")
     public String delete(@PathVariable(name = "macv") int macv) {
         chucVuDAO.deleteById(macv);
+        redirectAttributes.addAttribute("message","Xóa thành công");
         return "redirect:/chucvu/index";
     }
 
@@ -60,4 +65,5 @@ public class ChucVuController {
         chucVuDAO.save(chucVu);
         return "redirect:/chucvu/index";
     }
+
 }
