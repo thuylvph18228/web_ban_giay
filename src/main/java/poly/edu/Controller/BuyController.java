@@ -75,9 +75,12 @@ public class BuyController {
     }
 
     @PostMapping("/savegiohang")
-    public String savegh(@RequestParam("soluong") int soluong, @RequestParam("mag") int mag,
+    public String savegh( @Valid @RequestParam("soluong") int soluong, @RequestParam("mag") int mag,
                          @RequestParam("diachi") String diachi, @RequestParam("sdt") String sdt,
-                         GioHang gioHang, Model model){
+                         GioHang gioHang, Model model, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "giay/buy";
+        }
         String email = (String) httpSession.getAttribute("email");
         KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
         gioHang.setMakh(khachHang.getMakh());
@@ -104,11 +107,6 @@ public class BuyController {
 
             return "redirect:/giohang/ghk";
         }
-        gioHang.setMagh(gioHang.getMagh());
-        gioHang.setMakh(gioHang.getMakh());
-        gioHang.setDiachi(gioHang.getDiachi());
-        gioHang.setSdt(gioHang.getSdt());
-        gioHang.setSoluong(gioHang.getSoluong());
         gioHangDao.save(gioHang);
         return "redirect:/giohang/ghk";
     }
