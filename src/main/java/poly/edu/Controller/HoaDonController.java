@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import poly.edu.DAO.HoaDonDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.DAO.NhanVienDAO;
-import poly.edu.DAO.ThanhToanDAO;
-import poly.edu.Entity.HoaDon;
-import poly.edu.Entity.KhachHang;
-import poly.edu.Entity.NhanVien;
-import poly.edu.Entity.ThanhToan;
+import poly.edu.DAO.*;
+import poly.edu.Entity.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,29 +18,50 @@ import java.util.List;
 public class HoaDonController {
 
     @Autowired
-    private KhachHangDAO khachHangDAO;
+    public HoaDonDAO hoaDonDAO;
 
     @Autowired
-    private NhanVienDAO nhanVienDAO;
+    public ChiTietHoaDonDAO chiTietHoaDonDAO;
+
+    @Autowired
+    public NhanVienDAO nhanVienDAO;
+
+    @Autowired
+    public KhachHangDAO khachHangDAO;
 
     @Autowired
     private ThanhToanDAO thanhToanDAO;
 
     @Autowired
-    private HoaDonDAO hoaDonDAO;
+    private GiayDAO giayDAO;
+
+    @Autowired
+    private ChiTietGiayDAO chiTietGiayDAO;
+    @Autowired
+    private MauSacDAO  mauSacDAO;
+    @Autowired
+    private SizeDAO sizeDAO;
     @GetMapping("/hoadon/index")
     public String listhd(Model model) {
+        List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
+        model.addAttribute("listcthd", listcthd);
+
         List<HoaDon> listhd = hoaDonDAO.findAll();
         model.addAttribute("listhd", listhd);
-
-        List<KhachHang> listkh = khachHangDAO.findAll();
-        model.addAttribute("listkh", listkh);
-
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
-
+        List<KhachHang> listkh = khachHangDAO.findAll();
+        model.addAttribute("listkh", listkh);
         List<ThanhToan> listtt = thanhToanDAO.findAll();
         model.addAttribute("listtt", listtt);
+        List<Giay> listg = giayDAO.findAll();
+        model.addAttribute("listg", listg);
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+        model.addAttribute("listctg", listctg);
+        List<MauSac> listms = mauSacDAO.findAll();
+        model.addAttribute("listms", listms);
+        List<Size> lists = sizeDAO.findAll();
+        model.addAttribute("lists", lists);
         return ("hoadon/index");
     }
     @GetMapping("/hoadon/create")
