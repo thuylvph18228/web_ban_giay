@@ -14,7 +14,6 @@
         <tr>
             <th>Mã giày</th>
             <th>Tên</th>
-            <th>Số lượng</th>
             <th>Giá</th>
             <th>Số lượng</th>
             <th>Trạng thái</th>
@@ -31,7 +30,6 @@
                 <p th:if="${g.trangthai}==1">Còn hàng</p>
                 <p th:if="${g.trangthai}==0">Hết hàng</p>
             </td>
-            <td th:text="${g.soluong}"></td>
             <td colspan="3">
                 <a class="btn btn-outline-primary" th:href="@{'/giay/buy/'+${g.mag}}">Thêm vào giỏ hàng</a>
                 <a class="btn btn-outline-primary" th:href="@{'/giay/edit/'+${g.mag}}">Sửa</a>

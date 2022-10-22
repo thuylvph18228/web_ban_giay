@@ -16,7 +16,7 @@
       <th>Địa chỉ</th>
       <th>Sđt</th>
       <th>Số lượng</th>
-      <th>Trạng thái</th>
+      <th>Thao tác</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +28,7 @@
       <td th:text="${gh.sdt}"></td>
       <td th:text="${gh.soluong}"></td>
       <td colspan="2">
+        <a class="btn btn-outline-primary" th:href="@{'/giohang/thanhtoan/'+${gh.magh}}">Thanh toán</a>
         <a class="btn btn-outline-primary" th:href="@{'/giohang/editkh/'+${gh.magh}}">Sửa</a>
         <a class="btn btn-outline-danger" th:href="@{'/giohang/deleteghk/'+${gh.magh}}">Xoá</a>
       </td>
