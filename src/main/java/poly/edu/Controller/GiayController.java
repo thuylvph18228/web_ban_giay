@@ -38,6 +38,12 @@ public class GiayController {
         return "giay/index";
     }
 
+    @GetMapping("/giay/product")
+    public String product(Model model){
+        List<Giay> listg = giaydao.findAll();
+        model.addAttribute("listg", listg);
+        return "giay/product";
+    }
     @GetMapping("/giay/create")
     public String create(@ModelAttribute("giay")Giay giay, Model model){
         model.addAttribute("saveg", "/saveg");
