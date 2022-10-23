@@ -25,6 +25,8 @@ public class Giay implements Serializable {
     @Column(name="mag")
     private int mag;
 
+
+
     @NotBlank(message = "Không được để trống")
     @Column(name="ten")
     private String ten;
@@ -33,6 +35,10 @@ public class Giay implements Serializable {
     @Min(value = 1, message = "Giá phải lớn hơn 0")
     @Column(name="gia")
     private double gia;
+
+    @NotNull(message = "Không được để ảnh")
+    @Column(name="anh")
+    private String anh;
 
     @NotNull(message = "Không được để trống")
     @Min(value = 1, message = "Số lượng phải lớn hơn 0")

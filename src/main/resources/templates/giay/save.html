@@ -25,6 +25,11 @@
         <span th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
     </div>
     <div>
+        <label>Ảnh</label>
+        <input type="text" th:field="*{anh}" name="anh">
+        <span th:if="${#fields.hasErrors('anh')}" th:errors="*{anh}"></span>
+    </div>
+    <div>
         <label>Trạng thái:</label>
         <select th:field="*{trangthai}" name="trangthai">
             <option th:value="1">Còn hàng</option>
