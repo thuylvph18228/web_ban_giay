@@ -61,10 +61,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.2.0.Final</version>
         </dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> d5b7ae4dbb258e0af6ff92a3edb0a013d04a61d6
 
     </dependencies>
 
