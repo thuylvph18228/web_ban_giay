@@ -5,16 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.GioHangDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.Entity.Giay;
-import poly.edu.Entity.GioHang;
-import poly.edu.Entity.KhachHang;
+import poly.edu.DAO.*;
+import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BuyController {
@@ -28,8 +25,25 @@ public class BuyController {
     @Autowired
     GiayDAO giaydao;
 
+
+    @Autowired
+    SizeDAO sdao;
+
+    @Autowired
+    NsxDAO nsxdao;
+
+    @Autowired
+    MauSacDAO msdao;
+
+    @Autowired
+    LoaiGiayDAO lgdao;
+
+
     @Autowired
     GioHangDAO gioHangDao;
+
+    @Autowired
+    ChiTietGiayDAO chiTietGiayDAO;
 
     @GetMapping("/giohang/ghk")
     public String ghk( Model model) {
@@ -61,16 +75,27 @@ public class BuyController {
     }
 
     @GetMapping("/giay/buy/{mag}")
-    public String buy(@ModelAttribute("giohang") GioHang gioHang, @PathVariable(name="mag") int mag, Model model){
-        model.addAttribute("mag", mag);
-        String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        System.out.println(khachHang);
-        model.addAttribute("khachHang", khachHang);
-        Giay g = giaydao.getById(mag);
-        httpSession.setAttribute(String.valueOf(mag),"mag");
-        model.addAttribute("giay", g);
-        model.addAttribute("savegiohang", "/savegiohang");
+    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name="mag") int mag, Model model){
+
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
+        //List<ChiTietGiay> lists = chiTietGiayDAO.findByMas(mag);
+
+        Giay giay = giaydao.getById(mag);
+        List<Size> listsize = sdao.findAll();
+        List<Nsx> listnsx = nsxdao.findAll();
+        List<MauSac> listms = msdao.findAll();
+        List<LoaiGiay> listlg = lgdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+
+
+        model.addAttribute("giay", giay);
+        model.addAttribute("listctg", listctg);
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listnsx", listnsx);
+        model.addAttribute("listms", listms);
+        model.addAttribute("listlg", listlg);
+
+        model.addAttribute("listg", listg);
         return "giay/buy";
     }
 
