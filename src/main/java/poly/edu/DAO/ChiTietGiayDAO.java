@@ -13,4 +13,5 @@ public interface ChiTietGiayDAO extends JpaRepository<ChiTietGiay, Integer> {
     List<ChiTietGiay> findByMag(int mag);
       @Query("select e.mas from ChiTietGiay e join Giay g on e.mag =  g.mag where  g.mag =?1")
       List<ChiTietGiay> findByMas(int mag);
+
 }
