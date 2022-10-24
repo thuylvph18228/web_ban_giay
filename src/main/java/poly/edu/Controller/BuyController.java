@@ -78,9 +78,9 @@ public class BuyController {
     public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name="mag") int mag, Model model){
 
         List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
-        //List<ChiTietGiay> lists = chiTietGiayDAO.findByMas(mag);
-
+       
         Giay giay = giaydao.getById(mag);
+        System.out.println(giay);
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         List<MauSac> listms = msdao.findAll();
