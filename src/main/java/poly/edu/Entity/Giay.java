@@ -27,25 +27,20 @@ public class Giay implements Serializable {
 
 
 
-    @NotBlank(message = "Không được để trống")
+    @NotBlank(message = "Không được để trống tên")
     @Column(name="ten")
     private String ten;
 
-    @NotNull(message = "Không được để trống")
+    @NotBlank(message = "Không được để trống giá")
     @Min(value = 1, message = "Giá phải lớn hơn 0")
     @Column(name="gia")
     private double gia;
 
-    @NotNull(message = "Không được để ảnh")
+    @NotNull(message = "Không được để trống ảnh")
     @Column(name="anh")
     private String anh;
 
-    @NotNull(message = "Không được để trống")
-    @Min(value = 1, message = "Số lượng phải lớn hơn 0")
-    @Column(name="soluong")
-    private int soluong;
-
-    @Column(name="trangthai")
-    private int trangthai;
-
+    @NotNull(message = "Không được để trống mô tả")
+    @Column(name="mota")
+    private String mota;
 }

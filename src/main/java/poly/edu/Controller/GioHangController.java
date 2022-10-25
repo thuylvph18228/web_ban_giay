@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
@@ -36,14 +33,15 @@ public class GioHangController {
     @Autowired
     HoaDonDAO hddao;
 
+    @Autowired
+    ChiTietGiayDAO ctgdao;
+
     @GetMapping("/giohang/index")
     public String listkh(Model model) {
         List<GioHang> listgh =gioHangDAO.findAll();
         model.addAttribute("listgh", listgh);
-        List<Giay> listg =giayDAO.findAll();
-        model.addAttribute("listg", listg);
-        List<KhachHang> listkh =khachHangDAO.findAll();
-        model.addAttribute("listkh", listkh);
+        List<ChiTietGiay> listctg =ctgdao.findAll();
+        model.addAttribute("listctg", listctg);
         return ("giohang/index");
     }
 
@@ -97,8 +95,8 @@ public class GioHangController {
     public String thanhtoan(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDAO.getById(magh);
-        List<Giay> listg =giayDAO.findAll();
-        model.addAttribute("listg", listg);
+        List<ChiTietGiay> listctg =ctgdao.findAll();
+        model.addAttribute("listctg", listctg);
         List<ThanhToan> listtt =ttdao.findAll();
         model.addAttribute("listtt", listtt);
         List<KhachHang> listkh =khachHangDAO.findAll();
@@ -109,7 +107,11 @@ public class GioHangController {
     }
 
     @PostMapping("/savetthd")
-    public String savett(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
+    public String savett(@Valid @ModelAttribute("giohang")   GioHang gioHang,
+                         BindingResult bindingResult,Model model,
+                         @RequestParam("soluong") Integer soluong,
+                         @RequestParam("mactg") Integer mactg
+    ) {
         if (bindingResult.hasErrors()) {
             List<Giay> listg =giayDAO.findAll();
             model.addAttribute("listg", listg);
@@ -117,24 +119,14 @@ public class GioHangController {
             model.addAttribute("listkh", listkh);
             return "giohang/thanhtoan";
         }else {
+            List<ChiTietGiay> ctg = ctgdao.findByMag(mactg);
+
             HoaDon hd = new HoaDon();
             String date = String.valueOf(java.time.LocalDate.now());
-            if(gioHang.getTrangthai()==1){
-                hd.setMakh(gioHang.getMakh());
                 hd.setManv(1);
-                hd.setMahttt(2);
-                hd.setNgaytao(date);
-                hd.setNgaythanhtoan(date);
-                hd.setDiachi(gioHang.getDiachi());
-                hd.setTennguoinhan(gioHang.getTennguoinhan());
-            }else {
-                hd.setMakh(gioHang.getMakh());
-                hd.setManv(1);
+                hd.setMakh(1);
                 hd.setMahttt(1);
                 hd.setNgaytao(date);
-                hd.setDiachi(gioHang.getDiachi());
-                hd.setTennguoinhan(gioHang.getTennguoinhan());
-            }
             hddao.save(hd);
             gioHangDAO.delete(gioHang);
             return "redirect:/hoadon/index";

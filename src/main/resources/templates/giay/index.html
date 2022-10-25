@@ -12,26 +12,20 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Mã giày</th>
             <th>Tên</th>
             <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Trạng thái</th>
+            <th>Ảnh</th>
+            <th>Mô tả</th>
             <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="g : ${listg}">
-            <td th:text="${g.mag}"></td>
             <td th:text="${g.ten}"></td>
             <td th:text="${g.gia}"></td>
-            <td th:text="${g.soluong}"></td>
-            <td>
-                <p th:if="${g.trangthai}==1">Còn hàng</p>
-                <p th:if="${g.trangthai}==0">Hết hàng</p>
-            </td>
-            <td colspan="3">
-                <a class="btn btn-outline-primary" th:href="@{'/giay/buy/'+${g.mag}}">Thêm vào giỏ hàng</a>
+            <td><img th:src="@{${ g.anh}}"></td>
+            <td th:text="${g.mota}"></td>
+            <td colspan="2">
                 <a class="btn btn-outline-primary" th:href="@{'/giay/edit/'+${g.mag}}">Sửa</a>
                 <a class="btn btn-outline-danger" th:href="@{'/giay/delete/'+${g.mag}}">Xoá</a>
             </td>

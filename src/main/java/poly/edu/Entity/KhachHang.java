@@ -45,8 +45,4 @@ public class KhachHang {
     @Column(name="sdt")
     private String sdt;
 
-    @Size(min=5, max=1000,message = "Mật khẩu quá yếu")
-    @NotBlank(message = "Không được để trống mật khẩu")
-    @Column(name="matkhau")
-    private String matkhau;
 }

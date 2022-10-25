@@ -1,43 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Giày</title>
-
-</head>
-<body>
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic (~{::main})}">
 <form method="post" th:action="${saveg}" th:object="${giay}">
     <h1>Giày</h1>
     <input hidden type="text" th:field="*{mag}">
-    <div>
+    <div class="form-check">
         <label>Tên giày:</label>
-        <input type="text" th:field="*{ten}" name="ten">
-        <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+        <input class="form-control" type="text" th:field="*{ten}" name="ten">
+        <span class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
     </div>
-    <div>
+    <div class="form-check">
         <label>Giá:</label>
-        <input type="number" th:field="*{gia}" name="gia"><label>VNĐ</label>
-        <span th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}"></span>
+        <input class="form-control" type="number" th:field="*{gia}" name="gia"><label>VNĐ</label>
+        <span class="text-danger" th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}"></span>
     </div>
-    <div>
-        <label>Số lượng:</label>
-        <input type="number" th:field="*{soluong}" name="soluong">
-        <span th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
-    </div>
-    <div>
+    <div class="form-check">
         <label>Ảnh</label>
-        <input type="file" th:field="*{anh}" name="anh">
-        <span th:if="${#fields.hasErrors('anh')}" th:errors="*{anh}"></span>
+        <input class="form-control" type="file" th:field="*{anh}" name="anh">
+        <span class="text-danger" th:if="${#fields.hasErrors('anh')}" th:errors="*{anh}"></span>
     </div>
-    <div>
-        <label>Trạng thái:</label>
-        <select th:field="*{trangthai}" name="trangthai">
-            <option th:value="1">Còn hàng</option>
-            <option th:value="0">Hết hàng</option>
-        </select>
+    <div class="form-check">
+        <label>Mô tả</label>
+        <input class="form-control" type="file" th:field="*{mota}" name="mota">
+        <span class="text-danger" th:if="${#fields.hasErrors('mota')}" th:errors="*{mota}"></span>
     </div>
     <button type="submit">Save</button>
 
 </form>
-</body>
-</html>
+</div>

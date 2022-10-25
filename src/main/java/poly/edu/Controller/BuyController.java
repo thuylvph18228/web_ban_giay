@@ -32,8 +32,6 @@ public class BuyController {
     @Autowired
     NsxDAO nsxdao;
 
-    @Autowired
-    MauSacDAO msdao;
 
     @Autowired
     LoaiGiayDAO lgdao;
@@ -64,7 +62,7 @@ public class BuyController {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDao.getById(magh);
 
-        Giay giay = (Giay) giaydao.getById(gh.getMag());
+        Giay giay = (Giay) giaydao.getById(gh.getMactg());
         model.addAttribute("listg", giay);
         String email = (String) httpSession.getAttribute("email");
         KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
@@ -83,7 +81,6 @@ public class BuyController {
         Giay giay = giaydao.getById(mag);
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
-        List<MauSac> listms = msdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = giaydao.findAll();
 
@@ -92,7 +89,6 @@ public class BuyController {
         model.addAttribute("listctg", listctg);
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listms", listms);
         model.addAttribute("listlg", listlg);
 
         model.addAttribute("listg", listg);
@@ -108,14 +104,8 @@ public class BuyController {
         }
         String email = (String) httpSession.getAttribute("email");
         KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        gioHang.setMakh(khachHang.getMakh());
         String date = String.valueOf(java.time.LocalDate.now());
-        gioHang.setMag(mag);
         gioHang.setSoluong(soluong);
-        gioHang.setDiachi(diachi);
-        gioHang.setSdt(sdt);
-        gioHang.setNgaytao(String.valueOf(date));
-        gioHang.setTrangthai(Integer.parseInt("0"));
         gioHangDao.save(gioHang);
         return "redirect:/giohang/ghk";
     }

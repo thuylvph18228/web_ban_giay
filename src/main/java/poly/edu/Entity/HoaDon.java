@@ -44,7 +44,7 @@ public class HoaDon {
     @Column(name="tennguoinhan")
     private String tennguoinhan;
 
-    @NotBlank(message = "Không được để trống địa chỉ")
+//    @NotBlank(message = "Không được để trống địa chỉ")
     @Column(name="diachi")
     private String diachi;
 }

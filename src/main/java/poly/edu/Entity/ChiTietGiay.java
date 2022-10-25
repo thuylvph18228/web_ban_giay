@@ -29,23 +29,13 @@ public class ChiTietGiay implements Serializable {
     @Column(name="mansx")
     private int mansx;
 
-    @Column(name="mams")
-    private int mams;
-
     @Column(name="malg")
     private int malg;
 
     @Column(name="mag")
     private int mag;
 
-
-    @Column(name="ten")
-    private String ten;
-
-//    @NotBlank(message = "Không được để trống")
-    @Column(name="mota")
-    private String mota;
-
+    @NotBlank(message = "Không được để trống số lượng")
     @Column(name="soluong")
     private int soluong;
 

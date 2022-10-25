@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface GioHangDAO extends JpaRepository<GioHang, Integer> {
     //public GioHang findByMakhEquals(int makh) ;
-    @Query("SELECT e FROM GioHang e WHERE e.makh = ?1")
+    @Query("SELECT e FROM GioHang e WHERE e.mactg = ?1")
     List<GioHang> findByMakh(int makh);
 }
