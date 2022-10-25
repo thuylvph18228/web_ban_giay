@@ -11,7 +11,7 @@
     <header class="row bg-white">
         <div class="text-center">
             <img src="https://mona.media/wp-content/uploads/2021/06/banner-giay.png" alt=""
-            width="1500" height="550">
+            width="100%" height="550">
         </div>
     </header>
     <!-- navbar -->
@@ -36,6 +36,10 @@
                     </li>
                 </ul>
                 <form class="d-flex">
+                    <a href="http://localhost:8088/listcart" class="nav-link">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="" width="30" height="24">
+
+                    </a>
                     <input class="form-control me-2" type="search" placeholder="Nhập tên giày" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Tìm</button>
                 </form>
@@ -51,12 +55,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${ g.ten}"></h5>
                     <p class="card-text" th:text="${ g.gia}"></p>
-
-<<<<<<<<< Temporary merge branch 1
-                    <a class="btn btn-outline-primary" th:href="@{'/giay/buy/'+${g.mag}}">Thêm vào giỏ hàng</a>
-=========
                     <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-success">Buy</a>
->>>>>>>>> Temporary merge branch 2
                 </div>
             </div>
 </div>

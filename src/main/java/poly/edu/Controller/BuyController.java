@@ -91,25 +91,32 @@ public class BuyController {
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
         model.addAttribute("listlg", listlg);
-
         model.addAttribute("listg", listg);
+        model.addAttribute("addproduct", "/addproduct");
+
         return "giay/buy";
     }
 
     @PostMapping("/savegiohang")
-    public String savegh( @Valid @RequestParam("soluong") int soluong, @RequestParam("mag") int mag,
-                         @RequestParam("diachi") String diachi, @RequestParam("sdt") String sdt,
-                         GioHang gioHang, Model model, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return "giay/buy";
-        }
-        String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        String date = String.valueOf(java.time.LocalDate.now());
-        gioHang.setSoluong(soluong);
-        gioHangDao.save(gioHang);
-        return "redirect:/giohang/ghk";
+    public String savegh( @ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay,GioHang gioHang){
+        gioHang.setMactg(chiTietGiay.getMactg());
+        gioHang.setSoluong(1);
+        System.out.println(gioHang);
+       gioHangDao.save(gioHang);
+        return "redirect:/giohang/indext";
     }
+//    @PostMapping("/savegh")
+//    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
+//        if (bindingResult.hasErrors()) {
+//            List<Giay> listg =giayDAO.findAll();
+//            model.addAttribute("listg", listg);
+//            List<KhachHang> listkh =khachHangDAO.findAll();
+//            model.addAttribute("listkh", listkh);
+//            return "giohang/save";
+//        }
+//        gioHangDAO.save(gioHang);
+//        return "redirect:/giohang/index";
+//    }
 
     @GetMapping("/giohang/deleteghk/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {

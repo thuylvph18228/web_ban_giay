@@ -41,6 +41,7 @@ public class GiayController {
     @GetMapping("/giay/product")
     public String product(Model model){
         List<Giay> listg = giaydao.findAll();
+
         model.addAttribute("listg", listg);
         return "giay/product";
     }
