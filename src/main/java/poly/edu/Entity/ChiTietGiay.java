@@ -35,7 +35,7 @@ public class ChiTietGiay implements Serializable {
     @Column(name="mag")
     private int mag;
 
-    @NotBlank(message = "Không được để trống số lượng")
+//    @NotBlank(message = "Không được để trống số lượng")
     @Column(name="soluong")
     private int soluong;
 

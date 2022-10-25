@@ -47,4 +47,7 @@ public class HoaDon {
 //    @NotBlank(message = "Không được để trống địa chỉ")
     @Column(name="diachi")
     private String diachi;
+
+    @Column(name="sdt")
+    private String sdt;
 }

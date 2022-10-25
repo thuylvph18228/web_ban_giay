@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Giày luisviton</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/giohang/index">Giỏ hàng</a>
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Nhập tên giày" aria-label="Search">
@@ -45,6 +48,7 @@
 </div>
 <!-- container -->
 <div class="container row mt-3">
+    <div th:if="${message}" class="text-danger" th:text="${message}"/>
     <form>
         <table class="table table-bordered">
             <thead>

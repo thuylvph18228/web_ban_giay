@@ -12,34 +12,11 @@
   <h1>Giỏ hàng</h1>
   <input hidden type="text" th:field="*{magh}">
   <div   class="form-check">
-    <a>Khách Hàng</a>
-    <select class="form-select" th:field="*{makh}" name="makh">
-      <option th:each="list:${listkh}" th:value="${list.makh}" th:text="${list.ten}">
+    <a>Ctg:</a>
+    <select class="form-select" th:field="*{mactg}" name="mactg">
+      <option th:each="ctg:${listctg}" th:value="${ctg.mactg}" th:text="${ctg.mactg}">
       </option>
     </select>
-  </div>
-  <div   class="form-check">
-    <a>Giày</a>
-    <select class="form-select" th:field="*{mag}" name="mag">
-      <option th:each="list:${listg}" th:value="${list.mag}" th:text="${list.ten}">
-      </option>
-    </select>
-  </div>
-  <div   class="form-check">
-    <label>Ngày tạo:</label>
-    <input  class="form-control" type="date" th:field="*{ngaytao}" name="ngaytao">
-    <label  class="text-danger"  th:if="${#fields.hasErrors('ngaytao')}" th:errors="*{ngaytao}"></label>
-  </div>
-
-  <div  class="form-check">
-    <label>Địa chỉ:</label>
-    <input   class="form-control"  type="text" th:field="*{diachi}" name="diachi">
-    <label   class="text-danger"  th:if="${#fields.hasErrors('diachi')}" th:errors="*{diachi}"></label>
-  </div>
-  <div  class="form-check">
-    <label>Sđt:</label>
-    <input class="form-control" type="text" th:field="*{sdt}" name="sdt">
-    <label   class="text-danger"  th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></label>
   </div>
   <div  class="form-check">
     <label>Số lượng:</label>
