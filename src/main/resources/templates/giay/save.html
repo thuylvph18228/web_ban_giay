@@ -1,6 +1,5 @@
 <div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic (~{::main})}">
-<form method="post" th:action="${saveg}" th:object="${giay}">
-    <h1>Giày</h1>
+<form method="post" th:action="${saveg}" th:object="${giay}"><h1>Giày</h1>
     <input hidden type="text" th:field="*{mag}">
     <div class="form-check">
         <label>Tên giày:</label>
