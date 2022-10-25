@@ -11,7 +11,6 @@ import poly.edu.Entity.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BuyController {
@@ -21,6 +20,7 @@ public class BuyController {
 
     @Autowired
     KhachHangDAO khachHangDao;
+
 
     @Autowired
     GiayDAO giaydao;
@@ -81,12 +81,13 @@ public class BuyController {
        
         Giay giay = giaydao.getById(mag);
         System.out.println(giay);
+
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         List<MauSac> listms = msdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = giaydao.findAll();
-
+        //List <Sizetheogiay> chiTietGiayList  = sizeTheoGiayDAO.findByMas(mag);
 
         model.addAttribute("giay", giay);
         model.addAttribute("listctg", listctg);
