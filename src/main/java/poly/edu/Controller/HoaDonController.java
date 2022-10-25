@@ -38,8 +38,6 @@ public class HoaDonController {
     @Autowired
     private ChiTietGiayDAO chiTietGiayDAO;
     @Autowired
-    private MauSacDAO  mauSacDAO;
-    @Autowired
     private SizeDAO sizeDAO;
     @GetMapping("/hoadon/index")
     public String listhd(Model model) {
@@ -58,8 +56,6 @@ public class HoaDonController {
         model.addAttribute("listg", listg);
         List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
-        List<MauSac> listms = mauSacDAO.findAll();
-        model.addAttribute("listms", listms);
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
         return ("hoadon/index");

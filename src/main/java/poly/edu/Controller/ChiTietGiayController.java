@@ -27,9 +27,6 @@ public class ChiTietGiayController {
     NsxDAO nsxdao;
 
     @Autowired
-    MauSacDAO msdao;
-
-    @Autowired
     LoaiGiayDAO lgdao;
 
     @Autowired
@@ -40,14 +37,12 @@ public class ChiTietGiayController {
         List<ChiTietGiay> listctg = ctgdao.findAll();
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
-        List<MauSac> listms = msdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = gdao.findAll();
 
         model.addAttribute("listctg", listctg);
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listms", listms);
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
         return "chitietgiay/index";
@@ -57,13 +52,11 @@ public class ChiTietGiayController {
     public String create(@ModelAttribute("chitietgiay")ChiTietGiay chitietgiay, Model model){
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
-        List<MauSac> listms = msdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = gdao.findAll();
 
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listms", listms);
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
         model.addAttribute("savectg", "/savectg");
@@ -76,13 +69,11 @@ public class ChiTietGiayController {
         ChiTietGiay ctg = ctgdao.getById(mactg);
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
-        List<MauSac> listms = msdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = gdao.findAll();
 
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listms", listms);
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
         model.addAttribute("chitietgiay", ctg);

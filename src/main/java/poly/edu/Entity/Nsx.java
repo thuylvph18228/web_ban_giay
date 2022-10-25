@@ -22,7 +22,7 @@ public class Nsx {
     @Column(name="mansx")
     private int mansx;
 
-    @NotBlank(message = "Không được để trống")
+    @NotBlank(message = "Không được để trống nhà sản xuất")
     @Column(name="ten")
     private String ten;
 

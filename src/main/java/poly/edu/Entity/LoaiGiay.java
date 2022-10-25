@@ -21,7 +21,7 @@ public class LoaiGiay implements Serializable {
     @Column(name="malg")
     private int malg;
 
-    @NotBlank(message = "Không được để trống")
+    @NotBlank(message = "Không được để trống tên loại giày")
     @Column(name="ten")
     private String ten;
 
