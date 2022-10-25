@@ -38,16 +38,15 @@ public class ChiTietGiay implements Serializable {
     @Column(name="mag")
     private int mag;
 
-    @NotBlank(message = "Không được để trống")
+
     @Column(name="ten")
     private String ten;
 
-    @NotBlank(message = "Không được để trống")
+//    @NotBlank(message = "Không được để trống")
     @Column(name="mota")
     private String mota;
 
-    @NotNull(message = "Không được để trống")
-    @Min(value = 1, message = "Giá phải lớn hơn 0")
-    @Column(name="gia")
-    private double gia;
+    @Column(name="soluong")
+    private int soluong;
+
 }

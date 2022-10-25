@@ -7,37 +7,23 @@
 
 </head>
 <body>
-<form method="post" th:action="${savegiohang}" th:object="${giohang}">
+<form method="post" th:action="${savegiohang}" th:object="${chitietgiay}">
   <h1>Them vao gio hang</h1>
-  <div class="form-check" th:each="g : ${giay}">
+    <img class="rounded float-start" th:each="giay: ${giay}"   th:src="${giay.anh}">
+  <div class="form-check" th:each="ctg : ${listctg}">
+      <label th:text="${ctg.mactg}" th:disabled></label>
+      <label th:text="${ctg.ten}"></label>
 
-    <input style="display: none" th:value="${g.mag}" name="mag"></input>
-    <label>Giày :</label>
-  <input class="form-control"  th:value="${g.ten}"  name="ten"  disabled>
-  </div>
-  <div class="form-check">
-    <label>Giá</label>
-    <input class="form-control"  th:each="g : ${giay}" th:value="${g.gia}"  name="gia" disabled>
-
-  </div>
-  <div class="form-check">
-    <label>Số  lượng</label>
-    <input th:field="*{soluong}" class="form-control"  type="number"  name="soluong" >
-    <label class="text-danger" th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></label>
-  </div>
-  <div class="form-check">
-    <label>Số điện thoại</label>
-    <input th:field="*{sdt}" class="form-control"  type="text"  name="sdt" >
-    <label class="text-danger" th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></label>
-  </div>
-  <div class="form-check">
-    <label>Địa chỉ</label>
-    <input th:field="*{diachi}" class="form-control"  type="text"  name="diachi" >
-    <label class="text-danger" th:if="${#fields.hasErrors('diachi')}" th:errors="*{diachi}"></label>
-  </div>
-  <div class="form-check">
-    <label>Khách hàng</label>
-    <input class="form-control"  th:each="kh : ${khachHang}" th:value="${kh.ten}"  name="tenkh" disabled>
+      <label>Size</label>
+      <select  name="mansx">
+          <option th:each="size: ${listsize}" th:if="${size.mas}==${ctg.mas}" th:text="${size.ten}"></option>
+      </select>
+      <label th:each="size: ${listsize}" th:if="${size.mas}==${ctg.mas}" th:text="${size.ten}"></label>
+      <label th:each="nsx: ${listnsx}" th:if="${ctg.mansx}==${nsx.mansx}" th:text="${nsx.ten}"></label>
+      <label th:each="ms: ${listms}" th:if="${ctg.mams}==${ms.mams}" th:text="${ms.ten}"></label>
+      <label th:each="lg: ${listlg}" th:if="${ctg.malg}==${lg.malg}" th:text="${lg.ten}"></label>
+      <label th:each="g: ${listg}" th:if="${ctg.mag}==${g.mag}" th:text="${g.ten}"></label>
+      <label th:text="${ctg.mota}"></label>
   </div>
   <button type="submit">Save</button>
 
