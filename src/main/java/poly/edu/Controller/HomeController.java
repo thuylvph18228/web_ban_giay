@@ -16,6 +16,7 @@ public class HomeController {
     public String index(Model model){
         List<Giay> listgl = giaydao.findAll();
         model.addAttribute("listgl", listgl);
+
         return "layout/index";
     }
 }

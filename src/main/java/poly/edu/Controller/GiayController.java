@@ -41,7 +41,21 @@ public class GiayController {
     @GetMapping("/giay/product")
     public String product(Model model){
         List<Giay> listg = giaydao.findAll();
+        model.addAttribute("listg", listg);
+        model.addAttribute("giayfindname", "/giayfindname");
+        model.addAttribute("giayfindnsx", "/giayfindnsx");
+        return "giay/product";
+    }
+    @GetMapping("/giayfindname")
+    public String findbyName( Model model,@RequestParam("tengiay") String tengiay){
+        List<Giay> listg = giaydao.findByName(tengiay);
+        model.addAttribute("listg", listg);
+        return "giay/product";
+    }
 
+    @GetMapping("/giayfindnsx")
+    public String findbyNSX( Model model,@RequestParam("mansx") int mansx){
+        List<Giay> listg = giaydao.findByNsx(mansx);
         model.addAttribute("listg", listg);
         return "giay/product";
     }

@@ -4,18 +4,23 @@
 <body>
   <main>
     <div class="container row mt-3">
-      <form method="post" th:action="${savegh}" th:object="${cart}">
-        <h1>Giỏ hàng</h1>
-        <input hidden type="text" name="mactg" th:field="*{chiTietGiay.mactg}">
+      <form method="post" th:action="${updatecart}" th:object="${cart}">
+
         <div th:each="ct:${chiTietGiay}"  class="form-check">
+          <div th:if="${error}" class="text-danger" th:text="${error}" />
+          <h1>Giỏ hàng</h1>
+          <input hidden type="text" name="mactg" th:value="${ct.mactg}">
           <label>Tên giày</label>
-          <input  class="form-control" type="text" th:each="g:${listg}" th:if="${g.mag}==${ct.mag}" th:value="${g.ten}" name="tencv" disabled>
+          <input  class="form-control" type="text" th:each="g:${listg}" th:if="${g.mag}==${ct.mag}" th:value="${g.ten}" name="" disabled>
           <label>Size</label>
-          <input  class="form-control" type="text" th:each="s:${lists}" th:if="${s.mas}==${ct.mas}" th:value="${s.ten}" name="tencv" disabled>
+          <input  class="form-control" type="text" th:each="s:${lists}" th:if="${s.mas}==${ct.mas}" th:value="${s.ten}" name="" disabled>
+          <label>Số lượng còn</label>
+          <input  class="form-control" type="text"  th:value="${ct.soluong}" name="soluongcon" hidden>
+          <input  class="form-control" type="text"  th:value="${ct.soluong}" name="" disabled>
         </div>
         <div   th:each="ct:${chiTietGiay}" class="form-check">
-          <label>Số lượng</label>
-          <input  class="form-control" type="number" th:each="si:${session.myCartItems}" th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}"  th:value="${si.value.soluong}"  name="tencv">
+          <label>Số lượng mua</label>
+          <input  class="form-control" type="number" th:each="si:${session.myCartItems}" th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}"  th:value="${si.value.soluong}"  name="soluong">
         </div>
 
         <button   class="btn btn-primary" type="submit">Save</button>
