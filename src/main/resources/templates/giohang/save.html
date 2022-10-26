@@ -4,22 +4,22 @@
 <body>
   <main>
     <div class="container row mt-3">
-      <form method="post" th:action="${savegh}" th:object="${giohang}">
-        <h1>Giỏ hàng</h1>
-        <input hidden type="text" th:field="*{magh}">
-        <div class="form-check">
-          <a>Ctg:</a>
-          <select class="form-select" th:field="*{mactg}" name="mactg">
-            <option th:each="ctg:${listctg}" th:value="${ctg.mactg}" th:text="${ctg.mactg}">
-            </option>
-          </select>
-        </div>
-        <div class="form-check">
-          <label>Số lượng:</label>
-          <input class="form-control" type="text" th:field="*{soluong}" name="soluong">
-          <label class="text-danger" th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></label>
-        </div>
+<form method="post" th:action="${savegh}" th:object="${cart}">
+  <h1>Giỏ hàng</h1>
+  <input hidden type="text" name="mactg" th:field="*{chiTietGiay.mactg}">
+  <div th:each="ct:${chiTietGiay}"  class="form-check">
+    <label>Tên giày</label>
+    <input  class="form-control" type="text" th:each="g:${listg}" th:if="${g.mag}==${ct.mag}" th:value="${g.ten}" name="tencv" disabled>
+    <label>Size</label>
+    <input  class="form-control" type="text" th:each="s:${lists}" th:if="${s.mas}==${ct.mas}" th:value="${s.ten}" name="tencv" disabled>
+  </div>
+  <div   th:each="ct:${chiTietGiay}" class="form-check">
+    <label>Số lượng</label>
+    <input  class="form-control" type="number" th:each="si:${session.myCartItems}" th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}"  th:value="${si.value.soluong}"  name="tencv">
+  </div>
 
+  <button   class="btn btn-primary" type="submit">Save</button>
+</form>
         <button class="btn btn-primary" type="submit">Save</button>
 
       </form>

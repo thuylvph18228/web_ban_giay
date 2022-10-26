@@ -22,13 +22,13 @@
     </thead>
     <tbody>
     <tr th:each="s : ${session.myCartItems}">
-
+      <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>
       <td th:each="g:${listg}"  th:if="${g.mag}==${s.value.chiTietGiay.mag}"  th:text="${g.ten}"></td>
       <td th:each="size:${listsize}"  th:if="${size.mas}==${s.value.chiTietGiay.mas}"  th:text="${size.ten}"></td>
       <td th:text="${s.value.soluong}"></td>
       <td colspan="2">
 
-        <a class="btn btn-outline-primary">Sửa</a>
+        <a class="btn btn-outline-primary" th:href="@{'/viewupdate/'+${s.value.chiTietGiay.mactg}}">Sửa</a>
         <a class="btn btn-outline-danger" >Xoá</a>
       </td>
     </tr>
