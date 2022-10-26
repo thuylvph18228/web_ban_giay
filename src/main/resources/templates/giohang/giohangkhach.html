@@ -1,5 +1,8 @@
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>GioHang</title>
@@ -12,25 +15,21 @@
     <thead>
     <tr>
       <th>Giày</th>
-      <th>Ngày thêm</th>
-      <th>Địa chỉ</th>
-      <th>Sđt</th>
+      <th>Size</th>
       <th>Số lượng</th>
       <th>Thao tác</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="gh : ${listgh}">
+    <tr th:each="s : ${session.myCartItems}">
 
-      <td th:each="listg:${listg}" th:if="${listg.mag}==${gh.mag}" th:text="${listg.ten}"/>
-      <td th:text="${gh.ngaytao}"></td>
-      <td th:text="${gh.diachi}"></td>
-      <td th:text="${gh.sdt}"></td>
-      <td th:text="${gh.soluong}"></td>
-      <td colspan="3">
-        <a class="btn btn-outline-primary" th:href="@{'/giohang/thanhtoan/'+${gh.magh}}">Thanh toán</a>
-        <a class="btn btn-outline-primary" th:href="@{'/giohang/editkh/'+${gh.magh}}">Sửa</a>
-        <a class="btn btn-outline-danger" th:href="@{'/giohang/deleteghk/'+${gh.magh}}">Xoá</a>
+      <td th:each="g:${listg}"  th:if="${g.mag}==${s.value.chiTietGiay.mag}"  th:text="${g.ten}"></td>
+      <td th:each="size:${listsize}"  th:if="${size.mas}==${s.value.chiTietGiay.mas}"  th:text="${size.ten}"></td>
+      <td th:text="${s.value.soluong}"></td>
+      <td colspan="2">
+
+        <a class="btn btn-outline-primary">Sửa</a>
+        <a class="btn btn-outline-danger" >Xoá</a>
       </td>
     </tr>
     </tbody>

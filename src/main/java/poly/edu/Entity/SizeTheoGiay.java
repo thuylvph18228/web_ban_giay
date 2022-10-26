@@ -1,10 +1,13 @@
 package poly.edu.Entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sizetheogiay {
+@Data
+public class SizeTheoGiay {
     private int mas;
+
 }
