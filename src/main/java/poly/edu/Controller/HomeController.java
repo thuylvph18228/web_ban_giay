@@ -12,10 +12,10 @@ public class HomeController {
     @Autowired
     GiayDAO giaydao;
 
-    @GetMapping("/")
+    @GetMapping("/layout")
     public String index(Model model){
         List<Giay> listgl = giaydao.findAll();
         model.addAttribute("listgl", listgl);
-        return "/layout";
+        return "layout/index";
     }
 }
