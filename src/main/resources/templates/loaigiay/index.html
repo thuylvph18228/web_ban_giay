@@ -1,35 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Loại Giày</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
-<h1>Loại Giày</h1>
-<a class="btn btn-primary" th:href="@{/loaigiay/create}">Thêm mới</a>
-<form>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Mã loại giày</th>
-            <th>Tên loại giay</th>
-            <th>Thao tác</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="lg : ${listlg}">
-            <td th:text="${lg.malg}"></td>
-            <td th:text="${lg.ten}"></td>
-            <td colspan="2">
-                <a class="btn btn-outline-primary" th:href="@{'/loaigiay/edit/'+${lg.malg}}">Sửa</a>
-                <a class="btn btn-outline-danger" th:href="@{'/loaigiay/delete/'+${lg.malg}}">Xoá</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<body>
+    <main>
+        <div class="container row mt-3">
+            <h1>Loại Giày</h1>
+            <a class="btn btn-primary" th:href="@{/loaigiay/create}">Thêm mới</a>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mã loại giày</th>
+                            <th>Tên loại giay</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="lg : ${listlg}">
+                            <td th:text="${lg.malg}"></td>
+                            <td th:text="${lg.ten}"></td>
+                            <td colspan="2">
+                                <a class="btn btn-outline-primary" th:href="@{'/loaigiay/edit/'+${lg.malg}}">Sửa</a>
+                                <a class="btn btn-outline-danger" th:href="@{'/loaigiay/delete/'+${lg.malg}}">Xoá</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
 </body>
+
 </html>
