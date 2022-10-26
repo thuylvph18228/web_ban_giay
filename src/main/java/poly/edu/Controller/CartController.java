@@ -32,12 +32,11 @@ public class CartController {
 
     @GetMapping("/listcart")
     public String list (Model model){
-
-
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
+        model.addAttribute("savetthd", "/savetthd");
           return "giohang/giohangkhach";
     }
 
@@ -66,7 +65,7 @@ public class CartController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
-
+        model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems",cartItems);
        // session.setAttribute("myCartToTal",totalPrice(cartItems));
         session.setAttribute("myCartNum",cartItems.size());
