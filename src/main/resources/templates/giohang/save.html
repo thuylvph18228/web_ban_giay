@@ -19,7 +19,7 @@
   </div>
   <div   th:each="ct:${chiTietGiay}" class="form-check">
     <label>Số lượng</label>
-    <input  class="form-control" type="number" th:each="si:${session.myCartItems}" th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}"  th:value="${si.value.soluong}"  name="tencv">
+    <input  class="form-control" type="number" name="soluong" th:each="si:${session.myCartItems}" th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}"  th:value="${si.value.soluong}"  name="tencv">
   </div>
 
   <button   class="btn btn-primary" type="submit">Save</button>

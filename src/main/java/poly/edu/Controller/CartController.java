@@ -88,7 +88,5 @@ public class CartController {
             model.addAttribute("chiTietGiay", chiTietGiay);
             model.addAttribute("listg", listg);
           return "giohang/save";
-
-
     }
 }
