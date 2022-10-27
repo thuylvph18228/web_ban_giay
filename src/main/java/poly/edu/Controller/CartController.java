@@ -33,8 +33,6 @@ public class CartController {
 
     @GetMapping("/listcart")
     public String list (Model model){
-        
-        
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
@@ -62,6 +60,7 @@ public class CartController {
                 item.setSoluong(1);
                 cartItems.put(mactg, item);
             }
+            model.addAttribute("message", "Thêm sản phẩm vào giỏ hàng thành công");
         }
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
@@ -70,7 +69,7 @@ public class CartController {
 
         session.setAttribute("myCartItems",cartItems);
         System.out.println(totalPrice(cartItems));
-       session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
         System.out.println(cartItems);
         return "giohang/giohangkhach";
     }
@@ -115,7 +114,7 @@ public class CartController {
                 Cart item = cartItems.get(chiTietGiay.getMactg());
                 item.setChiTietGiay(chiTietGiay);
                 if (soluongcon < soluong){
-                    model.addAttribute("message", "Số lượng bạn muốn mua lớn hơn số lượng trong kho");
+                    model.addAttribute("error", "Số lượng bạn muốn mua không còn đủ");
 
                     List<Size> listsize = sdao.findAll();
                     List<Giay> listg = giaydao.findAll();
@@ -125,6 +124,7 @@ public class CartController {
                 }
                 item.setSoluong(soluong);
                 cartItems.put(mactg, item);
+                model.addAttribute("message", "Cập nhập số lượng thành công");
             }
         }
         List<Size> listsize = sdao.findAll();
@@ -139,18 +139,26 @@ public class CartController {
         System.out.println(totalPrice(cartItems));
         return "giohang/giohangkhach";
     }
+   // @GetMapping("/removecart/{mactg}")
+
     @GetMapping("/removecart/{mactg}")
-    public String Remove(ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
+    public String viewRemove(ModelMap mm,Model model, HttpSession session, @PathVariable("mactg") int mactg) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
         }
         if (cartItems.containsKey(mactg)) {
             cartItems.remove(mactg);
+            model.addAttribute("message", "Xóa sản phẩm thành công");
         }
+        List<Size> listsize = sdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listg", listg);
         session.setAttribute("myCartItems", cartItems);
-        session.setAttribute("myCartTotal", totalPrice(cartItems));
-      //  session.setAttribute("myCartNum", cartItems.size());
-        return "redirect:/listcart";
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartNum", cartItems.size());
+        return "giohang/giohangkhach";
     }
+
 }
