@@ -9,11 +9,10 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <h3>Thông tin liên hệ</h3>
+                        <input  name="tongtien" type="text" th:value="${session.myCartToTal}">
                         <div th:each="s : ${session.myCartItems}" >
                             <input hidden name="soluong" th:value="${s.value.soluong}">
-
                         </div>
-                        <input  name="tongtien" type="number" th:value="${session.myCartToTal}">
                         <label>Họ và tên:</label>
                         <span>
                             <input type="text" id="ten" name="ten" class="form-control" placeholder="Họ và tên của bạn">

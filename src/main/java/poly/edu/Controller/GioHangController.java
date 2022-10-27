@@ -143,20 +143,39 @@ public class GioHangController {
                 ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
                 String date = String.valueOf(java.time.LocalDate.now());
 
-                hoaDon.setManv(1);
-                hoaDon.setMakh(1);
-                hoaDon.setMahttt(httt);
-                hoaDon.setNgaytao(date);
-                hoaDon.setDiachi(diachi);
-                hoaDon.setSdt(sdt);
-                hoaDon.setTennguoinhan(ten);
-                hoaDonDAO.save(hoaDon);
+                if(httt==1){
+                    hoaDon.setManv(1);
+                    hoaDon.setMakh(1);
+                    hoaDon.setMahttt(httt);
+                    hoaDon.setNgaytao(date);
+                    hoaDon.setNgaythanhtoan(date);
+                    hoaDon.setDiachi(diachi);
+                    hoaDon.setSdt(sdt);
+                    hoaDon.setTennguoinhan(ten);
+                    hoaDonDAO.save(hoaDon);
 
-                chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                chiTietHoaDon.setMahd(hoaDon.getMahd());
-                chiTietHoaDon.setSoluong(soluong);
-                chiTietHoaDon.setTongtien(tongtien);
-                chiTietHoaDonDAO.save(chiTietHoaDon);
+                    chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
+                    chiTietHoaDon.setMahd(hoaDon.getMahd());
+                    chiTietHoaDon.setSoluong(soluong);
+                    chiTietHoaDon.setTongtien(tongtien);
+                    chiTietHoaDonDAO.save(chiTietHoaDon);
+                }else {
+                    hoaDon.setManv(1);
+                    hoaDon.setMakh(1);
+                    hoaDon.setMahttt(httt);
+                    hoaDon.setNgaytao(date);
+                    hoaDon.setDiachi(diachi);
+                    hoaDon.setSdt(sdt);
+                    hoaDon.setTennguoinhan(ten);
+                    hoaDonDAO.save(hoaDon);
+
+                    chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
+                    chiTietHoaDon.setMahd(hoaDon.getMahd());
+                    chiTietHoaDon.setSoluong(soluong);
+                    chiTietHoaDon.setTongtien(tongtien);
+                    chiTietHoaDonDAO.save(chiTietHoaDon);
+                }
+
             }
 
             return "redirect:/hoadon/index";
