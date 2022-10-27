@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
-<<<<<<< HEAD
-
 <body>
-    <main>
-        <div class="row mt-3">
-=======
-<body>
-    <main>
-        <div class="container row mt-3">
-
->>>>>>> dc6fa86a7bb0fb921ef5fd89aba2bf39c02f3767
-            <div th:each="g : ${listg}" class="card ms-2 " style="width: 16.5rem;">
-                <img class="mt-2" th:src="@{${ g.anh}}">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${ g.ten}"></h5>
-                    <p class="card-text" th:text="${ g.gia}"></p>
-                    <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-success">Buy</a>
-                </div>
+<main>
+    <div class=" row mt-3">
+        <div th:each="g : ${listg}" class="card ms-2 " style="width: 16.5rem;">
+            <img class="mt-2" th:src="@{${ g.anh}}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${ g.ten}"></h5>
+                <p class="card-text" th:text="${ g.gia}"></p>
+                <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-success">Buy</a>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 </body>
 </html>

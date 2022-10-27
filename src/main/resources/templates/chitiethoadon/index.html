@@ -10,27 +10,20 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <!--                            <th>Mã CTHD</th>-->
                     <th>Mã HD</th>
                     <th>Mã CTG</th>
                     <th>Số lượng</th>
                     <th>Tổng tiền</th>
-                    <!--                            <th>Trạng thái</th>-->
                     <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="cthd : ${listcthd}">
-                    <!--                            <td th:text="${cthd.macthd}"></td>-->
                     <td th:each="hd : ${listhd}" th:if="${cthd.mahd}==${hd.mahd}" th:text="${hd.mahd}"></td>
                     <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}" th:text="${ctg.mactg}">
                     </td>
                     <td th:text="${cthd.soluong}"></td>
                     <td th:text="${cthd.tongtien}"></td>
-                    <!--                            <td>-->
-                    <!--                                <p th:if="${cthd.trangthai}==1">Đã thanh toán</p>-->
-                    <!--                                <p th:if="${cthd.trangthai}==0">Chưa thanh toán</p>-->
-                    <!--                            </td>-->
                     <td colspan="2">
                         <a class="btn btn-outline-primary"
                            th:href="@{'/chitiethoadon/edit/'+${cthd.macthd}}">Sửa</a>

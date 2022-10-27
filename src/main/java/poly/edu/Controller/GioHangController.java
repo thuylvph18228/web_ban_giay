@@ -123,7 +123,6 @@ public class GioHangController {
                          @RequestParam("sdt") String sdt,
                          @RequestParam("diachi") String diachi,
                          @RequestParam("httt") Integer httt,
-//                         @RequestParam("mactg") Integer mactg,
                          @RequestParam("tongtien") Integer tongtien
     ) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
@@ -163,6 +162,7 @@ public class GioHangController {
                     hoaDon.setManv(1);
                     hoaDon.setMakh(1);
                     hoaDon.setMahttt(httt);
+
                     hoaDon.setNgaytao(date);
                     hoaDon.setDiachi(diachi);
                     hoaDon.setSdt(sdt);
@@ -177,13 +177,13 @@ public class GioHangController {
                 }
 
             }
-
+            cartItems.clear();
             return "redirect:/hoadon/index";
         }
 
     }
 
-    public double totalPrice(HashMap<Integer, Cart> cartItems) {
+    public int totalPrice(HashMap<Integer, Cart> cartItems) {
         int count = 0;
         for (Map.Entry<Integer, Cart> list : cartItems.entrySet()) {
             int mag =list.getValue().getChiTietGiay().getMag();

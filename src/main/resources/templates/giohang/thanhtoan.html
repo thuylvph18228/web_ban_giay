@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <h3>Thông tin liên hệ</h3>
-                        <input  name="tongtien" type="text" th:value="${session.myCartToTal}">
+                        <input  name="tongtien" type="text" hidden th:value="${session.myCartToTal}">
                         <div th:each="s : ${session.myCartItems}" >
                             <input hidden name="soluong" th:value="${s.value.soluong}">
                         </div>

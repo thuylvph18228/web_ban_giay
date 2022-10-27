@@ -34,7 +34,7 @@ public class Giay implements Serializable {
     @NotNull(message = "Không được để trống giá")
     @Min(value = 1, message = "Giá phải lớn hơn 0")
     @Column(name="gia")
-    private double gia;
+    private int gia;
 
     @NotNull(message = "Không được để trống ảnh")
     @Column(name="anh")

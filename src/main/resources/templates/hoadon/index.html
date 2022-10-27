@@ -2,77 +2,73 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
 <body>
-    <main>
-        <div class="container row mt-3">
-            <h1>Hóa Đơn thanh toán</h1>
-    <form>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Nhân viên</th>
-                <th>Khách hàng</th>
-                <th>Hình thức Thanh toán</th>
-                <th>Trạng thái</th>
-                <th>Ngày tạo</th>
-                <th>Ngày ship</th>
-                <th>Ngày nhận</th>
-                <th>Tên người nhận</th>
-                <th>Địa chỉ</th>
-            </tr>
-            </thead>
+<main>
+    <div class="container row mt-3">
+        <h1>Hóa Đơn thanh toán</h1>
+        <form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Người nhận</th>
+                    <th>Hình thức thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày thanh toán</th>
+                    <th>Ngày ship</th>
+                    <th>Ngày nhận</th>
+                    <th>Sđt</th>
+                    <th>Địa chỉ</th>
+                </tr>
+                </thead>
 
-            <tbody>
-            <tr th:each="hd : ${listhd}">
-                <td th:each="nv:${listnv}" th:if="${nv.manv}==${hd.manv}" th:text="${nv.ten}"/>
-                <td th:each="kh:${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"/>
-                <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
-                <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" >
-
-                    <p th:if="${tt.mahttt}==1">Đã thanh toán</p>
-                    <p th:if="${tt.mahttt}==2">Chưa thanh toán</p>
-
-                </td>
-                <td th:text="${hd.ngaytao}"></td>
-                <td th:text="${hd.ngayship}"></td>
-                <td th:text="${hd.ngaynhan}"></td>
-                <td th:text="${hd.tennguoinhan}"></td>
-                <td th:text="${hd.diachi}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <!--    <br>-->
-        <!--    <h1>Hóa đơn sản phẩm</h1>-->
-        <!--    <table class="table table-bordered">-->
-        <!--        <thead>-->
-        <!--        <tr>-->
-        <!--            <th>Mã CTHD</th>-->
-        <!--            <th>Tên Giày</th>-->
-        <!--            <th>Giá</th>-->
-        <!--            <th>Số lượng</th>-->
-        <!--            <th>Màu sắc</th>-->
-        <!--            <th>Size</th>-->
-
-        <!--        </tr>-->
-        <!--        </thead>-->
-        <!--        <tbody>-->
-        <!--        <tr th:each="cthd : ${listcthd}" >-->
-        <!--            <td th:text="${cthd.macthd}"></td>-->
-        <!--            <td th:each="giay : ${listg}" th:if="${cthd.mactg}==${ctg.mactg}" th:text="${ctg.ten}"></td>-->
-        <!--            <td th:text="${cthd.gia}"></td>-->
-        <!--            <td th:text="${cthd.soluong}"></td>-->
-        <!--            <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}" >-->
-        <!--                <p th:each="ms: ${listms}" th:if="${ctg.mams}==${ms.mams}" th:text="${ms.ten}"></p>-->
-        <!--            </td>-->
-        <!--            <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}" >-->
-        <!--                <p th:each="s: ${lists}" th:if="${ctg.malg}==${s.mas}" th:text="${s.ten}"></p>-->
-        <!--            </td>-->
-
-        <!--        </tr>-->
-        <!--        </tbody>-->
-        <!--    </table>-->
-    </form>
-        </div>
-    </main>
+                <tbody>
+                <tr th:each="hd : ${listhd}">
+                    <td th:text="${hd.tennguoinhan}"></td>
+                    <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
+                    <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}">
+                        <p th:if="${tt.mahttt}==1">Đã thanh toán</p>
+                        <p th:if="${tt.mahttt}==2">Chưa thanh toán</p>
+                    </td>
+                    <td th:text="${hd.ngaytao}"></td>
+                    <td th:text="${hd.ngaythanhtoan}"></td>
+                    <td th:text="${hd.ngayship}"></td>
+                    <td th:text="${hd.ngaynhan}"></td>
+                    <td th:text="${hd.sdt}"></td>
+                    <td th:text="${hd.diachi}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <h1>Hóa đơn sản phẩm</h1>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Mã HD</th>
+                        <th>Giày</th>
+                        <th>Ảnh</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cthd : ${listcthd}">
+                        <td th:each="hd : ${listhd}" th:if="${cthd.mahd}==${hd.mahd}" th:text="${hd.mahd}"></td>
+                        <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}">
+                            <span th:each="g : ${listg}" th:if="${ctg.mag}==${g.mag}" th:text="${g.ten}"></span>
+                        </td>
+                        <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}">
+                            <img th:each="g : ${listg}" th:if="${ctg.mag}==${g.mag}" width="200px" height="200px" th:src="@{${ g.anh}}">
+                        </td>
+                        <td th:text="${cthd.soluong}"></td>
+                        <td th:text="${cthd.tongtien}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </form>
+    </div>
+</main>
 </body>
 
 </html>
