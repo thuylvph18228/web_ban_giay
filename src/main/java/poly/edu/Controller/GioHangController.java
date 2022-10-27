@@ -70,7 +70,7 @@ public class GioHangController {
         List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("giohang", gh);
-        model.addAttribute("savegh", "/savegh");
+
         return "giohang/save";
     }
 

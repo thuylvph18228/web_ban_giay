@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
 <body>
@@ -45,6 +46,52 @@
             </a>
         </div>
     </div>
+=======
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}"
+      xmlns="http://www.w3.org/1999/html">
+
+
+<body>
+<main>
+<h1>Giỏ hàng của bạn</h1>
+<form>
+  <div th:if="${message}" class="text-danger" th:text="${message}" />
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Giày</th>
+      <th>Size</th>
+      <th>Ảnh</th>
+      <th>Số lượng</th>
+      <th>Giá</th>
+      <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="s : ${session.myCartItems}">
+      <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>
+      <td th:each="g:${listg}"  th:if="${g.mag}==${s.value.chiTietGiay.mag}"  th:text="${g.ten}"></td>
+      <td th:each="size:${listsize}"  th:if="${size.mas}==${s.value.chiTietGiay.mas}"  th:text="${size.ten}"></td>
+      <td  class="text-center" th:each="g:${listg}"  th:if="${g.mag}==${s.value.chiTietGiay.mag}"  ><img th:src="${g.anh} "width="200" height="180"></td>
+      <td th:text="${s.value.soluong}"></td>
+      <td th:each="g:${listg}"  th:if="${g.mag}==${s.value.chiTietGiay.mag}" th:text="${g.gia}"></td>
+      <td colspan="2">
+
+        <a class="btn btn-outline-primary" th:href="@{'/viewupdate/'+${s.value.chiTietGiay.mactg}}">Sửa</a>
+        <a class="btn btn-outline-danger" th:href="@{'/removecart/'+${s.value.chiTietGiay.mactg}}" >Xoá</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</form>
+  <div  class="text-center">
+    <h3>Tổng tiền :</h3>
+    <h3 class="fw-bold" style="color: red" th:if="${session.myCartToTal}!=null" th:text="${session.myCartToTal}"></h3>
+    <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==null">0</h3>
+  </div>
+>>>>>>> dc6fa86a7bb0fb921ef5fd89aba2bf39c02f3767
 </main>
 </body>
 
