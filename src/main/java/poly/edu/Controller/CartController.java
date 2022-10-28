@@ -32,31 +32,36 @@ public class CartController {
     public ChiTietGiayDAO chiTietGiayDAO;
 
     @GetMapping("/listcart")
-    public String list (Model model){
+    public String list(Model model) {
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
-          return "giohang/giohangkhach";
+        model.addAttribute("savetthd", "/savetthd");
+        return "giohang/giohangkhach";
     }
 
 
-    @PostMapping ("/addproduct")
-    public String viewAdd (ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg,Model model) {
+
+
+
+    @PostMapping("/addproduct")
+    public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg, Model model) {
+
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        if(cartItems==null){
-            cartItems  =new HashMap<>();
+        if (cartItems == null) {
+            cartItems = new HashMap<>();
         }
 
-        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById( mactg);
-        if (chiTietGiay!=null) {
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+        if (chiTietGiay != null) {
             if (cartItems.containsKey(mactg)) {
                 Cart item = cartItems.get(chiTietGiay.getMactg());
                 item.setChiTietGiay(chiTietGiay);
                 item.setSoluong(item.getSoluong() + 1);
                 cartItems.put(mactg, item);
-            }else{
-                Cart item  = new Cart();
+            } else {
+                Cart item = new Cart();
                 item.setChiTietGiay(chiTietGiay);
                 item.setSoluong(1);
                 cartItems.put(mactg, item);
@@ -67,50 +72,51 @@ public class CartController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
-
+        model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems",cartItems);
-        System.out.println(totalPrice(cartItems));
         session.setAttribute("myCartToTal",totalPrice(cartItems));
+
         System.out.println(cartItems);
         return "redirect:/listcart";
+
     }
-    public double totalPrice(HashMap<Integer, Cart> cartItems) {
+
+    public int totalPrice(HashMap<Integer, Cart> cartItems) {
         int count = 0;
         for (Map.Entry<Integer, Cart> list : cartItems.entrySet()) {
-             int mag =list.getValue().getChiTietGiay().getMag();
-             Giay giay = giaydao.getById(mag);
-            count += giay.getGia()* list.getValue().getSoluong();
+            int mag = list.getValue().getChiTietGiay().getMag();
+            Giay giay = giaydao.getById(mag);
+            count += giay.getGia() * list.getValue().getSoluong();
         }
         return count;
     }
 
 
-
     @GetMapping("/viewupdate/{mactg}")
-    public String viewUpdate ( @ModelAttribute("cart") Cart cart,Model  model , ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
-            HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+    public String viewUpdate(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         System.out.println(cartItems);
-            if (cartItems == null) {
-                cartItems = new HashMap<>();
-            }
-            ChiTietGiay chiTietGiay =chiTietGiayDAO.getById(mactg);
-            session.setAttribute("myCartItems", cartItems);
-            List<Giay> listg = giaydao.findAll();
-            List<Size> lists = sdao.findAll();
-            model.addAttribute("lists", lists);
-            model.addAttribute("chiTietGiay", chiTietGiay);
-            model.addAttribute("listg", listg);
-            model.addAttribute("updatecart", "/updatecart");
+        if (cartItems == null) {
+            cartItems = new HashMap<>();
+        }
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+        session.setAttribute("myCartItems", cartItems);
+        List<Giay> listg = giaydao.findAll();
+        List<Size> lists = sdao.findAll();
+        model.addAttribute("lists", lists);
+        model.addAttribute("chiTietGiay", chiTietGiay);
+        model.addAttribute("listg", listg);
+        model.addAttribute("updatecart", "/updatecart");
         return "giohang/save";
     }
 
-    @PostMapping ("/updatecart")
-    public String updatecart(@ModelAttribute("cart") Cart cart,Model  model , ModelMap mm, HttpSession session,
+    @PostMapping("/updatecart")
+    public String updatecart(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session,
                              @RequestParam("soluong") int soluong, @RequestParam("mactg") int mactg,
                              @RequestParam("soluongcon") int soluongcon) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById( mactg);
-        if (chiTietGiay!=null) {
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+        if (chiTietGiay != null) {
             if (cartItems.containsKey(mactg)) {
                 Cart item = cartItems.get(chiTietGiay.getMactg());
                 item.setChiTietGiay(chiTietGiay);
@@ -133,11 +139,15 @@ public class CartController {
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
 
+
         session.setAttribute("myCartItems",cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
         System.out.println(cartItems);
         System.out.println(totalPrice(cartItems));
         return "redirect:/listcart";
+
+
+
     }
 
     @GetMapping("/removecart/{mactg}")
@@ -159,5 +169,17 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/listcart";
     }
-
+    @GetMapping("/removecartall")
+    public String RemoveAll(ModelMap mm,Model model, HttpSession session) {
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        cartItems.remove(cartItems);
+        List<Size> listsize = sdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listg", listg);
+        session.setAttribute("myCartItems", cartItems);
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartNum", cartItems.size());
+        return "redirect:/listcart";
+    }
 }
