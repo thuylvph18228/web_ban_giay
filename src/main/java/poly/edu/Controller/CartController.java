@@ -40,6 +40,7 @@ public class CartController {
           return "giohang/giohangkhach";
     }
 
+
     @PostMapping ("/addproduct")
     public String viewAdd (ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg,Model model) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
@@ -71,7 +72,7 @@ public class CartController {
         System.out.println(totalPrice(cartItems));
         session.setAttribute("myCartToTal",totalPrice(cartItems));
         System.out.println(cartItems);
-        return "giohang/giohangkhach";
+        return "redirect:/listcart";
     }
     public double totalPrice(HashMap<Integer, Cart> cartItems) {
         int count = 0;
@@ -134,12 +135,10 @@ public class CartController {
 
         session.setAttribute("myCartItems",cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
-        //session.setAttribute("myCartNum",cartItems.size());
         System.out.println(cartItems);
         System.out.println(totalPrice(cartItems));
-        return "giohang/giohangkhach";
+        return "redirect:/listcart";
     }
-   // @GetMapping("/removecart/{mactg}")
 
     @GetMapping("/removecart/{mactg}")
     public String viewRemove(ModelMap mm,Model model, HttpSession session, @PathVariable("mactg") int mactg) {
@@ -158,7 +157,7 @@ public class CartController {
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "giohang/giohangkhach";
+        return "redirect:/listcart";
     }
 
 }

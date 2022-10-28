@@ -43,7 +43,7 @@ public class GiayController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listg", listg);
         model.addAttribute("giayfindname", "/giayfindname");
-        model.addAttribute("giayfindnsx", "/giayfindnsx");
+
         return "giay/product";
     }
     @GetMapping("/giayfindname")

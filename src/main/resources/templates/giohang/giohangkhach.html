@@ -44,9 +44,11 @@
     <div class="text-center">
 
         <div>
+            <div th:if="${session.myCartToTal}!=null">
             <h3>Tổng tiền :</h3>
-                <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}!=null" th:text="${session.myCartToTal}">
-                <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==null">0</h3>
+            <h3 class="fw-bold" style="color:red"  th:text="${session.myCartToTal}"></h3>
+            </div>
+                <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==0">Không có sản phẩm nào trong giỏ hàng</h3>
 
         </div>
     </div>
