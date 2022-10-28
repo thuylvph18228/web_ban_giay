@@ -3,16 +3,16 @@
 
 <body>
     <main>
-        <div class="container row mt-3">
+        <div class="row mt-3">
             <form method="post" th:action="${savelg}" th:object="${loaigiay}">
                 <h1>Loại Giày</h1>
                 <input hidden type="text" th:field="*{malg}">
                 <div>
                     <label>Tên loại giày:</label>
-                    <input type="text" th:field="*{ten}" name="ten">
+                    <input class="form-control" type="text" th:field="*{ten}" name="ten">
                     <span th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
                 </div>
-                <button type="submit">Save</button>
+                <button class="btn btn-primary mt-3" type="submit">Save</button>
 
             </form>
         </div>

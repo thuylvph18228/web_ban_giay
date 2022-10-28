@@ -79,38 +79,6 @@ public class GiayController {
         giaydao.deleteById(mag);
         return "redirect:/giay/index";
     }
-//    @GetMapping("/giay/buy/{mag}")
-//    public String buy(@PathVariable(name="mag") int mag, Model model){
-//        model.addAttribute("mag", mag);
-//        String email = (String) httpSession.getAttribute("email");
-//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-//        System.out.println(khachHang);
-//        model.addAttribute("khachHang", khachHang);
-//        Giay g = giaydao.getById(mag);
-//        httpSession.setAttribute(String.valueOf(mag),"mag");
-//        model.addAttribute("giay", g);
-//        model.addAttribute("savegiohang", "/savegiohang");
-//        return "giay/buy";
-//    }
-//
-//    @PostMapping("/savegiohang")
-//    public String savegh( @RequestParam("soluong") int soluong,@RequestParam("mag") int mag,
-//                          @RequestParam("diachi") String diachi,@RequestParam("sdt") String sdt,
-//                           GioHang gioHang, Model model){
-//        String email = (String) httpSession.getAttribute("email");
-//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-//        gioHang.setMakh(khachHang.getMakh());
-//        String date = String.valueOf(java.time.LocalDate.now());
-//        gioHang.setMag(mag);
-//        gioHang.setSoluong(soluong);
-//        gioHang.setDiachi(diachi);
-//        gioHang.setSdt(sdt);
-//        gioHang.setNgaytao(String.valueOf(date));
-//        gioHang.setTrangthai(Integer.parseInt("0"));
-//        gioHangDao.save(gioHang);
-//        return "redirect:/giohang/index";
-//    }
-
 
     @PostMapping("/saveg")
     public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult){

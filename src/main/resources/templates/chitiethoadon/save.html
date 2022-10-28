@@ -2,45 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
 <body>
-    <main>
-        <div class="container row mt-3">
-            <form method="post" th:action="${savecthd}" th:object="${chitiethoadon}">
-                <h1>Chi Tiết Hoá Đơn</h1>
-                <input hidden type="text" th:field="*{macthd}">
-                <div>
-                    <label>Chi tiết giày:</label>
-                    <select th:field="*{mactg}" name="mactg">
-                        <option th:each="ctg : ${listctg}" th:value="${ctg.mactg}" th:text="${ctg.ten}"></option>
-                    </select>
-                </div>
-                <div>
-                    <label>Mã hoá đơn:</label>
-                    <select th:field="*{mahd}" name="mahd">
-                        <option th:each="hd : ${listhd}" th:value="${hd.mahd}" th:text="${hd.mahd}"></option>
-                    </select>
-                </div>
-                <div>
-                    <label>Giá:</label>
-                    <input type="text" th:field="*{tongtien}" name="tongtien">
-                    <span th:if="${#fields.hasErrors('tongtien')}" th:errors="*{tongtien}"></span>
-                </div>
-                <div>
-                    <label>Sổ lượng:</label>
-                    <input type="text" th:field="*{soluong}" name="soluong">
-                    <span th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
-                </div>
-                <div>
-                    <label>Trạng thái:</label>
-                    <select th:field="*{trangthai}" name="trangthai">
-                        <option th:value="1">Đã thanh toán</option>
-                        <option th:value="0">Chưa thanh toán</option>
-                    </select>
-                </div>
-                <button type="submit">Save</button>
+<main>
+    <div class="row mt-3">
+        <form method="post" th:action="${savecthd}" th:object="${chitiethoadon}">
+            <h1>Chi Tiết Hoá Đơn</h1>
+            <input hidden type="text" th:field="*{macthd}">
+            <div>
+                <label>Chi tiết giày:</label>
+                <select class="form-select" th:field="*{mactg}" name="mactg">
+                    <option th:each="ctg : ${listctg}" th:value="${ctg.mactg}" th:text="${ctg.mactg}"></option>
+                </select>
+            </div>
+            <div>
+                <label>Mã hoá đơn:</label>
+                <select class="form-select" th:field="*{mahd}" name="mahd">
+                    <option th:each="hd : ${listhd}" th:value="${hd.mahd}" th:text="${hd.mahd}"></option>
+                </select>
+            </div>
+            <div>
+                <label>Sổ lượng:</label>
+                <input class="form-control" type="text" th:field="*{soluong}" name="soluong">
+                <span th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
+            </div>
+            <div>
+                <label>Tổng tiền:</label>
+                <input class="form-control" type="text" th:field="*{tongtien}" name="tongtien">
+                <span th:if="${#fields.hasErrors('tongtien')}" th:errors="*{tongtien}"></span>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Save</button>
 
-            </form>
-        </div>
-    </main>
+        </form>
+    </div>
+</main>
 </body>
 
 </html>
