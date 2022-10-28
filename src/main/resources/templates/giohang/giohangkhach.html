@@ -4,12 +4,12 @@
 
 <body>
 <main>
-    <div class="container row mt-3">
-        <div th:if="${message}" class="text-danger" th:text="${message}"/>
+    <div class="row mt-3">
         <div th:fragment="cart_frag">
             <h3>Giỏ hàng của bạn</h3>
             <form>
-                <div th:if="${message}" class="text-danger" th:text="${message}"/>
+                <div th:if="${message}" class="text-primary  fw-bold" th:text="${message}"/>
+                <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="s : ${session.myCartItems}">
-                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>
+<!--                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>-->
                         <td th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}" th:text="${g.ten}"></td>
                         <td th:each="size:${listsize}" th:if="${size.mas}==${s.value.chiTietGiay.mas}"
                             th:text="${size.ten}"></td>
@@ -39,19 +39,20 @@
                     </tr>
                     </tbody>
                 </table>
-
             </form>
             <div class="text-center">
-                <h3>Tổng tiền :</h3>
-                <h3 class="fw-bold" style="color: red" th:if="${session.myCartToTal}!=null"
-                    th:text="${session.myCartToTal}"></h3>
-                <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==null">0</h3>
+                <div>
+                    <h3>Tổng tiền :</h3>
+                    <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}!=null"
+                        th:text="${session.myCartToTal}"></h3>
+                    <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==null">0</h3>
+                </div>
             </div>
         </div>
-        <div ng-if="cart.items.length" class="panel-footer">
-            <button ng-click="cart.clear()" class="btn btn-danger">
-                <i class="glyphicon glyphicon-trash"></i> Clear
-            </button>
+        <div>
+<!--            <button ng-click="cart.clear()" class="btn btn-danger">-->
+<!--                <i class="glyphicon glyphicon-trash"></i> Clear-->
+<!--            </button>-->
             <a th:href="@{/giohang/thanhtoan}" class="btn btn-primary">
                 Checkout
             </a>

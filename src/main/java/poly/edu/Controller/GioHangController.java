@@ -48,16 +48,16 @@ public class GioHangController {
 
     @GetMapping("/giohang/index")
     public String listkh(Model model) {
-        List<GioHang> listgh =gioHangDAO.findAll();
+        List<GioHang> listgh = gioHangDAO.findAll();
         model.addAttribute("listgh", listgh);
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         return ("giohang/index");
     }
 
     @GetMapping("/giohang/create")
     public String create(@ModelAttribute("giohang") GioHang gioHang, Model model) {
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("savegh", "/savegh");
         return "giohang/save";
@@ -67,13 +67,12 @@ public class GioHangController {
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDAO.getById(magh);
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("giohang", gh);
 
         return "giohang/save";
     }
-
 
 
     @GetMapping("/giohang/delete/{magh}")
@@ -83,9 +82,9 @@ public class GioHangController {
     }
 
     @PostMapping("/savegh")
-    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
+    public String save(@Valid @ModelAttribute("giohang") GioHang gioHang, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+            List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
             model.addAttribute("listctg", listctg);
             return "giohang/save";
         }
@@ -95,31 +94,30 @@ public class GioHangController {
 
 
     @GetMapping("/giohang/thanhtoan")
-    public String thanhtoan(HttpSession session, Model model) {
+    public String thanhtoan(@ModelAttribute("hoaDon") HoaDon hoaDon, HttpSession session, Model model) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-
-        List<Giay> listg =giayDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listg", listg);
 
-        List<Size> listsize =sizeDAO.findAll();
+        List<Size> listsize = sizeDAO.findAll();
         model.addAttribute("listsize", listsize);
 
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
 
-        List<ThanhToan> listtt =thanhToanDAO.findAll();
+        List<ThanhToan> listtt = thanhToanDAO.findAll();
         model.addAttribute("listtt", listtt);
 
-        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartToTal", totalPrice(cartItems));
         model.addAttribute("savetthd", "/savetthd");
         return "giohang/thanhtoan";
     }
 
     @PostMapping("/savetthd")
-    public String savett(ModelMap mm, HttpSession session, @Valid @ModelAttribute("giohang")   GioHang gioHang,
+    public String savett(ModelMap mm, HttpSession session, @Valid @ModelAttribute("hoaDon") HoaDon hoaDon,
                          BindingResult bindingResult, Model model,
                          @RequestParam("soluong") Integer soluong,
-                         @RequestParam("ten") String ten,
+                         @RequestParam("tennguoinhan") String ten,
                          @RequestParam("sdt") String sdt,
                          @RequestParam("diachi") String diachi,
                          @RequestParam("httt") Integer httt,
@@ -131,46 +129,50 @@ public class GioHangController {
         }
 
         if (bindingResult.hasErrors()) {
-            List<Giay> listg =giayDAO.findAll();
+            List<Giay> listg = giayDAO.findAll();
             model.addAttribute("listg", listg);
-            List<KhachHang> listkh =khachHangDAO.findAll();
+            List<Size> listsize = sizeDAO.findAll();
+            model.addAttribute("listsize", listsize);
+            List<ThanhToan> listtt = thanhToanDAO.findAll();
+            model.addAttribute("listtt", listtt);
+            List<KhachHang> listkh = khachHangDAO.findAll();
             model.addAttribute("listkh", listkh);
             return "giohang/thanhtoan";
-        }else {
-            for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()){
-                HoaDon hoaDon = new HoaDon();
+        } else {
+            for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
+                HoaDon hoadon = new HoaDon();
                 ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
                 String date = String.valueOf(java.time.LocalDate.now());
 
-                if(httt==1){
-                    hoaDon.setManv(1);
-                    hoaDon.setMakh(1);
-                    hoaDon.setMahttt(httt);
-                    hoaDon.setNgaytao(date);
-                    hoaDon.setNgaythanhtoan(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
-                    hoaDonDAO.save(hoaDon);
+                if (httt == 1) {
+                    hoadon.setManv(1);
+                    hoadon.setMakh(1);
+                    hoadon.setMahttt(httt);
+                    hoadon.setNgaytao(date);
+                    hoadon.setNgaythanhtoan(date);
+                    hoadon.setDiachi(diachi);
+                    hoadon.setSdt(sdt);
+                    hoadon.setTennguoinhan(ten);
+                    hoaDonDAO.save(hoadon);
 
                     chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                    chiTietHoaDon.setMahd(hoaDon.getMahd());
+                    chiTietHoaDon.setMahd(hoadon.getMahd());
                     chiTietHoaDon.setSoluong(soluong);
                     chiTietHoaDon.setTongtien(tongtien);
                     chiTietHoaDonDAO.save(chiTietHoaDon);
-                }else {
-                    hoaDon.setManv(1);
-                    hoaDon.setMakh(1);
-                    hoaDon.setMahttt(httt);
+                } else {
+                    hoadon.setManv(1);
+                    hoadon.setMakh(1);
+                    hoadon.setMahttt(httt);
 
-                    hoaDon.setNgaytao(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
-                    hoaDonDAO.save(hoaDon);
+                    hoadon.setNgaytao(date);
+                    hoadon.setDiachi(diachi);
+                    hoadon.setSdt(sdt);
+                    hoadon.setTennguoinhan(ten);
+                    hoaDonDAO.save(hoadon);
 
                     chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                    chiTietHoaDon.setMahd(hoaDon.getMahd());
+                    chiTietHoaDon.setMahd(hoadon.getMahd());
                     chiTietHoaDon.setSoluong(soluong);
                     chiTietHoaDon.setTongtien(tongtien);
                     chiTietHoaDonDAO.save(chiTietHoaDon);
@@ -186,9 +188,9 @@ public class GioHangController {
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
         int count = 0;
         for (Map.Entry<Integer, Cart> list : cartItems.entrySet()) {
-            int mag =list.getValue().getChiTietGiay().getMag();
+            int mag = list.getValue().getChiTietGiay().getMag();
             Giay giay = giayDAO.getById(mag);
-            count += giay.getGia()* list.getValue().getSoluong();
+            count += giay.getGia() * list.getValue().getSoluong();
         }
         return count;
     }
