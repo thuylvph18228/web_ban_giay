@@ -30,7 +30,7 @@ public class NhanVien implements Serializable {
 
     @NotBlank(message = "Không được để trống ngày sinh")
     @Column(name="ngaysinh")
-    private String ngaysinh;
+    private Date ngaysinh;
 
     @NotBlank(message = "Không được để trống giới tính")
     @Column(name="gioitinh")
