@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="s : ${session.myCartItems}">
-<!--                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>-->
+                        <!--                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>-->
                         <td th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}" th:text="${g.ten}"></td>
                         <td th:each="size:${listsize}" th:if="${size.mas}==${s.value.chiTietGiay.mas}"
                             th:text="${size.ten}"></td>
@@ -40,7 +40,7 @@
                     </tbody>
                 </table>
             </form>
-            <div class="text-center">
+            <div th:if="${session.myCartToTal!=0}" class="text-center">
                 <div>
                     <h3>Tổng tiền :</h3>
                     <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}!=null"
@@ -48,12 +48,12 @@
                     <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==null">0</h3>
                 </div>
             </div>
+            <div th:if="${session.myCartToTal}==0" class="text-center">
+                <h3>Giỏ hàng trống</h3>
+            </div>
         </div>
         <div>
-<!--            <button ng-click="cart.clear()" class="btn btn-danger">-->
-<!--                <i class="glyphicon glyphicon-trash"></i> Clear-->
-<!--            </button>-->
-            <a th:href="@{/giohang/thanhtoan}" class="btn btn-primary">
+            <a th:if="${session.myCartToTal}!=0" th:href="@{/giohang/thanhtoan}" class="btn btn-primary">
                 Checkout
             </a>
         </div>
