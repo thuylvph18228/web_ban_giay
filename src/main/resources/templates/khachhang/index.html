@@ -3,37 +3,37 @@
 
 <body>
     <main>
-        <div class="container row mt-3">
+        <div class="row mt-3">
             <h1>Khách Hàng</h1>
-<a class="btn btn-primary" th:href="@{/khachhang/create}">Thêm mới</a>
-<form>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Họ và tên</th>
-            <th>Ngày sinh</th>
-            <th>Email</th>
-            <th>Địa chỉ</th>
-            <th>Sđt</th>
-            <th>Mật khẩu</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="kh : ${listkh}">
-            <td th:text="${kh.ten}"></td>
-            <td th:text="${kh.ngaysinh}"></td>
-            <td th:text="${kh.email}"></td>
-            <td th:text="${kh.diachi}"></td>
-            <td th:text="${kh.sdt}"></td>
-            <td th:text="${kh.matkhau}"></td>
-            <td colspan="2">
-                <a class="btn btn-outline-primary" th:href="@{'/khachhang/edit/'+${kh.makh}}">Sửa</a>
-                <a class="btn btn-outline-danger" th:href="@{'/khachhang/delete/'+${kh.makh}}">Xoá</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
+            <a class="btn btn-primary" th:href="@{/khachhang/create}">Thêm mới</a>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Họ và tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Email</th>
+                            <th>Địa chỉ</th>
+                            <th>Sđt</th>
+                            <th>Mật khẩu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="kh : ${listkh}">
+                            <td th:text="${kh.ten}"></td>
+                            <td th:text="${kh.ngaysinh}"></td>
+                            <td th:text="${kh.email}"></td>
+                            <td th:text="${kh.diachi}"></td>
+                            <td th:text="${kh.sdt}"></td>
+                            <td th:text="${kh.matkhau}"></td>
+                            <td colspan="2">
+                                <a class="btn btn-outline-primary" th:href="@{'/khachhang/edit/'+${kh.makh}}">Sửa</a>
+                                <a class="btn btn-outline-danger" th:href="@{'/khachhang/delete/'+${kh.makh}}">Xoá</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </main>
 </body>

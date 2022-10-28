@@ -101,8 +101,8 @@ public class GioHangController {
         List<Giay> listg =giayDAO.findAll();
         model.addAttribute("listg", listg);
 
-        List<Size> lists =sizeDAO.findAll();
-        model.addAttribute("lists", lists);
+        List<Size> listsize =sizeDAO.findAll();
+        model.addAttribute("listsize", listsize);
 
         List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);

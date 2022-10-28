@@ -44,19 +44,19 @@ public class BuyController {
     ChiTietGiayDAO chiTietGiayDAO;
 
     @GetMapping("/giohang/ghk")
-    public String ghk( Model model) {
+    public String ghk(Model model) {
 
         String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
+        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
         List<GioHang> listgh = (List<GioHang>) gioHangDao.findByMakh(khachHang.getMakh());
-        System.out.println(listgh);
         model.addAttribute("listgh", listgh);
-        List<Giay> listg =giaydao.findAll();
+        List<Giay> listg = giaydao.findAll();
         model.addAttribute("listg", listg);
-        List<KhachHang> listkh =khachHangDao.findAll();
+        List<KhachHang> listkh = khachHangDao.findAll();
         model.addAttribute("listkh", listkh);
-            return ("giohang/giohangkhach");
+        return ("giohang/giohangkhach");
     }
+
     @GetMapping("/giohang/editkh/{magh}")
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
@@ -65,7 +65,7 @@ public class BuyController {
         Giay giay = (Giay) giaydao.getById(gh.getMactg());
         model.addAttribute("listg", giay);
         String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
+        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
         model.addAttribute("listkh", khachHang);
         model.addAttribute("giohang", gh);
         model.addAttribute("savegh", "/saveghk");
@@ -73,18 +73,13 @@ public class BuyController {
     }
 
     @GetMapping("/giay/buy/{mag}")
-    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name="mag") int mag, Model model){
-
+    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
         List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
-       
         Giay giay = giaydao.getById(mag);
-        System.out.println(giay);
-
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = giaydao.findAll();
-        //List <Sizetheogiay> chiTietGiayList  = sizeTheoGiayDAO.findByMas(mag);
 
         model.addAttribute("giay", giay);
         model.addAttribute("listctg", listctg);
@@ -98,25 +93,12 @@ public class BuyController {
     }
 
     @PostMapping("/savegiohang")
-    public String savegh( @ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay,GioHang gioHang){
+    public String savegh(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, GioHang gioHang) {
         gioHang.setMactg(chiTietGiay.getMactg());
         gioHang.setSoluong(1);
-        System.out.println(gioHang);
-       gioHangDao.save(gioHang);
+        gioHangDao.save(gioHang);
         return "redirect:/giohang/indext";
     }
-//    @PostMapping("/savegh")
-//    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
-//        if (bindingResult.hasErrors()) {
-//            List<Giay> listg =giayDAO.findAll();
-//            model.addAttribute("listg", listg);
-//            List<KhachHang> listkh =khachHangDAO.findAll();
-//            model.addAttribute("listkh", listkh);
-//            return "giohang/save";
-//        }
-//        gioHangDAO.save(gioHang);
-//        return "redirect:/giohang/index";
-//    }
 
     @GetMapping("/giohang/deleteghk/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {
@@ -125,7 +107,7 @@ public class BuyController {
     }
 
     @PostMapping("/saveghk")
-    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult, Model model) {
+    public String save(@Valid @ModelAttribute("giohang") GioHang gioHang, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
 
             return "redirect:/giohang/ghk";
