@@ -41,13 +41,11 @@ public class HoaDon {
     @Column(name="ngaynhan")
     private String ngaynhan;
 
-    @Column(name="tennguoinhan")
-    private String tennguoinhan;
+    @Column(name="trangthaidh")
+    private String trangthaidh;
 
-//    @NotBlank(message = "Không được để trống địa chỉ")
-    @Column(name="diachi")
-    private String diachi;
-
-    @Column(name="sdt")
-    private String sdt;
+    @Column(name="trangthaihd")
+    private String trangthaihd;
+    @Column(name="tongtien")
+    private int tongtien;
 }

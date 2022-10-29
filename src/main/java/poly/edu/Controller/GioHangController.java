@@ -148,15 +148,13 @@ public class GioHangController {
                     hoaDon.setMahttt(httt);
                     hoaDon.setNgaytao(date);
                     hoaDon.setNgaythanhtoan(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
+
                     hoaDonDAO.save(hoaDon);
 
                     chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
                     chiTietHoaDon.setMahd(hoaDon.getMahd());
                     chiTietHoaDon.setSoluong(soluong);
-                    chiTietHoaDon.setTongtien(tongtien);
+
                     chiTietHoaDonDAO.save(chiTietHoaDon);
                 }else {
                     hoaDon.setManv(1);
@@ -164,15 +162,13 @@ public class GioHangController {
                     hoaDon.setMahttt(httt);
 
                     hoaDon.setNgaytao(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
+
                     hoaDonDAO.save(hoaDon);
 
                     chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
                     chiTietHoaDon.setMahd(hoaDon.getMahd());
                     chiTietHoaDon.setSoluong(soluong);
-                    chiTietHoaDon.setTongtien(tongtien);
+
                     chiTietHoaDonDAO.save(chiTietHoaDon);
                 }
 

@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.GiayDAO;
 import poly.edu.DAO.KhachHangDAO;
 import poly.edu.DAO.GioHangDAO;
+import poly.edu.DAO.NsxDAO;
 import poly.edu.Entity.Giay;
-import poly.edu.Entity.GioHang;
-import poly.edu.Entity.KhachHang;
+
+import poly.edu.Entity.Nsx;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Date;
+import javax.websocket.server.PathParam;
+
 import java.util.List;
 
 @Controller
@@ -25,6 +27,8 @@ public class GiayController {
     @Autowired
     KhachHangDAO khachHangDao;
 
+    @Autowired
+    NsxDAO nsxdao;
     @Autowired
     GiayDAO giaydao;
 
@@ -41,6 +45,8 @@ public class GiayController {
     @GetMapping("/giay/product")
     public String product(Model model){
         List<Giay> listg = giaydao.findAll();
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
         model.addAttribute("listg", listg);
         model.addAttribute("giayfindname", "/giayfindname");
 
@@ -53,8 +59,10 @@ public class GiayController {
         return "giay/product";
     }
 
-    @GetMapping("/giayfindnsx")
-    public String findbyNSX( Model model,@RequestParam("mansx") int mansx){
+    @GetMapping("/giayfindnsx/{mansx}")
+    public String findbyNSX( @PathVariable("mansx") int mansx,Model model){
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
         List<Giay> listg = giaydao.findByNsx(mansx);
         model.addAttribute("listg", listg);
         return "giay/product";

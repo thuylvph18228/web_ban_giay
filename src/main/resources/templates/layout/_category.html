@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/html">
-<div class="dropdown">
-    <button class="btn btn-primary " type="button" >
-    Các thương hiệu giày !!!
-    </button>
-    <ul th:each=" nsx :${listnsx}">
-        <li th:text="${nsx.ten}">  </a></li>
+
+<div class=" bg-light">
+    <h4 class="  text-center fw-bold " aria-current="true " style="color: red" > Các thương hiệu giày!</h4>
+    <ul  th:each=" nsx :${listnsx}">
+        <a class=" fw-bold text-center dropdown-item" th:href="@{'/giayfindnsx/'+${nsx.mansx}}"><label name="tennsx"
+                                                                                                           th:text="${nsx.ten}"> </label>
+        </a>
+
     </ul>
 </div>
 </html>

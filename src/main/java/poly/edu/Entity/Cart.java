@@ -1,7 +1,11 @@
 package poly.edu.Entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Cart {
     private ChiTietGiay chiTietGiay;
+    @NotNull(message = "Không được để trống số lượng")
     private int soluong;
 
     public Cart(){

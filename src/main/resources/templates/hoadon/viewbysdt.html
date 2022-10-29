@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+    <div class="row mt-3">
+        <form method="get" th:action="${yourorder}" th:object="${nsx}">
+            <div class="form-check">
+                <h1  class="fw-bold">Kiểm tra đơn hàng đã đặt </h1>
+                <input name="sdt"  class="form-control" placeholder="Nhập số điện thoại của bạn ?">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Save</button>
+
+        </form>
+
+    </div>
+</main>
+</body>
+
+</html>

@@ -16,14 +16,14 @@
                     <th>Ngày thanh toán</th>
                     <th>Ngày ship</th>
                     <th>Ngày nhận</th>
-                    <th>Sđt</th>
-                    <th>Địa chỉ</th>
+                    <th>Sản phẩm</th>
+
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr th:each="hd : ${listhd}">
-                    <td th:text="${hd.tennguoinhan}"></td>
+
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}">
                         <p th:if="${tt.mahttt}==1">Đã thanh toán</p>
@@ -33,8 +33,7 @@
                     <td th:text="${hd.ngaythanhtoan}"></td>
                     <td th:text="${hd.ngayship}"></td>
                     <td th:text="${hd.ngaynhan}"></td>
-                    <td th:text="${hd.sdt}"></td>
-                    <td th:text="${hd.diachi}"></td>
+                    <td > <p></p></td>
                 </tr>
                 </tbody>
             </table>

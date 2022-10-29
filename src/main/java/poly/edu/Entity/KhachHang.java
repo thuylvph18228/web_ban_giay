@@ -26,14 +26,6 @@ public class KhachHang {
     private String ten;
 
 
-    @NotBlank(message = "Không được để trống ngày sinh")
-    @Column(name="ngaysinh")
-    private String ngaysinh;
-
-    @NotBlank(message = "Không được để trống email")
-    @Email(message = "Sai định dạng email")
-    @Column(name="email")
-    private String email;
 
     @NotBlank(message = "Không được để trống địa chỉ")
     @Column(name="diachi")

@@ -8,7 +8,7 @@
         <div th:fragment="cart_frag">
             <h3>Giỏ hàng của bạn</h3>
             <form>
-            <div th:if="${message}" class="text-primary  fw-bold" th:text="${message}"/>
+                <div th:if="${message}" class="text-primary  fw-bold" th:text="${message}"/>
                 <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
                 <table class="table table-bordered">
                     <thead>
@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="s : ${session.myCartItems}">
-<!--                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>-->
+                        <!--                        <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>-->
                         <td th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}" th:text="${g.ten}"></td>
                         <td th:each="size:${listsize}" th:if="${size.mas}==${s.value.chiTietGiay.mas}"
                             th:text="${size.ten}"></td>
@@ -39,29 +39,26 @@
                     </tr>
                     </tbody>
                 </table>
-    </form>
-    <div class="text-center">
+            </form>
+            <div class="text-center">
 
-        <div>
-            <div th:if="${session.myCartToTal}!=null">
-            <h3>Tổng tiền :</h3>
-            <h3 class="fw-bold" style="color:red"  th:text="${session.myCartToTal}"></h3>
+                <div>
+                    <div th:if="${session.myCartToTal}!=null">
+                        <h3>Tổng tiền :</h3>
+                        <h3 class="fw-bold" style="color:red" th:text="${session.myCartToTal}"></h3>
+                    </div>
+
+                    <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==0">Không có sản phẩm nào trong
+                        giỏ hàng</h3>
+
+                    <div>
+                        <a th:href="@{/giohang/thanhtoan}" class="btn btn-primary">
+                            Checkout
+                        </a>
+
+                    </div>
+                </div>
             </div>
-
-                <h3 class="fw-bold" style="color:red" th:if="${session.myCartToTal}==0">Không có sản phẩm nào trong giỏ hàng</h3>
-
-
-        <div ng-if="cart.items.length" class="panel-footer">
-            <button th:href="@{/removecartall}" class="btn btn-danger">
-                <i class="glyphicon glyphicon-trash"></i> Clear
-            </button>
-
-        </div>
-        <div>
-            <a th:href="@{/giohang/thanhtoan}" class="btn btn-primary">
-                Checkout
-            </a>
-
         </div>
     </div>
 </main>

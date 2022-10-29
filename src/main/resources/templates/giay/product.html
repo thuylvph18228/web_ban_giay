@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 <body>
 <main>
-    <div class=" row mt-3">
-        <div th:each="g : ${listg}" class="card ms-2 " style="width: 16.5rem;">
+    <div class=" row">
+        <div th:each="g : ${listg}" class="card mt-2 col-sm-3">
             <img class="mt-2" th:src="@{${ g.anh}}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${ g.ten}"></h5>
