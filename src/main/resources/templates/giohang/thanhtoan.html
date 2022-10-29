@@ -5,7 +5,7 @@
 <main>
     <div class="row mt-3">
         <div th:replace="~{/giohang/giohangkhach :: cart_frag}"></div>
-        <form method="post" th:action="${savetthd}" th:object="${hoaDon}">
+        <form method="post" th:action="${savetthd}" th:object="${khachHang}">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
                     <h3>Thông tin liên hệ</h3>
@@ -16,8 +16,8 @@
                     <div>
                         <label>Họ và tên:</label>
                         <span>
-                        <input type="text" id="tennguoinhan" name="tennguoinhan" th:field="*{tennguoinhan}" class="form-control" placeholder="Họ và tên của bạn">
-                        <span class="text-danger" th:if="${#fields.hasErrors('tennguoinhan')}" th:errors="*{tennguoinhan}"></span>
+                        <input type="text" id="ten" name="ten" th:field="*{ten}" class="form-control" placeholder="Họ và tên của bạn">
+                        <span class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
                         </span>
                     </div>
                     <div>
