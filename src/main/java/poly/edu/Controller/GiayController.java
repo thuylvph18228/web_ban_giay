@@ -43,20 +43,12 @@ public class GiayController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listg", listg);
         model.addAttribute("giayfindname", "/giayfindname");
-        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
         return "giay/product";
     }
     @GetMapping("/giayfindname")
-    public String findbyName( Model model,@RequestParam("teng") String teng){
-        List<Giay> listg = giaydao.findByName(teng);
-        model.addAttribute("listg", listg);
-        return "giay/product";
-    }
-
-    @GetMapping("/giayfindnamelike")
-    public String findbyNameLike( Model model,@RequestParam("name") String name){
-        List<Giay> listg = giaydao.findByNameLike(name);
+    public String findbyName( Model model,@RequestParam("tengiay") String tengiay){
+        List<Giay> listg = giaydao.findByName(tengiay);
         model.addAttribute("listg", listg);
         return "giay/product";
     }
