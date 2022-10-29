@@ -17,6 +17,7 @@
                     <th>Ngày nhận</th>
                     <th>Sđt</th>
                     <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
                     <th>Trạng thái</th>
                 </tr>
                 </thead>
@@ -31,6 +32,7 @@
                     <td th:text="${hd.ngaynhan}"></td>
                     <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.sdt}"></td>
                     <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.diachi}"></td>
+                    <td th:text="${hd.tongtien}"></td>
                     <td>
                         <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
                         <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
@@ -48,7 +50,6 @@
                         <th>Giày</th>
                         <th>Ảnh</th>
                         <th>Số lượng</th>
-                        <th>Tổng tiền</th>
                         <th>Trạng thái đơn hàng</th>
                     </tr>
                     </thead>
@@ -62,7 +63,6 @@
                             <img th:each="g : ${listg}" th:if="${ctg.mag}==${g.mag}" width="200px" height="200px" th:src="@{${ g.anh}}">
                         </td>
                         <td th:text="${cthd.soluong}"></td>
-                        <td th:text="${cthd.tongtien}"></td>
                         <td th:each="hd : ${listhd}" th:if="${cthd.mahd}==${hd.mahd}">
                             <p th:if="${hd.trangthaidh}==0">Chờ xác nhận</p>
                             <p th:if="${hd.trangthaidh}==1">Đã xác nhận</p>

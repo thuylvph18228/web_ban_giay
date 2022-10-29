@@ -27,8 +27,7 @@ public class ChiTietHoaDon {
 
 //    @NotBlank(message = "Không được để trống tổng tiền")
 //    @Min(value = 1, message = "Tổng tiền phải lớn hơn 0")
-    @Column(name="tongtien")
-    private int tongtien;
+
 //
 //    @NotBlank(message = "Không được để trống số lượng")
 //    @Min(value = 1, message = "Số lượng phải lớn hơn 0")

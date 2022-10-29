@@ -46,4 +46,7 @@ public class HoaDon {
 
     @Column(name="trangthaidh")
     private int trangthaidh;
+
+    @Column(name="tongtien")
+    private int tongtien;
 }

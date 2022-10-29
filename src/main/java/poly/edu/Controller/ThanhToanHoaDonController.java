@@ -89,104 +89,115 @@ public class ThanhToanHoaDonController {
             model.addAttribute("listkh", listkh);
             return "giohang/thanhtoan";
         } else {
-            for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
-                HoaDon hoadon = new HoaDon();
-                ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
-                String date = String.valueOf(java.time.LocalDate.now());
-                KhachHang kh = khachHangDAO.findBySdt(sdt);
-                if (kh != null) {
-                    if (httt == 1) {
-                        hoadon.setManv(1);
-                        hoadon.setMakh(kh.getMakh());
-                        hoadon.setMahttt(httt);
-                        hoadon.setNgaytao(date);
-                        hoadon.setNgaythanhtoan(date);
-                        hoadon.setTrangthaihd(1);
-                        hoadon.setTrangthaidh(0);
-                        hoaDonDAO.save(hoadon);
+            HoaDon hoadon = new HoaDon();
+            String date = String.valueOf(java.time.LocalDate.now());
+            KhachHang kh = khachHangDAO.findBySdt(sdt);
 
+            if (kh != null) {
+                if (httt == 1) {
+                    hoadon.setManv(1);
+                    hoadon.setMakh(kh.getMakh());
+                    hoadon.setMahttt(httt);
+                    hoadon.setNgaytao(date);
+                    hoadon.setNgaythanhtoan(date);
+                    hoadon.setTrangthaihd(1);
+                    hoadon.setTrangthaidh(0);
+                    hoadon.setTongtien(tongtien);
+                    hoaDonDAO.save(hoadon);
+                    for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
+                        ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
                         chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
                         chiTietHoaDon.setMahd(hoadon.getMahd());
-                        chiTietHoaDon.setSoluong(soluong);
-                        chiTietHoaDon.setTongtien(tongtien);
-                        chiTietHoaDonDAO.save(chiTietHoaDon);
-                    } else {
-                        hoadon.setManv(1);
-                        hoadon.setMakh(kh.getMakh());
-                        hoadon.setMahttt(httt);
-                        hoadon.setNgaytao(date);
-                        hoadon.setTrangthaihd(0);
-                        hoadon.setTrangthaidh(0);
-                        hoaDonDAO.save(hoadon);
-
-                        chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                        chiTietHoaDon.setMahd(hoadon.getMahd());
-                        chiTietHoaDon.setSoluong(soluong);
-                        chiTietHoaDon.setTongtien(tongtien);
+                        chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                         chiTietHoaDonDAO.save(chiTietHoaDon);
                     }
                 } else {
-                    khachHang.setTen(ten);
-                    khachHang.setDiachi(diachi);
-                    khachHang.setSdt(sdt);
-                    khachHangDAO.save(khachHang);
-                    KhachHang khsdt = khachHangDAO.findBySdt(sdt);
-                    if (httt == 1) {
-                        hoadon.setManv(1);
-                        hoadon.setMakh(khsdt.getMakh());
-                        hoadon.setMahttt(httt);
-                        hoadon.setNgaytao(date);
-                        hoadon.setNgaythanhtoan(date);
-                        hoadon.setTrangthaihd(1);
-                        hoadon.setTrangthaidh(0);
-                        hoaDonDAO.save(hoadon);
+                    hoadon.setManv(1);
+                    hoadon.setMakh(kh.getMakh());
+                    hoadon.setMahttt(httt);
+                    hoadon.setNgaytao(date);
+                    hoadon.setTrangthaihd(0);
+                    hoadon.setTrangthaidh(0);
+                    hoadon.setTongtien(tongtien);
+                    hoaDonDAO.save(hoadon);
 
+                    for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
+                        ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
                         chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
                         chiTietHoaDon.setMahd(hoadon.getMahd());
-                        chiTietHoaDon.setSoluong(soluong);
-                        chiTietHoaDon.setTongtien(tongtien);
-                        chiTietHoaDonDAO.save(chiTietHoaDon);
-                    } else {
-                        hoadon.setManv(1);
-                        hoadon.setMakh(khsdt.getMakh());
-                        hoadon.setMahttt(httt);
-                        hoadon.setNgaytao(date);
-                        hoadon.setTrangthaihd(0);
-                        hoadon.setTrangthaidh(0);
-                        hoaDonDAO.save(hoadon);
-
-                        chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                        chiTietHoaDon.setMahd(hoadon.getMahd());
-                        chiTietHoaDon.setSoluong(soluong);
-                        chiTietHoaDon.setTongtien(tongtien);
+                        chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                         chiTietHoaDonDAO.save(chiTietHoaDon);
                     }
                 }
+            } else {
+                khachHang.setTen(ten);
+                khachHang.setDiachi(diachi);
+                khachHang.setSdt(sdt);
+                khachHangDAO.save(khachHang);
+                KhachHang khsdt = khachHangDAO.findBySdt(sdt);
+                if (httt == 1) {
+                    hoadon.setManv(1);
+                    hoadon.setMakh(khsdt.getMakh());
+                    hoadon.setMahttt(httt);
+                    hoadon.setNgaytao(date);
+                    hoadon.setNgaythanhtoan(date);
+                    hoadon.setTrangthaihd(1);
+                    hoadon.setTrangthaidh(0);
+                    hoadon.setTongtien(tongtien);
+                    hoaDonDAO.save(hoadon);
 
-                KhachHang khbysdt = khachHangDAO.findBySdt(sdt);
-                List<HoaDon> listhd = hoaDonDAO.findByMakh(khbysdt.getMakh());
-                model.addAttribute("listhd", listhd);
-                listhd = hoaDonDAO.findMaxHDByMa(hoadon.getMahd());
-                model.addAttribute("listhdkh", listhd);
+                    for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
+                        ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
+                        chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
+                        chiTietHoaDon.setMahd(hoadon.getMahd());
+                        chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
+                        chiTietHoaDonDAO.save(chiTietHoaDon);
+                    }
+                } else {
+                    hoadon.setManv(1);
+                    hoadon.setMakh(khsdt.getMakh());
+                    hoadon.setMahttt(httt);
+                    hoadon.setNgaytao(date);
+                    hoadon.setTrangthaihd(0);
+                    hoadon.setTrangthaidh(0);
+                    hoadon.setTongtien(tongtien);
+                    hoaDonDAO.save(hoadon);
 
-                List<KhachHang> listkh = khachHangDAO.findAll();
-                model.addAttribute("listkh", listkh);
-                List<ThanhToan> listtt = thanhToanDAO.findAll();
-                model.addAttribute("listtt", listtt);
-                List<Giay> listg = giayDAO.findAll();
-                model.addAttribute("listg", listg);
-
-                List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
-                model.addAttribute("listcthd", listcthd);
-                List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
-                model.addAttribute("listctg", listctg);
-                List<Size> lists = sizeDAO.findAll();
-                model.addAttribute("lists", lists);
-
+                    for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()) {
+                        ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
+                        chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
+                        chiTietHoaDon.setMahd(hoadon.getMahd());
+                        chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
+                        chiTietHoaDonDAO.save(chiTietHoaDon);
+                    }
+                }
             }
+
+            KhachHang khbysdt = khachHangDAO.findBySdt(sdt);
+            List<HoaDon> listhd = hoaDonDAO.findByMakh(khbysdt.getMakh());
+            model.addAttribute("listhd", listhd);
+            listhd = hoaDonDAO.findMaxHDByMa(hoadon.getMahd());
+            model.addAttribute("listhdkh", listhd);
+
+            List<KhachHang> listkh = khachHangDAO.findAll();
+            model.addAttribute("listkh", listkh);
+            List<ThanhToan> listtt = thanhToanDAO.findAll();
+            model.addAttribute("listtt", listtt);
+            List<Giay> listg = giayDAO.findAll();
+            model.addAttribute("listg", listg);
+
+            List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
+            model.addAttribute("listcthd", listcthd);
+            List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+            model.addAttribute("listctg", listctg);
+            List<Size> lists = sizeDAO.findAll();
+            model.addAttribute("lists", lists);
+
+
             cartItems.clear();
             return "hoadon/hdkh";
         }
+
     }
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
