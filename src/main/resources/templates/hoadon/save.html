@@ -36,23 +36,28 @@
 
         <div class="form-check">
           <label> Ngày ship:</label>
-          <input class="form-control" type="text" th:field="*{ngayship}" name="ngayship">
+          <input class="form-control" type="date" th:field="*{ngayship}" name="ngayship">
           <label class="text-danger" th:if="${#fields.hasErrors('ngayship')}" th:errors="*{ngayship}"></label>
         </div>
         <div class="form-check">
           <label>Ngày nhận:</label>
-          <input class="form-control" type="text" th:field="*{ngaynhan}" name="sdt">
+          <input class="form-control" type="date" th:field="*{ngaynhan}" name="ngaynhan">
           <label class="text-danger" th:if="${#fields.hasErrors('ngaynhan')}" th:errors="*{ngaynhan}"></label>
         </div>
         <div class="form-check">
           <label>Ngày thanh toán:</label>
-          <input class="form-control" type="text" th:field="*{ngaythanhtoan}" name="ngaythanhtoan">
+          <input class="form-control" type="date" th:field="*{ngaythanhtoan}" name="ngaythanhtoan">
           <label class="text-danger" th:if="${#fields.hasErrors('ngaythanhtoan')}" th:errors="*{ngaythanhtoan}"></label>
         </div>
         <div class="form-check">
           <label>Tên người nhận:</label>
           <input class="form-control" type="text" th:field="*{tennguoinhan}" name="tennguoinhan">
           <label class="text-danger" th:if="${#fields.hasErrors('tennguoinhan')}" th:errors="*{tennguoinhan}"></label>
+        </div>
+        <div class="form-check">
+          <label>Số điện thoại</label>
+          <input class="form-control" type="text" th:field="*{sdt}" name="sdt">
+          <label class="text-danger" th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></label>
         </div>
         <div class="form-check">
           <label>Địa chỉ:</label>
