@@ -94,7 +94,7 @@ public class ThanhToanHoaDonController {
                 ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
                 String date = String.valueOf(java.time.LocalDate.now());
                 KhachHang kh = khachHangDAO.findBySdt(sdt);
-                if(kh!=null){
+                if (kh != null) {
                     if (httt == 1) {
                         hoadon.setManv(1);
                         hoadon.setMakh(kh.getMakh());
@@ -125,7 +125,7 @@ public class ThanhToanHoaDonController {
                         chiTietHoaDon.setTongtien(tongtien);
                         chiTietHoaDonDAO.save(chiTietHoaDon);
                     }
-                }else {
+                } else {
                     khachHang.setTen(ten);
                     khachHang.setDiachi(diachi);
                     khachHang.setSdt(sdt);
@@ -162,9 +162,30 @@ public class ThanhToanHoaDonController {
                         chiTietHoaDonDAO.save(chiTietHoaDon);
                     }
                 }
+
+                KhachHang khbysdt = khachHangDAO.findBySdt(sdt);
+                List<HoaDon> listhd = hoaDonDAO.findByMakh(khbysdt.getMakh());
+                model.addAttribute("listhd", listhd);
+                listhd = hoaDonDAO.findMaxHDByMa(hoadon.getMahd());
+                model.addAttribute("listhdkh", listhd);
+
+                List<KhachHang> listkh = khachHangDAO.findAll();
+                model.addAttribute("listkh", listkh);
+                List<ThanhToan> listtt = thanhToanDAO.findAll();
+                model.addAttribute("listtt", listtt);
+                List<Giay> listg = giayDAO.findAll();
+                model.addAttribute("listg", listg);
+
+                List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
+                model.addAttribute("listcthd", listcthd);
+                List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+                model.addAttribute("listctg", listctg);
+                List<Size> lists = sizeDAO.findAll();
+                model.addAttribute("lists", lists);
+
             }
             cartItems.clear();
-            return "redirect:/hoadon/index";
+            return "hoadon/hdkh";
         }
     }
 

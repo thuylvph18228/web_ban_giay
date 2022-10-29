@@ -14,10 +14,10 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
 //    List<HoaDon> findByMaKH(int makh);
 
 
-    @Query(" SELECT e FROM HoaDon e  WHERE e.sdt = ?1")
-    List<HoaDon> findBySdt(String sdt);
+    @Query(" SELECT e FROM HoaDon e  WHERE e.makh = ?1")
+    List<HoaDon> findByMakh(int makh);
 
     @Query("SELECT e FROM HoaDon e\n" +
             "WHERE e.mahd = (SELECT MAX(e.mahd) FROM HoaDon )")
-    List<HoaDon> findByMa(int mahd);
+    List<HoaDon> findMaxHDByMa(int mahd);
 }
