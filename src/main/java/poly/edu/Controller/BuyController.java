@@ -46,8 +46,16 @@ public class BuyController {
     @GetMapping("/giohang/ghk")
     public String ghk(Model model) {
 
+
         String email = (String) httpSession.getAttribute("email");
 
+
+
+//
+//        String email = (String) httpSession.getAttribute("email");
+//        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
+//        List<GioHang> listgh = (List<GioHang>) gioHangDao.findByMakh(khachHang.getMakh());
+//        model.addAttribute("listgh", listgh);
 
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listg", listg);
@@ -64,6 +72,10 @@ public class BuyController {
         Giay giay = (Giay) giaydao.getById(gh.getMactg());
         model.addAttribute("listg", giay);
         String email = (String) httpSession.getAttribute("email");
+
+
+//        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
+//        model.addAttribute("listkh", khachHang);
 
         model.addAttribute("giohang", gh);
         model.addAttribute("savegh", "/saveghk");

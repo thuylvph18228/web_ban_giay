@@ -13,17 +13,6 @@
           <label class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></label>
         </div>
         <div class="form-check">
-          <label>Ngày sinh:</label>
-          <input class="form-control" type="date" th:field="*{ngaysinh}" name="ngaysinh">
-          <label class="text-danger" th:if="${#fields.hasErrors('ngaysinh')}" th:errors="*{ngaysinh}"></label>
-        </div>
-
-        <div class="form-check">
-          <label>Email:</label>
-          <input class="form-control" type="email" th:field="*{email}" name="email">
-          <label class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
-        </div>
-        <div class="form-check">
           <label>Địa chỉ:</label>
           <input class="form-control" type="text" th:field="*{diachi}" name="diachi">
           <label class="text-danger" th:if="${#fields.hasErrors('diachi')}" th:errors="*{diachi}"></label>
@@ -32,11 +21,6 @@
           <label>Sđt:</label>
           <input class="form-control" type="text" th:field="*{sdt}" name="sdt">
           <label class="text-danger" th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></label>
-        </div>
-        <div class="form-check">
-          <label>Mật khẩu:</label>
-          <input class="form-control" type="text" th:field="*{matkhau}" name="matkhau">
-          <label class="text-danger" th:if="${#fields.hasErrors('matkhau')}" th:errors="*{matkhau}"></label>
         </div>
         <button class="btn btn-primary" type="submit">Save</button>
 

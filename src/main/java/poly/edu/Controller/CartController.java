@@ -11,7 +11,6 @@ import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,13 +51,8 @@ public class CartController {
         return "giohang/giohangkhach";
     }
 
-
-
-
-
     @PostMapping("/addproduct")
     public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg, Model model) {
-
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
@@ -88,10 +82,7 @@ public class CartController {
         model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems",cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
-
-        System.out.println(cartItems);
-        return "redirect:/listcart";
-
+        return "giohang/giohangkhach";
     }
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
@@ -162,6 +153,7 @@ public class CartController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
+
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
 
@@ -170,7 +162,6 @@ public class CartController {
         System.out.println(cartItems);
         System.out.println(totalPrice(cartItems));
         return "redirect:/listcart";
-
 
 
     }
@@ -195,6 +186,7 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/listcart";
     }
+
     @GetMapping("/viewfindcart")
     public String viewFindCart(Model model) {
         List<Nsx> listnsx = nsxdao.findAll();

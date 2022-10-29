@@ -48,16 +48,16 @@ public class GioHangController {
 
     @GetMapping("/giohang/index")
     public String listkh(Model model) {
-        List<GioHang> listgh =gioHangDAO.findAll();
+        List<GioHang> listgh = gioHangDAO.findAll();
         model.addAttribute("listgh", listgh);
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         return ("giohang/index");
     }
 
     @GetMapping("/giohang/create")
     public String create(@ModelAttribute("giohang") GioHang gioHang, Model model) {
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("savegh", "/savegh");
         return "giohang/save";
@@ -67,13 +67,12 @@ public class GioHangController {
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDAO.getById(magh);
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("giohang", gh);
 
         return "giohang/save";
     }
-
 
 
     @GetMapping("/giohang/delete/{magh}")
@@ -83,9 +82,9 @@ public class GioHangController {
     }
 
     @PostMapping("/savegh")
-    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult,Model model) {
+    public String save(@Valid @ModelAttribute("giohang") GioHang gioHang, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+            List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
             model.addAttribute("listctg", listctg);
             return "giohang/save";
         }
@@ -188,6 +187,7 @@ public class GioHangController {
         }
         return count;
     }
+
 
 }
 
