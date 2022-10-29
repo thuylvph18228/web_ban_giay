@@ -116,7 +116,8 @@ public class CartController {
         session.setAttribute("myCartItems", cartItems);
         List<Giay> listg = giaydao.findAll();
         List<Size> lists = sdao.findAll();
-
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
         model.addAttribute("lists", lists);
         model.addAttribute("chiTietGiay", chiTietGiay);
         model.addAttribute("listg", listg);
@@ -143,7 +144,8 @@ public class CartController {
                 item.setChiTietGiay(chiTietGiay);
                 if (soluong<1  ||soluongcon < soluong){
                     model.addAttribute("error", "Vui lòng nhập lại giỏ hàng!!");
-
+                    List<Nsx> listnsx = nsxdao.findAll();
+                    model.addAttribute("listnsx", listnsx);
                     List<Size> listsize = sdao.findAll();
                     List<Giay> listg = giaydao.findAll();
                     model.addAttribute("listsize", listsize);
@@ -183,8 +185,7 @@ public class CartController {
             cartItems.remove(mactg);
             model.addAttribute("message", "Xóa sản phẩm thành công");
         }
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
+
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
@@ -203,11 +204,10 @@ public class CartController {
     }
     @GetMapping("/yourorder")
     public String yourorder(@RequestParam("sdt") String sdt,Model model) {
-
-        List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
-        List<KhachHang> khachHangList =khachHangDAO.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
+        List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("hoaDonList", hoaDonList);
         return "hoadon/findhdkhach";
@@ -219,7 +219,6 @@ public class CartController {
 
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
-
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
         model.addAttribute("chiTietHoaDonList", chiTietHoaDonList);
