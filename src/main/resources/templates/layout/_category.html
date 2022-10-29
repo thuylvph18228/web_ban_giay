@@ -2,13 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/html">
 
-<div class=" bg-light">
-    <h4 class="  text-center fw-bold " aria-current="true " style="color: red" > Các thương hiệu giày!</h4>
-    <ul  th:each=" nsx :${listnsx}">
-        <a class=" fw-bold text-center dropdown-item" th:href="@{'/giayfindnsx/'+${nsx.mansx}}"><label name="tennsx"
-                                                                                                           th:text="${nsx.ten}"> </label>
+<div class="bg-light">
+    <h4 class="  text-center fw-bold " aria-current="true " style="color: red"> Các thương hiệu giày!</h4>
+    <ul th:each=" nsx :${listnsx}">
+        <a class=" fw-bold text-center dropdown-item"
+           th:href="@{'/giayfindnsx/'+${nsx.mansx}}"><label name="tennsx" th:text="${nsx.ten}"> </label>
         </a>
-
     </ul>
 </div>
 </html>

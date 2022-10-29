@@ -41,11 +41,20 @@ public class HoaDon {
     @Column(name="ngaynhan")
     private String ngaynhan;
 
+<<<<<<<<< Temporary merge branch 1
     @Column(name="trangthaidh")
     private String trangthaidh;
 
     @Column(name="trangthaihd")
     private String trangthaihd;
+=========
+    @Column(name="trangthaihd")
+    private int trangthaihd;
+
+    @Column(name="trangthaidh")
+    private int trangthaidh;
+
+>>>>>>>>> Temporary merge branch 2
     @Column(name="tongtien")
     private int tongtien;
 }

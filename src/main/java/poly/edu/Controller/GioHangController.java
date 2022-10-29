@@ -92,6 +92,7 @@ public class GioHangController {
         return "redirect:/giohang/index";
     }
 
+<<<<<<<<< Temporary merge branch 1
 
     @GetMapping("/giohang/thanhtoan")
     public String thanhtoan(HttpSession session, Model model) {
@@ -188,7 +189,8 @@ public class GioHangController {
         return count;
     }
 
-
+=========
+>>>>>>>>> Temporary merge branch 2
 }
 
 

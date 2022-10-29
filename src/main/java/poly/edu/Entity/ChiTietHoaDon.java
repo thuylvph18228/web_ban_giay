@@ -25,8 +25,12 @@ public class ChiTietHoaDon {
     @Column(name="mahd")
     private int mahd;
 
-    //    @NotBlank(message = "Không được để trống tổng tiền")
+//    @NotBlank(message = "Không được để trống tổng tiền")
 //    @Min(value = 1, message = "Tổng tiền phải lớn hơn 0")
+<<<<<<<<< Temporary merge branch 1
+=========
+
+>>>>>>>>> Temporary merge branch 2
 //
 //    @NotBlank(message = "Không được để trống số lượng")
 //    @Min(value = 1, message = "Số lượng phải lớn hơn 0")
