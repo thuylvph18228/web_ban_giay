@@ -11,32 +11,30 @@
                 <tr>
                     <th>Người nhận</th>
                     <th>Hình thức thanh toán</th>
+                    <th>Trạng thái</th>
                     <th>Ngày tạo</th>
                     <th>Ngày thanh toán</th>
                     <th>Ngày ship</th>
                     <th>Ngày nhận</th>
                     <th>Sđt</th>
                     <th>Địa chỉ</th>
-                    <th>Tổng tiền</th>
-                    <th>Trạng thái</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr th:each="hd : ${listhd}">
-                    <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"></td>
+                    <td th:text="${hd.tennguoinhan}"></td>
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
+                    <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}">
+                        <p th:if="${tt.mahttt}==1">Đã thanh toán</p>
+                        <p th:if="${tt.mahttt}==2">Chưa thanh toán</p>
+                    </td>
                     <td th:text="${hd.ngaytao}"></td>
                     <td th:text="${hd.ngaythanhtoan}"></td>
                     <td th:text="${hd.ngayship}"></td>
                     <td th:text="${hd.ngaynhan}"></td>
-                    <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.sdt}"></td>
-                    <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.diachi}"></td>
-                    <td th:text="${hd.tongtien}"></td>
-                    <td>
-                        <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
-                        <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
-                    </td>
+                    <td th:text="${hd.sdt}"></td>
+                    <td th:text="${hd.diachi}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -50,7 +48,7 @@
                         <th>Giày</th>
                         <th>Ảnh</th>
                         <th>Số lượng</th>
-                        <th>Trạng thái đơn hàng</th>
+                        <th>Tổng tiền</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,12 +61,7 @@
                             <img th:each="g : ${listg}" th:if="${ctg.mag}==${g.mag}" width="200px" height="200px" th:src="@{${ g.anh}}">
                         </td>
                         <td th:text="${cthd.soluong}"></td>
-                        <td th:each="hd : ${listhd}" th:if="${cthd.mahd}==${hd.mahd}">
-                            <p th:if="${hd.trangthaidh}==0">Chờ xác nhận</p>
-                            <p th:if="${hd.trangthaidh}==1">Đã xác nhận</p>
-                            <p th:if="${hd.trangthaidh}==2">Đang giao hàng</p>
-                            <p th:if="${hd.trangthaidh}==3">Đã nhận hàng</p>
-                        </td>
+                        <td th:text="${cthd.tongtien}"></td>
                     </tr>
                     </tbody>
                 </table>

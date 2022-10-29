@@ -41,8 +41,13 @@ public class CartController {
         return "giohang/giohangkhach";
     }
 
+
+
+
+
     @PostMapping("/addproduct")
     public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg, Model model) {
+
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
@@ -70,7 +75,10 @@ public class CartController {
         model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems",cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
-        return "giohang/giohangkhach";
+
+        System.out.println(cartItems);
+        return "redirect:/listcart";
+
     }
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
@@ -131,9 +139,15 @@ public class CartController {
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
 
-        session.setAttribute("myCartItems", cartItems);
-        session.setAttribute("myCartToTal", totalPrice(cartItems));
-        return "giohang/giohangkhach";
+
+        session.setAttribute("myCartItems",cartItems);
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        System.out.println(cartItems);
+        System.out.println(totalPrice(cartItems));
+        return "redirect:/listcart";
+
+
+
     }
 
     @GetMapping("/removecart/{mactg}")
@@ -155,5 +169,17 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/listcart";
     }
-
+    @GetMapping("/removecartall")
+    public String RemoveAll(ModelMap mm,Model model, HttpSession session) {
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        cartItems.remove(cartItems);
+        List<Size> listsize = sdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listg", listg);
+        session.setAttribute("myCartItems", cartItems);
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartNum", cartItems.size());
+        return "redirect:/listcart";
+    }
 }

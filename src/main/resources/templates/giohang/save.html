@@ -24,6 +24,7 @@
                 <label>Số lượng mua</label>
                 <input class="form-control" type="number" th:each="si:${session.myCartItems}"
                        th:if="${si.value.chiTietGiay.mactg}==${ct.mactg}" th:value="${si.value.soluong}" name="soluong">
+                <label class="text-danger" th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></label>
             </div>
             <button class="btn btn-primary" type="submit">Save</button>
         </form>
