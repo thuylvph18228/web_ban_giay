@@ -32,11 +32,11 @@ public class CartController {
     public ChiTietGiayDAO chiTietGiayDAO;
 
     @GetMapping("/listcart")
-<<<<<<<<< Temporary merge branch 1
+//<<<<<<<<< Temporary merge branch 1
     public String list (Model model){
-=========
-    public String list(Model model) {
->>>>>>>>> Temporary merge branch 2
+//=========
+//    public String list(Model model) {
+//>>>>>>>>> Temporary merge branch 2
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
@@ -71,16 +71,16 @@ public class CartController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
-<<<<<<<<< Temporary merge branch 1
+//<<<<<<<<< Temporary merge branch 1
 
         session.setAttribute("myCartItems",cartItems);
         System.out.println(totalPrice(cartItems));
         session.setAttribute("myCartToTal",totalPrice(cartItems));
-=========
+//=========
         model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartToTal", totalPrice(cartItems));
->>>>>>>>> Temporary merge branch 2
+//>>>>>>>>> Temporary merge branch 2
         System.out.println(cartItems);
         return "giohang/giohangkhach";
     }
@@ -96,94 +96,94 @@ public class CartController {
     }
 
 
-    @GetMapping("/viewupdate/{mactg}")
-    public String viewUpdate(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        System.out.println(cartItems);
-        if (cartItems == null) {
-            cartItems = new HashMap<>();
-        }
-        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
-        session.setAttribute("myCartItems", cartItems);
-        List<Giay> listg = giaydao.findAll();
-        List<Size> lists = sdao.findAll();
-        model.addAttribute("lists", lists);
-        model.addAttribute("chiTietGiay", chiTietGiay);
-        model.addAttribute("listg", listg);
-        model.addAttribute("updatecart", "/updatecart");
-        return "giohang/save";
-    }
-
-    @PostMapping("/updatecart")
-    public String updatecart(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session,
-                             @RequestParam("soluong") int soluong, @RequestParam("mactg") int mactg,
-                             @RequestParam("soluongcon") int soluongcon) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
-        if (chiTietGiay != null) {
-            if (cartItems.containsKey(mactg)) {
-                Cart item = cartItems.get(chiTietGiay.getMactg());
-                item.setChiTietGiay(chiTietGiay);
-<<<<<<<<< Temporary merge branch 1
-                if (soluongcon < soluong){
-                    model.addAttribute("error", "Số lượng bạn muốn mua không còn đủ");
-=========
-                if (soluongcon < soluong) {
-                    model.addAttribute("message", "Số lượng bạn muốn mua lớn hơn số lượng trong kho");
->>>>>>>>> Temporary merge branch 2
-
-                    List<Size> listsize = sdao.findAll();
-                    List<Giay> listg = giaydao.findAll();
-                    model.addAttribute("listsize", listsize);
-                    model.addAttribute("listg", listg);
-                    return "giohang/giohangkhach";
-                }
-                item.setSoluong(soluong);
-                cartItems.put(mactg, item);
-                model.addAttribute("message", "Cập nhập số lượng thành công");
-            }
-        }
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
-        model.addAttribute("listsize", listsize);
-        model.addAttribute("listg", listg);
-
-        session.setAttribute("myCartItems", cartItems);
-        session.setAttribute("myCartToTal", totalPrice(cartItems));
-        //session.setAttribute("myCartNum",cartItems.size());
-        System.out.println(cartItems);
-        System.out.println(totalPrice(cartItems));
-        return "giohang/giohangkhach";
-    }
-<<<<<<<<< Temporary merge branch 1
-   // @GetMapping("/removecart/{mactg}")
-=========
->>>>>>>>> Temporary merge branch 2
-
-    @GetMapping("/removecart/{mactg}")
-    public String viewRemove(ModelMap mm,Model model, HttpSession session, @PathVariable("mactg") int mactg) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        if (cartItems == null) {
-            cartItems = new HashMap<>();
-        }
-        if (cartItems.containsKey(mactg)) {
-            cartItems.remove(mactg);
-            model.addAttribute("message", "Xóa sản phẩm thành công");
-        }
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
-        model.addAttribute("listsize", listsize);
-        model.addAttribute("listg", listg);
-        session.setAttribute("myCartItems", cartItems);
-<<<<<<<<< Temporary merge branch 1
-        session.setAttribute("myCartToTal",totalPrice(cartItems));
-        session.setAttribute("myCartNum", cartItems.size());
-        return "giohang/giohangkhach";
-=========
-        session.setAttribute("myCartTotal", totalPrice(cartItems));
-        //  session.setAttribute("myCartNum", cartItems.size());
-        return "redirect:/listcart";
->>>>>>>>> Temporary merge branch 2
-    }
+//    @GetMapping("/viewupdate/{mactg}")
+//    public String viewUpdate(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
+//        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+//        System.out.println(cartItems);
+//        if (cartItems == null) {
+//            cartItems = new HashMap<>();
+//        }
+//        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+//        session.setAttribute("myCartItems", cartItems);
+//        List<Giay> listg = giaydao.findAll();
+//        List<Size> lists = sdao.findAll();
+//        model.addAttribute("lists", lists);
+//        model.addAttribute("chiTietGiay", chiTietGiay);
+//        model.addAttribute("listg", listg);
+//        model.addAttribute("updatecart", "/updatecart");
+//        return "giohang/save";
+//    }
+//
+//    @PostMapping("/updatecart")
+//    public String updatecart(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session,
+//                             @RequestParam("soluong") int soluong, @RequestParam("mactg") int mactg,
+//                             @RequestParam("soluongcon") int soluongcon) {
+//        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+//        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+//        if (chiTietGiay != null) {
+//            if (cartItems.containsKey(mactg)) {
+//                Cart item = cartItems.get(chiTietGiay.getMactg());
+//                item.setChiTietGiay(chiTietGiay);
+//<<<<<<<<< Temporary merge branch 1
+//                if (soluongcon < soluong){
+//                    model.addAttribute("error", "Số lượng bạn muốn mua không còn đủ");
+//=========
+//                if (soluongcon < soluong) {
+//                    model.addAttribute("message", "Số lượng bạn muốn mua lớn hơn số lượng trong kho");
+//>>>>>>>>> Temporary merge branch 2
+//
+//                    List<Size> listsize = sdao.findAll();
+//                    List<Giay> listg = giaydao.findAll();
+//                    model.addAttribute("listsize", listsize);
+//                    model.addAttribute("listg", listg);
+//                    return "giohang/giohangkhach";
+//                }
+//                item.setSoluong(soluong);
+//                cartItems.put(mactg, item);
+//                model.addAttribute("message", "Cập nhập số lượng thành công");
+//            }
+//        }
+//        List<Size> listsize = sdao.findAll();
+//        List<Giay> listg = giaydao.findAll();
+//        model.addAttribute("listsize", listsize);
+//        model.addAttribute("listg", listg);
+//
+//        session.setAttribute("myCartItems", cartItems);
+//        session.setAttribute("myCartToTal", totalPrice(cartItems));
+//        //session.setAttribute("myCartNum",cartItems.size());
+//        System.out.println(cartItems);
+//        System.out.println(totalPrice(cartItems));
+//        return "giohang/giohangkhach";
+//    }
+//<<<<<<<<< Temporary merge branch 1
+//   // @GetMapping("/removecart/{mactg}")
+//=========
+//>>>>>>>>> Temporary merge branch 2
+//
+//    @GetMapping("/removecart/{mactg}")
+//    public String viewRemove(ModelMap mm,Model model, HttpSession session, @PathVariable("mactg") int mactg) {
+//        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+//        if (cartItems == null) {
+//            cartItems = new HashMap<>();
+//        }
+//        if (cartItems.containsKey(mactg)) {
+//            cartItems.remove(mactg);
+//            model.addAttribute("message", "Xóa sản phẩm thành công");
+//        }
+//        List<Size> listsize = sdao.findAll();
+//        List<Giay> listg = giaydao.findAll();
+//        model.addAttribute("listsize", listsize);
+//        model.addAttribute("listg", listg);
+//        session.setAttribute("myCartItems", cartItems);
+//<<<<<<<<< Temporary merge branch 1
+//        session.setAttribute("myCartToTal",totalPrice(cartItems));
+//        session.setAttribute("myCartNum", cartItems.size());
+//        return "giohang/giohangkhach";
+//=========
+//        session.setAttribute("myCartTotal", totalPrice(cartItems));
+//        //  session.setAttribute("myCartNum", cartItems.size());
+//        return "redirect:/listcart";
+//>>>>>>>>> Temporary merge branch 2
+//    }
 
 }
