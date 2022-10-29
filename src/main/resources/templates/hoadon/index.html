@@ -9,6 +9,9 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th>Mã HD</th>
+                    <th>Tên khách hàng</th>
+                    <th>Nhân viên</th>
                     <th>Người nhận</th>
                     <th>Hình thức thanh toán</th>
                     <th>Trạng thái</th>
@@ -23,6 +26,10 @@
 
                 <tbody>
                 <tr th:each="hd : ${listhd}">
+                    <td th:text="${hd.mahd}"></td>
+                    <td th:each="kh:${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"/>
+                    <td th:each="nv:${listnv}" th:if="${nv.manv}==${hd.manv}" th:text="${nv.ten}"/>
+
                     <td th:text="${hd.tennguoinhan}"></td>
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}">
