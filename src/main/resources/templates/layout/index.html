@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div>
         <header class="row bg-white">
             <div class="text-center">
                 <img src="https://mona.media/wp-content/uploads/2021/06/banner-giay.png" alt="" width="100%"
@@ -21,11 +21,11 @@
             <div th:replace="/layout/_menu.html"></div>
         </nav>
         <!-- container -->
-        <div class="row mt-3">
-            <article  class="col-md-9">
+        <div class="row mt-2">
+            <article  class="col-9">
                 <div th:replace="${main}"></div>
             </article>
-            <aside class="col-md-3">
+            <aside class="col-3">
                 <div th:replace="/layout/_category.html"></div>
             </aside>
         </div>

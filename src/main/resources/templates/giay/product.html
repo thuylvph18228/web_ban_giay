@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 <body>
 <main>
-    <div class=" row">
+    <div class="container row">
         <div th:each="g : ${listg}" class="card mt-2 col-sm-3">
             <img class="mt-2" th:src="@{${ g.anh}}">
             <div class="card-body">

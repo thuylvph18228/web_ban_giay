@@ -3,19 +3,14 @@ package poly.edu.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
-import poly.edu.Entity.Respon.TToan;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -91,106 +86,6 @@ public class GioHangController {
         }
         gioHangDAO.save(gioHang);
         return "redirect:/giohang/index";
-    }
-
-
-    @GetMapping("/giohang/thanhtoan")
-    public String thanhtoan(HttpSession session, Model model) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-
-        List<Giay> listg =giayDAO.findAll();
-        model.addAttribute("listg", listg);
-
-        List<Size> listsize =sizeDAO.findAll();
-        model.addAttribute("listsize", listsize);
-
-        List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
-        model.addAttribute("listctg", listctg);
-
-        List<ThanhToan> listtt =thanhToanDAO.findAll();
-        model.addAttribute("listtt", listtt);
-
-        session.setAttribute("myCartToTal",totalPrice(cartItems));
-        model.addAttribute("savetthd", "/savetthd");
-        return "giohang/thanhtoan";
-    }
-
-    @PostMapping("/savetthd")
-    public String savett(ModelMap mm, HttpSession session, @Valid @ModelAttribute("giohang")   GioHang gioHang,
-                         BindingResult bindingResult, Model model,
-                         @RequestParam("soluong") Integer soluong,
-                         @RequestParam("ten") String ten,
-                         @RequestParam("sdt") String sdt,
-                         @RequestParam("diachi") String diachi,
-                         @RequestParam("httt") Integer httt,
-                         @RequestParam("tongtien") Integer tongtien
-    ) {
-        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-        if (cartItems == null) {
-            cartItems = new HashMap<>();
-        }
-
-        if (bindingResult.hasErrors()) {
-            List<Giay> listg =giayDAO.findAll();
-            model.addAttribute("listg", listg);
-            List<KhachHang> listkh =khachHangDAO.findAll();
-            model.addAttribute("listkh", listkh);
-            return "giohang/thanhtoan";
-        }else {
-            for (Map.Entry<Integer, Cart> entry : cartItems.entrySet()){
-                HoaDon hoaDon = new HoaDon();
-                ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
-                String date = String.valueOf(java.time.LocalDate.now());
-
-                if(httt==1){
-                    hoaDon.setManv(1);
-                    hoaDon.setMakh(1);
-                    hoaDon.setMahttt(httt);
-                    hoaDon.setNgaytao(date);
-                    hoaDon.setNgaythanhtoan(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
-                    hoaDonDAO.save(hoaDon);
-
-                    chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                    chiTietHoaDon.setMahd(hoaDon.getMahd());
-                    chiTietHoaDon.setSoluong(soluong);
-                    chiTietHoaDon.setTongtien(tongtien);
-                    chiTietHoaDonDAO.save(chiTietHoaDon);
-                }else {
-                    hoaDon.setManv(1);
-                    hoaDon.setMakh(1);
-                    hoaDon.setMahttt(httt);
-
-                    hoaDon.setNgaytao(date);
-                    hoaDon.setDiachi(diachi);
-                    hoaDon.setSdt(sdt);
-                    hoaDon.setTennguoinhan(ten);
-                    hoaDonDAO.save(hoaDon);
-
-                    chiTietHoaDon.setMactg(entry.getValue().getChiTietGiay().getMactg());
-                    chiTietHoaDon.setMahd(hoaDon.getMahd());
-                    chiTietHoaDon.setSoluong(soluong);
-                    chiTietHoaDon.setTongtien(tongtien);
-                    chiTietHoaDonDAO.save(chiTietHoaDon);
-                }
-
-            }
-            cartItems.clear();
-            return "redirect:/hoadon/index";
-        }
-
-    }
-
-    public int totalPrice(HashMap<Integer, Cart> cartItems) {
-        int count = 0;
-        for (Map.Entry<Integer, Cart> list : cartItems.entrySet()) {
-            int mag =list.getValue().getChiTietGiay().getMag();
-            Giay giay = giayDAO.getById(mag);
-            count += giay.getGia()* list.getValue().getSoluong();
-        }
-        return count;
     }
 
 }

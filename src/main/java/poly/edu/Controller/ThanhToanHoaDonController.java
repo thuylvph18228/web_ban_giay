@@ -93,6 +93,19 @@ public class ThanhToanHoaDonController {
             String date = String.valueOf(java.time.LocalDate.now());
             KhachHang kh = khachHangDAO.findBySdt(sdt);
 
+//            ChiTietGiay ctg = chiTietGiayDAO.getById(mactg);
+//            if(soluong>ctg.getSoluong()){
+//                model.addAttribute("message", "Số lượng bạn muốn mua lớn hơn số lượng trong kho");
+//                List<GioHang> listgh =gioHangDAO.findAll();
+//                model.addAttribute("listgh", listgh);
+//                List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
+//                model.addAttribute("listctg", listctg);
+//                return "/giohang/index";
+//            }else {
+//
+//                ctg.setSoluong(ctg.getSoluong() - soluong);
+//                chiTietGiayDAO.save(ctg);
+//            }
             if (kh != null) {
                 if (httt == 1) {
                     hoadon.setManv(1);
