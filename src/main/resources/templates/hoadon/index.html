@@ -35,7 +35,14 @@
                     <td th:text="${hd.ngaynhan}"></td>
                     <td th:text="${hd.sdt}"></td>
                     <td th:text="${hd.diachi}"></td>
+                    <td colspan="2">
+                        <a class="btn btn-outline-primary"
+                           th:href="@{'/hoadon/edit/'+${hd.mahd}}">Sửa</a>
+                        <a class="btn btn-outline-danger"
+                           th:href="@{'/hoadon/delete/'+${hd.mahd}}">Xoá</a>
+                    </td>
                 </tr>
+
                 </tbody>
             </table>
             <br>

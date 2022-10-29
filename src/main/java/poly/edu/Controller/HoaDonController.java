@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,11 +37,14 @@ public class HoaDonController {
     private GiayDAO giayDAO;
 
     @Autowired
+    HttpSession httpSession;
+    @Autowired
     private ChiTietGiayDAO chiTietGiayDAO;
     @Autowired
     private SizeDAO sizeDAO;
     @GetMapping("/hoadon/index")
     public String listhd(Model model) {
+
         List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
         model.addAttribute("listcthd", listcthd);
 
@@ -58,8 +62,10 @@ public class HoaDonController {
         model.addAttribute("listctg", listctg);
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
+
         return ("hoadon/index");
     }
+
     @GetMapping("/hoadon/create")
     public String create(@ModelAttribute("hoadon") HoaDon hoaDon, Model model) {
 
@@ -117,5 +123,6 @@ public class HoaDonController {
         hoaDonDAO.save(hoaDon);
         return "redirect:/hoadon/index";
     }
+
 
 }

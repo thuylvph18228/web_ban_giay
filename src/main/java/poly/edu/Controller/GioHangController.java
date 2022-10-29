@@ -113,6 +113,13 @@ public class GioHangController {
         return "giohang/thanhtoan";
     }
 
+//    @GetMapping("/hoadonfindsdt")
+//    public String findBySdt( Model model,@RequestParam("sdt") int sdt){
+//        List<HoaDon> lishd = hoaDonDAO.findBySdt(sdt);
+//        model.addAttribute("listhd", lishd);
+//        return "hoadon/hdkh";
+//    }
+
     @PostMapping("/savetthd")
     public String savett(ModelMap mm, HttpSession session, @Valid @ModelAttribute("hoaDon") HoaDon hoaDon,
                          BindingResult bindingResult, Model model,
@@ -129,6 +136,8 @@ public class GioHangController {
         }
 
         if (bindingResult.hasErrors()) {
+            List<HoaDon> listhd = hoaDonDAO.findAll();
+            model.addAttribute("listhd", listhd);
             List<Giay> listg = giayDAO.findAll();
             model.addAttribute("listg", listg);
             List<Size> listsize = sizeDAO.findAll();
@@ -179,8 +188,23 @@ public class GioHangController {
                 }
 
             }
+            List<HoaDon> listhd = hoaDonDAO.findBySdt(sdt);
+            model.addAttribute("listhd", listhd);
+            listhd = hoaDonDAO.findByMa(hoaDon.getMahd());
+            model.addAttribute("listhdkh", listhd);
+            List<ThanhToan> listtt = thanhToanDAO.findAll();
+            model.addAttribute("listtt", listtt);
+            List<Giay> listg = giayDAO.findAll();
+            model.addAttribute("listg", listg);
+
+            List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
+            model.addAttribute("listcthd", listcthd);
+            List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+            model.addAttribute("listctg", listctg);
+            List<Size> lists = sizeDAO.findAll();
+            model.addAttribute("lists", lists);
             cartItems.clear();
-            return "redirect:/hoadon/index";
+            return "hoadon/hdkh";
         }
 
     }
