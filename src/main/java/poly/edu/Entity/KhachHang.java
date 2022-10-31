@@ -26,10 +26,7 @@ public class KhachHang {
     private String ten;
 
 
-<<<<<<<<< Temporary merge branch 1
 
-=========
->>>>>>>>> Temporary merge branch 2
     @NotBlank(message = "Không được để trống địa chỉ")
     @Column(name="diachi")
     private String diachi;

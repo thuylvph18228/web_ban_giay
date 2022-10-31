@@ -52,8 +52,13 @@ public class CartController {
         return "giohang/giohangkhach";
     }
 
+
+
+
+
     @PostMapping("/addproduct")
     public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("mactg") int mactg, Model model) {
+
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
@@ -83,7 +88,10 @@ public class CartController {
         model.addAttribute("savetthd", "/savetthd");
         session.setAttribute("myCartItems",cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
-        return "giohang/giohangkhach";
+
+        System.out.println(cartItems);
+        return "redirect:/listcart";
+
     }
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
@@ -152,7 +160,6 @@ public class CartController {
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
-<<<<<<<<< Temporary merge branch 1
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
 
@@ -164,12 +171,6 @@ public class CartController {
 
 
 
-=========
-
-        session.setAttribute("myCartItems", cartItems);
-        session.setAttribute("myCartToTal", totalPrice(cartItems));
-        return "giohang/giohangkhach";
->>>>>>>>> Temporary merge branch 2
     }
 
     @GetMapping("/removecart/{mactg}")
@@ -182,8 +183,6 @@ public class CartController {
             cartItems.remove(mactg);
             model.addAttribute("message", "Xóa sản phẩm thành công");
         }
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
         model.addAttribute("listsize", listsize);
@@ -193,11 +192,8 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/listcart";
     }
-<<<<<<<<< Temporary merge branch 1
     @GetMapping("/viewfindcart")
     public String viewFindCart(Model model) {
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
         model.addAttribute("yourorder", "/yourorder");
         return "hoadon/viewbysdt";
     }
@@ -206,22 +202,18 @@ public class CartController {
 
         List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
         List<KhachHang> khachHangList =khachHangDAO.findAll();
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
         model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("hoaDonList", hoaDonList);
         return "hoadon/findhdkhach";
     }
     @GetMapping("/purchasedproduct/{mahd}")
     public String purchasedproduct(@PathVariable("mahd") int mahd, Model model) {
-     List<ChiTietGiay> chiTietGiayList =  chiTietGiayDAO.findByMahd(mahd);
-     List<ChiTietHoaDon> chiTietHoaDonList =  chitiethoadondao.findByMahd(mahd);
+        List<ChiTietGiay> chiTietGiayList =  chiTietGiayDAO.findByMahd(mahd);
+        List<ChiTietHoaDon> chiTietHoaDonList =  chitiethoadondao.findByMahd(mahd);
 
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
 
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
         model.addAttribute("chiTietHoaDonList", chiTietHoaDonList);
         model.addAttribute("chiTietGiayList", chiTietGiayList);
         model.addAttribute("listsize", listsize);
@@ -229,7 +221,4 @@ public class CartController {
 
         return "hoadon/purchasedproduct";
     }
-=========
-
->>>>>>>>> Temporary merge branch 2
 }
