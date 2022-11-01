@@ -88,8 +88,8 @@ public class CartController {
         if (cartItems == null) {
             cartItems = new HashMap<>();
         }
-        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
 
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
         if (chiTietGiay != null) {
             if (cartItems.containsKey(mactg)) {
                 Cart item = cartItems.get(chiTietGiay.getMactg());
