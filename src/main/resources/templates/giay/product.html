@@ -3,12 +3,14 @@
 <body>
 <main>
     <div class="container row">
-        <div th:each="g : ${listg}" class="card mt-2 col-sm-3">
+        <div th:block th:each="g : ${listg}" class="card mt-2 col-sm-3">
             <img class="mt-2" th:src="@{${ g.anh}}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${ g.ten}"></h5>
                 <p class="card-text" th:text="${ g.gia}"></p>
-                <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-success">Buy</a>
+                <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-primary">
+                    <img src="https://img.icons8.com/external-anggara-glyph-anggara-putra/344/external-add-cart-ecommerce-anggara-glyph-anggara-putra.png" width="30" height="24"></a>
+                <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-danger">Mua ngay</a>
             </div>
         </div>
     </div>
