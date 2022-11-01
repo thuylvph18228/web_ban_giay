@@ -12,6 +12,7 @@
                     <input name="tongtien" type="text" hidden th:value="${session.myCartToTal}">
                     <div th:each="s : ${session.myCartItems}">
                         <input hidden name="soluong" th:value="${s.value.soluong}">
+                        <input hidden name="mactg" th:value="${s.value.chiTietGiay.mactg}">
                     </div>
                     <div>
                         <label>Họ và tên:</label>

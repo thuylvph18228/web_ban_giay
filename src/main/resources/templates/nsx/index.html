@@ -16,8 +16,8 @@
             <tr th:each=" nsx :${listnsx}">
               <td th:text="${nsx.ten}"></td>
               <td colspan="2">
-                <a class="btn btn-outline-primary" th:href="@{'/nsx/edit/'+${nsx.mas}}">Sửa</a>
-                <a class="btn btn-outline-danger" th:href="@{'/nsx/delete/'+${nsx.mas}}">Xoá</a>
+                <a class="btn btn-outline-primary" th:href="@{'/nsx/edit/'+${nsx.mansx}}">Sửa</a>
+                <a class="btn btn-outline-danger" th:href="@{'/nsx/delete/'+${nsx.mansx}}">Xoá</a>
               </td>
             </tr>
           </tbody>

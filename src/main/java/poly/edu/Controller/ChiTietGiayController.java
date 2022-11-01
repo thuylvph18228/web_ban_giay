@@ -1,13 +1,13 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
@@ -33,14 +33,34 @@ public class ChiTietGiayController {
     GiayDAO gdao;
 
     @GetMapping("/chitietgiay/index")
-    public String index(Model model){
-        List<ChiTietGiay> listctg = ctgdao.findAll();
+    public String index(Model model,
+                        @RequestParam(name = "page", defaultValue = "0") int page,
+                        @RequestParam(name = "size", defaultValue = "10") int size){
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = gdao.findAll();
 
-        model.addAttribute("listctg", listctg);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ChiTietGiay> p = this.ctgdao.findAll(pageable);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/chitietgiay/index?page=";
+
+        model.addAttribute("listctg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listsize", listsize);
         model.addAttribute("listnsx", listnsx);
         model.addAttribute("listlg", listlg);

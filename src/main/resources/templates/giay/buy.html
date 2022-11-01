@@ -8,6 +8,10 @@
         <div class="text-center">
         <h1>Chọn thông tin sản phầm</h1>
         <img class="" th:each="giay: ${giay}"   th:src="${giay.anh}">
+            <div  th:each="giay: ${giay}">
+                <label   class="fw-bold">Tên giày:</label>
+                <label th:text="${giay.ten}"></label>
+            </div>
             <div >
             <label   class="fw-bold" th:each="giay: ${giay}">Giá:</label>
             <label  th:text="${giay.gia}"></label>
@@ -26,9 +30,11 @@
                     </div>
                 </select>
             </div>
-            <div  th:each="giay: ${giay}">
-                <label   class="fw-bold">Tên giày:</label>
-                <label th:text="${giay.ten}"></label>
+            <div th:each="g: ${giay}">
+                <label class="fw-bold">Số lượng: </label>
+                <input type="number" name="soluong">
+                <label th:each="ctg : ${listctg}" th:if="${g.mag}==${ctg.mag}" th:text="${ctg.soluong}"></label>
+                <label> sản phẩm có sẵn</label>
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>

@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import poly.edu.DAO.ChiTietGiayDAO;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.GioHangDAO;
-import poly.edu.DAO.SizeDAO;
+import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
@@ -23,26 +20,35 @@ public class CartController {
     public GioHangDAO gioHangDAO;
 
     @Autowired
-    public SizeDAO sdao;
+    public SizeDAO sizeDAO;
 
     @Autowired
-    public GiayDAO giaydao;
+    public GiayDAO giayDAO;
 
     @Autowired
     public ChiTietGiayDAO chiTietGiayDAO;
 
+    @Autowired
+    public NsxDAO nsxDAO;
+
+    @Autowired
+    public HoaDonDAO hoaDonDAO;
+
+    @Autowired
+    public KhachHangDAO khachHangDAO;
+
+    @Autowired
+    public ChiTietHoaDonDAO chiTietHoaDonDAO;
+
     @GetMapping("/listcart")
     public String list(Model model) {
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
         model.addAttribute("savetthd", "/savetthd");
         return "giohang/giohangkhach";
     }
-
-
-
 
 
     @PostMapping("/addproduct")
@@ -68,8 +74,8 @@ public class CartController {
             }
             model.addAttribute("message", "Thêm sản phẩm vào giỏ hàng thành công");
         }
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
         model.addAttribute("savetthd", "/savetthd");
@@ -85,7 +91,7 @@ public class CartController {
         int count = 0;
         for (Map.Entry<Integer, Cart> list : cartItems.entrySet()) {
             int mag = list.getValue().getChiTietGiay().getMag();
-            Giay giay = giaydao.getById(mag);
+            Giay giay = giayDAO.getById(mag);
             count += giay.getGia() * list.getValue().getSoluong();
         }
         return count;
@@ -101,8 +107,8 @@ public class CartController {
         }
         ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
         session.setAttribute("myCartItems", cartItems);
-        List<Giay> listg = giaydao.findAll();
-        List<Size> lists = sdao.findAll();
+        List<Giay> listg = giayDAO.findAll();
+        List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
         model.addAttribute("chiTietGiay", chiTietGiay);
         model.addAttribute("listg", listg);
@@ -123,8 +129,8 @@ public class CartController {
                 if (soluongcon < soluong){
                     model.addAttribute("error", "Số lượng bạn muốn mua không còn đủ");
 
-                    List<Size> listsize = sdao.findAll();
-                    List<Giay> listg = giaydao.findAll();
+                    List<Size> listsize = sizeDAO.findAll();
+                    List<Giay> listg = giayDAO.findAll();
                     model.addAttribute("listsize", listsize);
                     model.addAttribute("listg", listg);
                     return "giohang/giohangkhach";
@@ -134,8 +140,8 @@ public class CartController {
                 model.addAttribute("message", "Cập nhập số lượng thành công");
             }
         }
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
 
@@ -160,8 +166,8 @@ public class CartController {
             cartItems.remove(mactg);
             model.addAttribute("message", "Xóa sản phẩm thành công");
         }
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
         session.setAttribute("myCartItems", cartItems);
@@ -173,8 +179,8 @@ public class CartController {
     public String RemoveAll(ModelMap mm,Model model, HttpSession session) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         cartItems.remove(cartItems);
-        List<Size> listsize = sdao.findAll();
-        List<Giay> listg = giaydao.findAll();
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
         session.setAttribute("myCartItems", cartItems);
@@ -182,4 +188,38 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/listcart";
     }
+    @GetMapping("/viewfindcart")
+    public String viewFindCart(Model model) {
+        List<Nsx> listnsx = nsxDAO.findAll();
+        model.addAttribute("listnsx", listnsx);
+        model.addAttribute("yourorder", "/yourorder");
+        return "hoadon/viewbysdt";
+    }
+    @GetMapping("/yourorder")
+    public String yourorder(@RequestParam("sdt") String sdt,Model model) {
+        List<Nsx> listnsx = nsxDAO.findAll();
+        model.addAttribute("listnsx", listnsx);
+//        List<HoaDon> hoaDonList=hoaDonDAO.findBySdt(sdt);
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        model.addAttribute("khachHangList", khachHangList);
+//        model.addAttribute("hoaDonList", hoaDonList);
+        return "hoadon/findhdkhach";
+    }
+    @GetMapping("/purchasedproduct/{mahd}")
+    public String purchasedproduct(@PathVariable("mahd") int mahd, Model model) {
+        List<ChiTietGiay> chiTietGiayList =  chiTietGiayDAO.findByMahd(mahd);
+        List<ChiTietHoaDon> chiTietHoaDonList =  chiTietHoaDonDAO.findByMahd(mahd);
+
+        List<Size> listsize = sizeDAO.findAll();
+        List<Giay> listg = giayDAO.findAll();
+        List<Nsx> listnsx = nsxDAO.findAll();
+        model.addAttribute("listnsx", listnsx);
+        model.addAttribute("chiTietHoaDonList", chiTietHoaDonList);
+        model.addAttribute("chiTietGiayList", chiTietGiayList);
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listg", listg);
+
+        return "hoadon/purchasedproduct";
+    }
+
 }
