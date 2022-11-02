@@ -23,9 +23,8 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
             " where k.sdt = ?1 group by h.mahd")
     List<HoaDon> findBySdt(String sdt);
 
-//    @Query("SELECT h FROM HoaDon h WHERE h.makh = ?1")
-//    List<HoaDon> findByMaKH(int makh);
-
+    @Query("SELECT h FROM HoaDon h where h.trangthaidh =1 or h.trangthaidh=0")
+    List<HoaDon> findByTrangthaidh();
 
     @Query(" SELECT e FROM HoaDon e  WHERE e.makh = ?1")
     List<HoaDon> findByMakh(int makh);

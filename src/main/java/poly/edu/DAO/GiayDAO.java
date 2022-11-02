@@ -13,17 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 public interface GiayDAO extends JpaRepository<Giay, Integer> {
-    @Query("SELECT g FROM Giay g")
-    Page<Giay> findCustomers(Pageable pageable);
-    public Giay findByTenEquals(String ten) ;
-
-    @Query("SELECT e FROM Giay e WHERE e.mag = ?1")
-    List<Giay> findByMag(int mag);
-
-    @Query("SELECT e FROM Giay e WHERE e.ten = ?1")
-    List<Giay> findByName(String teng);
-
-
 
 
 

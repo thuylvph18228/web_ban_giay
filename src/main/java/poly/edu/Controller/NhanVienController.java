@@ -60,8 +60,10 @@ public class NhanVienController {
     }
 
     @PostMapping("/savenv")
-    public String savenv(@Valid @ModelAttribute("nhanvien") NhanVien nhanvien, BindingResult bindingResult){
+    public String savenv(@Valid @ModelAttribute("nhanvien") NhanVien nhanvien ,Model model , BindingResult bindingResult){
         if(bindingResult.hasErrors()){
+            List<ChucVu> listcv = cvdao.findAll();
+            model.addAttribute("listcv", listcv);
             return "nhanvien/save";
         }else {
             nvdao.save(nhanvien);

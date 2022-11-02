@@ -66,7 +66,7 @@ public class GiayController {
     @GetMapping("/giay/product")
     public String product(Model model,
                           @RequestParam(name = "page", defaultValue = "0") int page,
-                          @RequestParam(name = "size", defaultValue = "4") int size) {
+                          @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
@@ -96,17 +96,36 @@ public class GiayController {
 
     @GetMapping("/giayfindname")
     public String findbyName(Model model, @RequestParam("tengiay") String tengiay) {
-        List<Giay> listg = giaydao.findByName(tengiay);
+        List<Giay> listg = giaydao.findByNameLike(tengiay);
         model.addAttribute("listg", listg);
         return "giay/product";
     }
 
     @GetMapping("/giayfindnsx/{mansx}")
-    public String findbyNSX(@PathVariable("mansx") int mansx, Model model) {
+    public String findbyNSX(@PathVariable("mansx") int mansx, Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
-        List<Giay> listg = giaydao.findByNsx(mansx);
-        model.addAttribute("listg", listg);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = (Page<Giay>) giaydao.findByNsx(mansx);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/giay/product?page=";
+
+        model.addAttribute("data", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
         return "giay/product";
     }
 

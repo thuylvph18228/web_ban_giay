@@ -43,7 +43,7 @@ public class CartController {
     @Autowired
     public ChiTietGiayDAO chiTietGiayDAO;
 
-    @GetMapping("/listcart")
+    @GetMapping("/cart/listcart")
     public String list(Model model , HttpSession session) {
         List<Size> listsize = sdao.findAll();
         List<Giay> listg = giaydao.findAll();
@@ -61,7 +61,7 @@ public class CartController {
 
 
 
-    @GetMapping("/giay/buy/{mag}")
+    @GetMapping("/cart/buy/{mag}")
     public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
         List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
         Giay giay = giaydao.getById(mag);
@@ -76,11 +76,11 @@ public class CartController {
         model.addAttribute("listnsx", listnsx);
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
-        model.addAttribute("addproduct", "/addproduct");
+        model.addAttribute("addproduct", "/cart/addproduct");
 
         return "giay/buy";
     }
-    @PostMapping("/addproduct")
+    @PostMapping("/cart/addproduct")
     public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("soluong") int soluong,
     @RequestParam("mactg") int mactg , Model model  ) {
 
@@ -109,7 +109,7 @@ public class CartController {
                     model.addAttribute("listnsx", listnsx);
                     model.addAttribute("listlg", listlg);
                     model.addAttribute("listg", listg);
-                    model.addAttribute("addproduct", "/addproduct");
+                    model.addAttribute("addproduct", "/cart/addproduct");
 
                     return "giay/buy";
                 }else {
@@ -133,7 +133,7 @@ public class CartController {
                     model.addAttribute("listnsx", listnsx);
                     model.addAttribute("listlg", listlg);
                     model.addAttribute("listg", listg);
-                    model.addAttribute("addproduct", "/addproduct");
+                    model.addAttribute("addproduct", "/cart/addproduct");
 
                     return "giay/buy";
                 }else {
@@ -157,7 +157,7 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
 
         System.out.println( "size :"+cartItems.size());
-        return "redirect:/listcart";
+        return "redirect:/cart/listcart";
 
     }
 
@@ -191,7 +191,7 @@ public class CartController {
 //        return "giohang/save";
 //    }
 
-    @GetMapping("/updatecart/{mactg}")
+    @GetMapping("/cart/updatecart/{mactg}")
     public String updatecart(@Valid @ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session,
                     @RequestParam("soluong") String soluongmua ,    @PathVariable("mactg") int mactg) {
         int soluong   = Integer.parseInt(soluongmua);
@@ -228,13 +228,10 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         System.out.println(cartItems);
         System.out.println(totalPrice(cartItems));
-        return "redirect:/listcart";
-
-
-
+        return "redirect:/cart/listcart";
     }
 
-    @GetMapping("/removecart/{mactg}")
+    @GetMapping("/cart/removecart/{mactg}")
     public String viewRemove(ModelMap mm,Model model, HttpSession session, @PathVariable("mactg") int mactg) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
@@ -251,14 +248,14 @@ public class CartController {
         session.setAttribute("myCartItems", cartItems);
         session.setAttribute("myCartToTal",totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "redirect:/listcart";
+        return "redirect:/cart/listcart";
     }
-    @GetMapping("/viewfindcart")
+    @GetMapping("/cart/viewfindcart")
     public String viewFindCart(Model model) {
-        model.addAttribute("yourorder", "/yourorder");
+        model.addAttribute("yourorder", "/cart/yourorder");
         return "hoadon/viewbysdt";
     }
-    @GetMapping("/yourorder")
+    @GetMapping("/cart/yourorder")
     public String yourorder(@RequestParam("sdt") String sdt,Model model) {
 
         List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
@@ -267,7 +264,7 @@ public class CartController {
         model.addAttribute("hoaDonList", hoaDonList);
         return "hoadon/findhdkhach";
     }
-    @GetMapping("/purchasedproduct/{mahd}")
+    @GetMapping("/cart/purchasedproduct/{mahd}")
     public String purchasedproduct(@PathVariable("mahd") int mahd, Model model) {
         List<ChiTietGiay> chiTietGiayList =  chiTietGiayDAO.findByMahd(mahd);
         List<ChiTietHoaDon> chiTietHoaDonList =  chitiethoadondao.findByMahd(mahd);

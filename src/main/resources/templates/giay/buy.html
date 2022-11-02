@@ -8,7 +8,7 @@
         <div class="text-center">
 
         <h1>Chọn thông tin sản phầm</h1>
-        <img class="" th:each="giay: ${giay}"   th:src="${giay.anh}">
+        <img class="" th:each="giay: ${giay}"   th:src="${giay.anh}"  width="430" height="400">
             <div >
             <label   class="fw-bold" th:each="giay: ${giay}">Tên:</label>
             <label  th:text="${giay.ten}"></label>
@@ -39,8 +39,8 @@
             </div>
             <div class="form-check">
                 <label>Số lượng mua</label>
-                <input  type="number"name="soluong">
-                <span class="text-danger" th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
+                <input  type="number" value="1" name="soluong">
+
                 <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
             </div>
         </div>

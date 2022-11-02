@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/index :: dynamic(~{::main})}">
 
 <body>
     <main>
-        <div class="container row mt-3">
+        <div>
             <h1>Nhân viên</h1>
             <a class="btn btn-primary" th:href="@{/nhanvien/create}">Thêm mới</a>
             <form>
@@ -26,7 +26,7 @@
                         <tr th:each="nv : ${listnv}">
                             <td th:text="${nv.ten}"></td>
                             <td th:each="cv: ${listcv}" th:if="${nv.macv}==${cv.macv}" th:text="${cv.tencv}"></td>
-                            <td th:text="${#dates.format(nv.ngaysinh, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${nv.ngaysinh}"></td>
                             <td>
                                 <p th:if="${nv.gioitinh}==1">Nam</p>
                                 <p th:if="${nv.gioitinh}==0">Nữ</p>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/index :: dynamic(~{::main})}">
 
 <body>
     <main>
-        <div class="container row mt-3">
+        <div>
             <form method="post" th:action="${savectg}" th:object="${chitietgiay}">
                 <h1>Chi Tiết Giày</h1>
                 <input hidden type="text" th:field="*{mactg}">

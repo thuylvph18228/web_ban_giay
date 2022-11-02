@@ -65,6 +65,26 @@ public class HoaDonController {
 
         return ("hoadon/index");
     }
+    @GetMapping("/hoadon/findtrangthai")
+    public String findtrangthai( Model model){
+        List<HoaDon> listhd = hoaDonDAO.findByTrangthaidh();
+        model.addAttribute("listhd", listhd);
+        List<NhanVien> listnv = nhanVienDAO.findAll();
+        model.addAttribute("listnv", listnv);
+        List<KhachHang> listkh = khachHangDAO.findAll();
+        model.addAttribute("listkh", listkh);
+        List<ThanhToan> listtt = thanhToanDAO.findAll();
+        model.addAttribute("listtt", listtt);
+        List<Giay> listg = giayDAO.findAll();
+        model.addAttribute("listg", listg);
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+        model.addAttribute("listctg", listctg);
+        List<Size> lists = sizeDAO.findAll();
+        model.addAttribute("lists", lists);
+
+        return "hoadon/findhdkhach";
+    }
+
 
     @GetMapping("/hoadon/create")
     public String create(@ModelAttribute("hoadon") HoaDon hoaDon, Model model) {
@@ -89,10 +109,8 @@ public class HoaDonController {
         HoaDon hoaDon = hoaDonDAO.getById(mahd);
         List<KhachHang> listkh = khachHangDAO.findAll();
         model.addAttribute("listkh", listkh);
-
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
-
         List<ThanhToan> listtt = thanhToanDAO.findAll();
 
         model.addAttribute("hoadon", hoaDon);
