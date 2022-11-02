@@ -41,11 +41,13 @@ public class HoaDon {
     @Column(name="ngaynhan")
     private String ngaynhan;
 
-    @Column(name="trangthaihd")
-    private int trangthaihd;
 
     @Column(name="trangthaidh")
     private int trangthaidh;
+
+    @Column(name="trangthaihd")
+    private int trangthaihd;
+
 
     @Column(name="tongtien")
     private int tongtien;

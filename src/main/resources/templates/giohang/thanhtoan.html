@@ -5,7 +5,7 @@
 <main>
     <div class="container row mt-3">
         <div th:replace="~{/giohang/giohangkhach :: cart_frag}"></div>
-        <form method="post" th:action="${savetthd}" th:object="${khachHang}">
+        <form method="post" th:action="${savetthd}" th:object="${giohang}">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
                     <h3>Thông tin liên hệ</h3>
@@ -14,39 +14,28 @@
                         <input hidden name="soluong" th:value="${s.value.soluong}">
                         <input hidden name="mactg" th:value="${s.value.chiTietGiay.mactg}">
                     </div>
-                    <div>
-                        <label>Họ và tên:</label>
-                        <span>
-                        <input type="text" id="ten" name="ten" th:field="*{ten}" class="form-control" placeholder="Họ và tên của bạn">
-                        <span class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+                    <label>Họ và tên:</label>
+                    <span>
+                            <input type="text" id="ten" name="ten" class="form-control" placeholder="Họ và tên của bạn">
                         </span>
-                    </div>
-                    <div>
-                        <label>Số điện thoại:</label>
-                        <span>
-                            <input type="text" id="sdt" th:field="*{sdt}" name="sdt" class="form-control"
+                    <label>Số điện thoại:</label>
+                    <span>
+                            <input type="text" id="sdt" name="sdt" class="form-control"
                                    placeholder="Số điện thoại của bạn">
-                        <span class="text-danger" th:if="${#fields.hasErrors('sdt')}" th:errors="*{sdt}"></span>
                         </span>
-                    </div>
-                    <div>
-                        <label>Địa chỉ:</label>
-                        <span>
-                            <input type="text" id="diachi" th:field="*{diachi}" name="diachi" class="form-control"
+                    <label>Địa chỉ:</label>
+                    <span>
+                            <input type="text" id="diachi" name="diachi" class="form-control"
                                    placeholder="Địa chỉ của bạn">
-                        <span class="text-danger" th:if="${#fields.hasErrors('diachi')}" th:errors="*{diachi}"></span>
                         </span>
-                    </div>
-                    <div>
-                        <label>Hình thức thanh toán</label>
-                        <select class="form-select" id="httt" name="httt">
-                            <option th:each="httt:${listtt}" th:value="${httt.mahttt}" th:text="${httt.ten}">
-                            </option>
-                        </select>
-                    </div>
+                    <label>Hình thức thanh toán</label>
+                    <select class="form-select" id="httt" name="httt">
+                        <option th:each="httt:${listtt}" th:value="${httt.mahttt}" th:text="${httt.ten}">
+                        </option>
+                    </select>
                 </div>
             </div>
-            <button class="btn btn-primary mt-3" type="submit">Thanh toán</button>
+            <button class="btn btn-primary" type="submit">Thanh toán</button>
         </form>
     </div>
 </main>

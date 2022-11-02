@@ -3,7 +3,7 @@
 
 <body>
 <main>
-    <div class="container row mt-3">
+    <div class="row mt-3">
         <h1>Hóa Đơn thanh toán</h1>
         <form>
             <table class="table table-bordered">
@@ -15,6 +15,7 @@
                     <th>Ngày thanh toán</th>
                     <th>Ngày ship</th>
                     <th>Ngày nhận</th>
+                    <th>Sản phẩm</th>
                     <th>Sđt</th>
                     <th>Địa chỉ</th>
                     <th>Tổng tiền</th>
@@ -25,11 +26,15 @@
                 <tbody>
                 <tr th:each="hd : ${listhd}">
                     <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"></td>
+
                     <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
                     <td th:text="${hd.ngaytao}"></td>
                     <td th:text="${hd.ngaythanhtoan}"></td>
                     <td th:text="${hd.ngayship}"></td>
                     <td th:text="${hd.ngaynhan}"></td>
+
+                    <td > <p></p></td>
+
                     <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.sdt}"></td>
                     <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.diachi}"></td>
                     <td th:text="${hd.tongtien}"></td>
@@ -37,6 +42,7 @@
                         <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
                         <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
                     </td>
+
                 </tr>
                 </tbody>
             </table>

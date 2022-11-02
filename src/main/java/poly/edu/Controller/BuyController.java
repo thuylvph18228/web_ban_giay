@@ -72,25 +72,7 @@ public class BuyController {
         return "giohang/savekh";
     }
 
-    @GetMapping("/giay/buy/{mag}")
-    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
-        List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
-        Giay giay = giaydao.getById(mag);
-        List<Size> listsize = sdao.findAll();
-        List<Nsx> listnsx = nsxdao.findAll();
-        List<LoaiGiay> listlg = lgdao.findAll();
-        List<Giay> listg = giaydao.findAll();
 
-        model.addAttribute("giay", giay);
-        model.addAttribute("listctg", listctg);
-        model.addAttribute("listsize", listsize);
-        model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listlg", listlg);
-        model.addAttribute("listg", listg);
-        model.addAttribute("addproduct", "/addproduct");
-
-        return "giay/buy";
-    }
 
     @PostMapping("/savegiohang")
     public String savegh(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, GioHang gioHang) {

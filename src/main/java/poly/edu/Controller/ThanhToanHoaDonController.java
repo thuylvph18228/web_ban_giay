@@ -28,6 +28,9 @@ public class ThanhToanHoaDonController {
     SizeDAO sizeDAO;
 
     @Autowired
+    NsxDAO nsxdao;
+
+    @Autowired
     ChiTietGiayDAO chiTietGiayDAO;
 
     @Autowired
@@ -58,6 +61,8 @@ public class ThanhToanHoaDonController {
         List<ThanhToan> listtt = thanhToanDAO.findAll();
         model.addAttribute("listtt", listtt);
 
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
         session.setAttribute("myCartToTal", totalPrice(cartItems));
         model.addAttribute("savetthd", "/savetthd");
         return "giohang/thanhtoan";
@@ -121,7 +126,7 @@ public class ThanhToanHoaDonController {
                     hoadon.setMakh(kh.getMakh());
                     hoadon.setMahttt(httt);
                     hoadon.setNgaytao(date);
-                    hoadon.setTrangthaihd(0);
+                    hoadon.setTrangthaidh(0);
                     hoadon.setTrangthaidh(0);
                     hoadon.setTongtien(tongtien);
                     hoaDonDAO.save(hoadon);
@@ -209,6 +214,8 @@ public class ThanhToanHoaDonController {
             model.addAttribute("listctg", listctg);
             List<Size> lists = sizeDAO.findAll();
             model.addAttribute("lists", lists);
+            List<Nsx> listnsx = nsxdao.findAll();
+            model.addAttribute("listnsx", listnsx);
 
 
             cartItems.clear();

@@ -3,45 +3,51 @@
       xmlns="http://www.w3.org/1999/html">
 <body>
 <main>
-<div class="container row mt-3">
-    <form method="post" th:action="${addproduct}" th:object="${chitietgiay}">
-        <div class="text-center">
-        <h1>Chọn thông tin sản phầm</h1>
-        <img class="" th:each="giay: ${giay}"   th:src="${giay.anh}">
-            <div  th:each="giay: ${giay}">
-                <label   class="fw-bold">Tên giày:</label>
-                <label th:text="${giay.ten}"></label>
-            </div>
-            <div >
-            <label   class="fw-bold" th:each="giay: ${giay}">Giá:</label>
-            <label  th:text="${giay.gia}"></label>
-            </div>
-            <div>
-                <label  class="fw-bold">Mô tả:</label>
-            <label  th:text="${giay.mota}"></label>
-            </div>
-        <div class="form-check">
-            <div  >
-                <label  class="fw-bold"> Chọn size</label>
-                <select  class=""  name="mactg">
-                    <div th:each="size: ${listsize}">
-                    <option th:each="ctg: ${listctg}"  th:value="${ctg.mactg}" th:if="${ctg.mas}==${size.mas}" th:text="${size.ten}">
-                    </option>
-                    </div>
-                </select>
-            </div>
-            <div th:each="g: ${giay}">
-                <label class="fw-bold">Số lượng: </label>
-                <input type="number" name="soluong">
-                <label th:each="ctg : ${listctg}" th:if="${g.mag}==${ctg.mag}" th:text="${ctg.soluong}"></label>
-                <label> sản phẩm có sẵn</label>
-            </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
-        </div>
-    </form>
+    <div class="container row mt-3">
+        <form method="post" th:action="${addproduct}" th:object="${chitietgiay}">
+            <div class="text-center">
 
-</div>
+                <h1>Chọn thông tin sản phầm</h1>
+                <img class="" th:each="giay: ${giay}" th:src="${giay.anh}">
+                <div>
+                    <label class="fw-bold" th:each="giay: ${giay}">Tên:</label>
+                    <label th:text="${giay.ten}"></label>
+                </div>
+                <div>
+                    <label class="fw-bold" th:each="giay: ${giay}">Giá:</label>
+                    <label th:text="${giay.gia}"></label>
+                </div>
+                <div>
+                    <label class="fw-bold">Mô tả:</label>
+                    <label th:text="${giay.mota}"></label>
+                </div>
+                <div class="form-check">
+                    <div>
+                        <label class="fw-bold"> Chọn size</label>
+
+                        <select class="" name="mactg">
+                            <div th:each="size: ${listsize}">
+                                <option th:each="ctg: ${listctg}" th:value="${ctg.mactg}"
+                                        th:if="${ctg.mas}==${size.mas}">
+                                    [[ ${size.ten} + ' - ' + ${ctg.soluong} + ' sản phẩm có sẵn' ]]
+                                </option>
+                            </div>
+
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <label>Số lượng mua</label>
+                        <input type="number" name="soluong">
+                        <span class="text-danger" th:if="${#fields.hasErrors('soluong')}" th:errors="*{soluong}"></span>
+                        <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
+                    </div>
+
+                </div>
+                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+            </div>
+        </form>
+
+    </div>
 
 </main>
 </body>
