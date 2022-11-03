@@ -7,7 +7,7 @@
             <img class="mt-2" th:src="@{${ g.anh}}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${ g.ten}"></h5>
-                <p class="card-text" th:text="${ g.gia}"></p>
+                <p class="card-text">[[ ${g.gia} + ' VNĐ' ]]</p>
                 <a th:href="@{'/giay/buy/'+${g.mag}}" class="btn btn-outline-success">
                     <img src="https://img.icons8.com/ios/72/add-shopping-cart--v1.png"
                          width="30" height="20">
