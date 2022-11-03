@@ -46,7 +46,7 @@ public class ThanhToanHoaDonController {
     ChiTietHoaDonDAO chiTietHoaDonDAO;
 
 
-    @GetMapping("/giohang/thanhtoan")
+    @GetMapping("/user/giohang/thanhtoan")
     public String thanhtoan(@ModelAttribute("khachHang") KhachHang khachHang, HttpSession session, Model model) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         List<Giay> listg = giayDAO.findAll();
@@ -65,7 +65,7 @@ public class ThanhToanHoaDonController {
         model.addAttribute("listnsx", listnsx);
         session.setAttribute("myCartToTal", totalPrice(cartItems));
         model.addAttribute("savetthd", "/savetthd");
-        return "giohang/thanhtoan";
+        return "user/giohang/thanhtoan";
     }
 
     @PostMapping("/savetthd")
@@ -93,7 +93,7 @@ public class ThanhToanHoaDonController {
             model.addAttribute("listtt", listtt);
             List<KhachHang> listkh = khachHangDAO.findAll();
             model.addAttribute("listkh", listkh);
-            return "giohang/thanhtoan";
+            return "user/giohang/thanhtoan";
         } else {
             HoaDon hoadon = new HoaDon();
             String date = String.valueOf(java.time.LocalDate.now());
@@ -219,7 +219,7 @@ public class ThanhToanHoaDonController {
 
 
             cartItems.clear();
-            return "hoadon/hdkh";
+            return "user/hoadon/hdkh";
         }
 
     }

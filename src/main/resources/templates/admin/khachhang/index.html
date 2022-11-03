@@ -1,0 +1,30 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div class="">
+            <h1>Khách Hàng</h1>
+            <a class="btn btn-primary" th:href="@{/admin/khachhang/create}">Thêm mới</a>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Họ và tên</th>
+                        <th>Địa chỉ</th>
+                        <th>Sđt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="kh : ${listkh}">
+                        <td th:text="${kh.ten}"></td>
+                        <td th:text="${kh.diachi}"></td>
+                        <td th:text="${kh.sdt}"></td>
+                        <td colspan="2">
+                            <a class="btn btn-outline-primary" th:href="@{'/admin/khachhang/edit/'+${kh.makh}}">Sửa</a>
+                            <a class="btn btn-outline-danger" th:href="@{'/admin/khachhang/delete/'+${kh.makh}}">Xoá</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>

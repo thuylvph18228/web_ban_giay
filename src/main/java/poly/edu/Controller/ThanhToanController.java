@@ -18,45 +18,45 @@ import java.util.List;
 public class ThanhToanController {
     @Autowired
     public ThanhToanDAO thanhToanDAO;
-    @GetMapping("/thanhtoan/index")
+    @GetMapping("/admin/thanhtoan/index")
     public String listTT(Model model) {
         List<ThanhToan> listtt = thanhToanDAO.findAll();
         model.addAttribute("listtt", listtt);
-        return ("thanhtoan/index");
+        return ("admin/thanhtoan/index");
     }
 
-    @GetMapping("/thanhtoan/create")
+    @GetMapping("/admin/thanhtoan/create")
     public String create(@ModelAttribute("thanhtoan") ThanhToan thanhToan, Model model) {
         List<ThanhToan> listt = thanhToanDAO.findAll();
         model.addAttribute("listt", listt);
         model.addAttribute("savett", "/savett");
 
-        return "thanhtoan/save";
+        return "admin/thanhtoan/save";
     }
 
-    @GetMapping("/thanhtoan/edit/{mahttt}")
+    @GetMapping("/admin/thanhtoan/edit/{mahttt}")
     public String edit(@PathVariable(name = "mahttt") int mahttt, Model model) {
         model.addAttribute("mahttt", mahttt);
         ThanhToan  thanhtoan = thanhToanDAO.getById(mahttt);
         model.addAttribute("thanhtoan", thanhtoan);
         model.addAttribute("savett", "/savett");
-        return "thanhtoan/save";
+        return "admin/thanhtoan/save";
     }
 
-    @GetMapping("/savett/delete/{mahttt}")
+    @GetMapping("/admin/savett/delete/{mahttt}")
     public String delete(@PathVariable(name = "mahttt") int mahttt) {
         thanhToanDAO.deleteById(mahttt);
-        return "redirect:/thanhtoan/index";
+        return "redirect:/admin/thanhtoan/index";
     }
 
     @PostMapping("/savett")
     public String saves(@Valid @ModelAttribute("thanhtoan")   ThanhToan thanhToan, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "thanhtoan/save";
+            return "admin/thanhtoan/save";
         }
 
         thanhToanDAO.save(thanhToan);
-        return "redirect:/thanhtoan/index";
+        return "redirect:/admin/thanhtoan/index";
     }
 
 }

@@ -20,41 +20,41 @@ public class LoaiGiayController {
     @Autowired
     LoaiGiayDAO loaigiaydao;
 
-    @GetMapping("/loaigiay/index")
+    @GetMapping("/admin/loaigiay/index")
     public String index(Model model){
         List<LoaiGiay> listlg = loaigiaydao.findAll();
         model.addAttribute("listlg", listlg);
-        return "loaigiay/index";
+        return "admin/loaigiay/index";
     }
 
-    @GetMapping("/loaigiay/create")
+    @GetMapping("/admin/loaigiay/create")
     public String create(@ModelAttribute("loaigiay")LoaiGiay loaigiay, Model model){
         model.addAttribute("savelg", "/savelg");
-        return "loaigiay/save";
+        return "admin/loaigiay/save";
     }
 
-    @GetMapping("/loaigiay/edit/{malg}")
+    @GetMapping("/admin/loaigiay/edit/{malg}")
     public String edit(@PathVariable(name="malg") int malg, Model model){
         model.addAttribute("malg", malg);
         LoaiGiay lg = loaigiaydao.getById(malg);
         model.addAttribute("loaigiay", lg);
         model.addAttribute("savelg", "/savelg");
-        return "loaigiay/save";
+        return "admin/loaigiay/save";
     }
 
-    @GetMapping("/loaigiay/delete/{malg}")
+    @GetMapping("/admin/loaigiay/delete/{malg}")
     public String delete(@PathVariable(name="malg") int malg){
         loaigiaydao.deleteById(malg);
-        return "redirect:/loaigiay/index";
+        return "redirect:/admin/loaigiay/index";
     }
 
     @PostMapping("/savelg")
     public String saveg(@Valid @ModelAttribute("loaigiay") LoaiGiay loaigiay, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "loaigiay/save";
+            return "admin/loaigiay/save";
         }else {
             loaigiaydao.save(loaigiay);
-            return "redirect:/loaigiay/index";
+            return "redirect:/admin/loaigiay/index";
         }
     }
 }

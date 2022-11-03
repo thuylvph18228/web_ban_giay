@@ -20,45 +20,45 @@ public class SizeController {
     private SizeDAO sizeDAO;
 
 
-    @GetMapping("/size/index")
+    @GetMapping("/admin/size/index")
     public String listS(Model model) {
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
-        return ("size/index");
+        return ("admin/size/index");
     }
 
-    @GetMapping("/size/create")
+    @GetMapping("/admin/size/create")
     public String create(@ModelAttribute("size") Size size, Model model) {
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
         model.addAttribute("saves", "/saves");
 
-        return "size/save";
+        return "admin/size/save";
     }
 
-    @GetMapping("/size/edit/{mas}")
+    @GetMapping("/admin/size/edit/{mas}")
     public String edit(@PathVariable(name = "mas") int mas, Model model) {
         model.addAttribute("mas", mas);
         Size size = sizeDAO.getById(mas);
         model.addAttribute("size", size);
         model.addAttribute("saves", "/saves");
-        return "size/save";
+        return "admin/size/save";
     }
 
-    @GetMapping("/size/delete/{mas}")
+    @GetMapping("/admin/size/delete/{mas}")
     public String delete(@PathVariable(name = "mas") int mas) {
         sizeDAO.deleteById(mas);
-        return "redirect:/size/index";
+        return "redirect:/admin/size/index";
     }
 
     @PostMapping("/saves")
     public String saves(@Valid @ModelAttribute("size")   Size size, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "size/save";
+            return "admin/size/save";
         }
 
         sizeDAO.save(size);
-        return "redirect:/size/index";
+        return "redirect:/admin/size/index";
     }
 
 }

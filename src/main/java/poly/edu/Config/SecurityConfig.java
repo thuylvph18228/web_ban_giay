@@ -55,8 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/listcart/**").authenticated()
-                .antMatchers("/giay/buy/**").authenticated()
+                .antMatchers("/user/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("STAF", "DIRE")
                 .antMatchers("/rest/authorities").hasRole("DIRE")
                 .anyRequest().permitAll();

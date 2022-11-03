@@ -43,7 +43,7 @@ public class BuyController {
     @Autowired
     ChiTietGiayDAO chiTietGiayDAO;
 
-    @GetMapping("/giohang/ghk")
+    @GetMapping("/user/giohang/ghk")
     public String ghk(Model model) {
 
 //        String email = (String) httpSession.getAttribute("email");
@@ -54,10 +54,10 @@ public class BuyController {
         model.addAttribute("listg", listg);
         List<KhachHang> listkh = khachHangDao.findAll();
         model.addAttribute("listkh", listkh);
-        return ("giohang/giohangkhach");
+        return ("user/giohang/giohangkhach");
     }
 
-    @GetMapping("/giohang/editkh/{magh}")
+    @GetMapping("/user/giohang/editkh/{magh}")
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDao.getById(magh);
@@ -69,7 +69,7 @@ public class BuyController {
 //        model.addAttribute("listkh", khachHang);
         model.addAttribute("giohang", gh);
         model.addAttribute("savegh", "/saveghk");
-        return "giohang/savekh";
+        return "user/giohang/savekh";
     }
 
 
@@ -82,19 +82,19 @@ public class BuyController {
         return "redirect:/giohang/indext";
     }
 
-    @GetMapping("/giohang/deleteghk/{magh}")
+    @GetMapping("/user/giohang/deleteghk/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {
         gioHangDao.deleteById(magh);
-        return "redirect:/giohang/ghk";
+        return "redirect:/user/giohang/ghk";
     }
 
     @PostMapping("/saveghk")
     public String save(@Valid @ModelAttribute("giohang") GioHang gioHang, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
 
-            return "redirect:/giohang/ghk";
+            return "redirect:/user/giohang/ghk";
         }
         gioHangDao.save(gioHang);
-        return "redirect:/giohang/ghk";
+        return "redirect:/user/giohang/ghk";
     }
 }

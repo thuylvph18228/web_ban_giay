@@ -1,0 +1,27 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div>
+            <h1>Size</h1>
+            <a class="btn btn-primary" th:href="@{/admin/size/create}">Thêm mới</a>
+
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Size</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" s :${lists}">
+                        <td th:text="${s.ten}"></td>
+                        <td colspan="2">
+                            <a class="btn btn-outline-primary" th:href="@{'/admin/size/edit/'+${s.mas}}">Sửa</a>
+                            <a class="btn btn-outline-danger" th:href="@{'/admin/size/delete/'+${s.mas}}">Xoá</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>

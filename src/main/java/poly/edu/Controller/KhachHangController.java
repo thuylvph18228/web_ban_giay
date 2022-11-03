@@ -22,45 +22,45 @@ public class KhachHangController {
     private KhachHangDAO khachHangDAO;
 
 
-    @GetMapping("/khachhang/index")
+    @GetMapping("/admin/khachhang/index")
     public String listkh(Model model) {
         List<KhachHang> listkh = khachHangDAO.findAll();
         model.addAttribute("listkh", listkh);
-        return ("khachhang/index");
+        return ("admin/khachhang/index");
     }
 
-    @GetMapping("/khachhang/create")
+    @GetMapping("/admin/khachhang/create")
     public String create(@ModelAttribute("khachhang") KhachHang khachHang, Model model) {
         List<KhachHang> listkh = khachHangDAO.findAll();
         model.addAttribute("listkh", listkh);
         model.addAttribute("savekh", "/savekh");
 
-        return "khachhang/save";
+        return "admin/khachhang/save";
     }
 
-    @GetMapping("/khachhang/edit/{makh}")
+    @GetMapping("/admin/khachhang/edit/{makh}")
     public String edit(@PathVariable(name = "makh") int makh, Model model) {
         model.addAttribute("makh", makh);
         KhachHang kh = khachHangDAO.getById(makh);
         model.addAttribute("khachhang", kh);
         model.addAttribute("savekh", "/savekh");
-        return "khachhang/save";
+        return "admin/khachhang/save";
     }
 
-    @GetMapping("/khachhang/delete/{makh}")
+    @GetMapping("/admin/khachhang/delete/{makh}")
     public String delete(@PathVariable(name = "makh") int makh) {
         khachHangDAO.deleteById(makh);
-        return "redirect:/khachhang/index";
+        return "redirect:/admin/khachhang/index";
     }
 
     @PostMapping("/savekh")
     public String savenv(@Valid @ModelAttribute("khachhang")   KhachHang khachHang, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "khachhang/save";
+            return "admin/khachhang/save";
         }
 
         khachHangDAO.save(khachHang);
-        return "redirect:/khachhang/index";
+        return "redirect:/admin/khachhang/index";
     }
 
 }

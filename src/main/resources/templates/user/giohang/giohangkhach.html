@@ -1,0 +1,68 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <div th:fragment="cart_frag">
+                <h3>Giỏ hàng của bạn</h3>
+                <form th:object="${cart}">
+                    <div th:if="${message}" class="text-primary  fw-bold" th:text="${message}"/>
+                    <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Giày</th>
+                            <th>Size</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng còn</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="s : ${session.myCartItems}">
+                            <td name="mactg" th:text="${s.value.chiTietGiay.mactg} " hidden></td>
+                            <td th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}"
+                                th:text="${g.ten}"></td>
+                            <td th:each="size:${listsize}" th:if="${size.mas}==${s.value.chiTietGiay.mas}"
+                                th:text="${size.ten}"></td>
+                            <td class="text-center" th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}">
+                                <img
+                                        th:src="${g.anh} " width="200" height="180"></td>
+                            <td th:each="ct:${chiTietGiayList}" th:if="${ct.mactg}==${s.value.chiTietGiay.mactg}"
+                                th:text="${ct.soluong}"></td>
+                            <td><input type="number" class="form-control" th:value="${s.value.soluong}" name="soluong">
+                            </td>
+                            <td th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}"
+                                th:text="${g.gia}"></td>
+                            <td colspan="2">
+                                <a class="btn btn-outline-primary"
+                                   th:href="@{'/user/cart/updatecart/'+${s.value.chiTietGiay.mactg}}">Sửa</a>
+                                <a class="btn btn-outline-danger"
+                                   th:href="@{'/user/cart/removecart/'+${s.value.chiTietGiay.mactg}}">Xoá</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <div class="text-center">
+                    <div th:if="${session.myCartToTal}!=0">
+                        <h3>Tổng tiền :</h3>
+                        <h3 class="fw-bold" style="color:red"
+                            th:text="${session.myCartToTal}"></h3>
+                    </div>
+                    <div th:if="${session.myCartToTal}==0">
+                        <h3 class="fw-bold" style="color:red">Giỏ hàng rỗng</h3>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <!--            <button ng-click="cart.clear()" class="btn btn-danger">-->
+                <!--                <i class="glyphicon glyphicon-trash"></i> Clear-->
+                <!--            </button>-->
+                <a th:if="${session.myCartToTal}!=0" th:href="@{/user/giohang/thanhtoan}" class="btn btn-primary">
+                    Checkout
+                </a>
+            </div>
+        </div>
+    </main>
+</div>

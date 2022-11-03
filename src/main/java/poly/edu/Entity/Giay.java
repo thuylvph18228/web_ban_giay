@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
@@ -36,11 +34,11 @@ public class Giay implements Serializable {
     @Column(name="gia")
     private int gia;
 
-    @NotNull(message = "Không được để trống ảnh")
+    @NotBlank(message = "Không được để trống ảnh")
     @Column(name="anh")
     private String anh;
 
-    @NotNull(message = "Không được để trống mô tả")
+    @NotBlank(message = "Không được để trống mô tả")
     @Column(name="mota")
     private String mota;
 }

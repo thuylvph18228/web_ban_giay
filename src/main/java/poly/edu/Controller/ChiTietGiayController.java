@@ -32,7 +32,7 @@ public class ChiTietGiayController {
     @Autowired
     GiayDAO gdao;
 
-    @GetMapping("/chitietgiay/index")
+    @GetMapping("/admin/chitietgiay/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "size", defaultValue = "10") int size){
@@ -50,7 +50,7 @@ public class ChiTietGiayController {
         int index = p.getNumber();
         int pre = p.getNumber()-1;
         int next = p.getNumber()+1;
-        String baseUrl = "/chitietgiay/index?page=";
+        String baseUrl = "/admin/chitietgiay/index?page=";
 
         model.addAttribute("listctg", p);
         model.addAttribute("totalPages", totalPages);
@@ -65,10 +65,10 @@ public class ChiTietGiayController {
         model.addAttribute("listnsx", listnsx);
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
-        return "chitietgiay/index";
+        return "admin/chitietgiay/index";
     }
 
-    @GetMapping("/chitietgiay/create")
+    @GetMapping("/admin/chitietgiay/create")
     public String create(@ModelAttribute("chitietgiay")ChiTietGiay chitietgiay, Model model){
         List<Size> listsize = sdao.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
@@ -80,10 +80,10 @@ public class ChiTietGiayController {
         model.addAttribute("listlg", listlg);
         model.addAttribute("listg", listg);
         model.addAttribute("savectg", "/savectg");
-        return "chitietgiay/save";
+        return "admin/chitietgiay/save";
     }
 
-    @GetMapping("/chitietgiay/edit/{mactg}")
+    @GetMapping("/admin/chitietgiay/edit/{mactg}")
     public String edit(@PathVariable(name="mactg") int mactg, Model model){
         model.addAttribute("mactg", mactg);
         ChiTietGiay ctg = ctgdao.getById(mactg);
@@ -98,13 +98,13 @@ public class ChiTietGiayController {
         model.addAttribute("listg", listg);
         model.addAttribute("chitietgiay", ctg);
         model.addAttribute("savectg", "/savectg");
-        return "chitietgiay/save";
+        return "admin/chitietgiay/save";
     }
 
-    @GetMapping("/chitietgiay/delete/{mactg}")
+    @GetMapping("/admin/chitietgiay/delete/{mactg}")
     public String delete(@PathVariable(name="mactg") int mactg){
         ctgdao.deleteById(mactg);
-        return "redirect:/chitietgiay/index";
+        return "redirect:/admin/chitietgiay/index";
     }
 
     @PostMapping("/savectg")

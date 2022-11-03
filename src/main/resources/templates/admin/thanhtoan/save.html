@@ -1,0 +1,16 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <form method="post" th:action="${savett}" th:object="${thanhtoan}">
+                <h1>Hình thức thanh toán </h1>
+                <input hidden type="text" th:field="*{mahttt}">
+                <div class="form-check">
+                    <label>Nhà sản xuất:</label>
+                    <input class="form-control" type="text" th:field="*{ten}" name="ten">
+                    <label class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></label>
+                </div>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+        </div>
+    </main>
+</div>
