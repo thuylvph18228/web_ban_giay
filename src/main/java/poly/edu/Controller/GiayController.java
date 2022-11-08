@@ -156,7 +156,7 @@ public class GiayController {
         return "admin/giay/save";
     }
 
-    @GetMapping("/adimin/giay/edit/{mag}")
+    @GetMapping("/admin/giay/edit/{mag}")
     public String edit(@PathVariable(name = "mag") int mag, Model model) {
         model.addAttribute("mag", mag);
         Giay g = giaydao.getById(mag);
@@ -174,7 +174,7 @@ public class GiayController {
     @PostMapping("/saveg")
     public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "admin/giay/save";
+            return "redirect:admin/giay/create";
         } else {
             giaydao.save(giay);
             return "redirect:/admin/giay/index";

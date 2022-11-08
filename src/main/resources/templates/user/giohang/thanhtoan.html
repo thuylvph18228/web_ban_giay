@@ -13,17 +13,15 @@
                         </div>
                         <label>Họ và tên:</label>
                         <span>
-                            <input type="text" id="ten" name="ten" class="form-control" placeholder="Họ và tên của bạn">
+                            <input type="text"  th:value="${kh.ten}" name="ten" class="form-control" disabled>
                         </span>
                         <label>Số điện thoại:</label>
                         <span>
-                            <input type="text" id="sdt" name="sdt" class="form-control"
-                                   placeholder="Số điện thoại của bạn">
+                            <input type="text" th:value="${kh.sdt}" name="sdt" class="form-control"  disabled>
                         </span>
                         <label>Địa chỉ:</label>
                         <span>
-                            <input type="text" id="diachi" name="diachi" class="form-control"
-                                   placeholder="Địa chỉ của bạn">
+                            <input type="text" th:value="${kh.diachi}" class="form-control" disabled>
                         </span>
                         <label>Hình thức thanh toán</label>
                         <select class="form-select" id="httt" name="httt">

@@ -3,34 +3,41 @@ package poly.edu.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 
 @Entity
 @Data
-@Table(name = "chitiethoadon")
+@Table(name = "trahang")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChiTietHoaDon {
+public class TraHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="macthd")
-    private int macthd;
+    @Column(name="math")
+    private int math;
 
-    @Column(name="mactg")
-    private int mactg;
+    @Column(name="makh")
+    private int makh;
 
     @Column(name="mahd")
     private int mahd;
 
-//    @NotBlank(message = "Không được để trống tổng tiền")
-//    @Min(value = 1, message = "Tổng tiền phải lớn hơn 0")
+    @Column(name="manv")
+    private int manv;
 
-//    @NotBlank(message = "Không được để trống số lượng")
-//    @Min(value = 1, message = "Số lượng phải lớn hơn 0")
-    @Column(name="soluong")
-    private int soluong;
+    @Column(name="mald")
+    private int mald;
+
+    @Column(name="ghichi")
+    private String ghichu;
+
+    @Column(name="xacnhan")
+    private int xacnhan;
+
+    @Column(name="trangthai")
+    private int trangthai;
+
+
 
 }

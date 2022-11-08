@@ -110,10 +110,13 @@ public class ChiTietGiayController {
     @PostMapping("/savectg")
     public String save(@Valid @ModelAttribute("chitietgiay") ChiTietGiay chitietgiay, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "chitietgiay/save";
+
+
+            return "admin/chitietgiay/save";
+
         }else {
             ctgdao.save(chitietgiay);
-            return "redirect:/chitietgiay/index";
+            return "redirect:/admin/chitietgiay/index";
         }
     }
 }

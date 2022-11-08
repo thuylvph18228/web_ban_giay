@@ -37,7 +37,7 @@
                         <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
                         <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
                     </td>
-                    <td><a href="#">Đăng kí hoàn trả</a></td>
+                    <td><a th:href="@{'/user/trahang/trahang/'+${hd.mahd}}">Đăng kí hoàn trả</a ></td>
                 </tr>
                 </tbody>
             </table>

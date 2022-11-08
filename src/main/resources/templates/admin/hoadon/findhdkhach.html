@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
     <main>
         <div class="container row mt-3">
             <h1>Đơn hàng cần xử lý</h1>
@@ -14,6 +14,7 @@
                         <th>Ngày ship</th>
                         <th>Sản phẩm</th>
                         <th>Tổng tiền</th>
+                        <th>Thao tác</th>
                     </tr>
                     </thead>
 
@@ -34,12 +35,15 @@
                         <td>
                             <p th:if="${hd.ngayship}!=null" th:text="${hd.ngayship}"></p>
                             <p th:if="${hd.ngayship}==null">Đang xử lý</p></td>
+
                         <td>
                             <a th:href="@{'/user/cart/purchasedproduct/'+${hd.mahd}}">Xem chi tiết</a>
                         </td>
                         <td th:text="${hd.tongtien}"></td>
-                        <td > <a href=""></a></td>
-                    </tr>
+                        <td  class=" ">
+                            <p th:if="${hd.trangthaidh}==0"><a th:href="@{'/cart/updatetrangthaidh/'+${hd.mahd}}" class="fw-bold" style="color: blue" >Xác nhận đơn hàng đang vận chuyển</a></p>
+                            <p th:if="${hd.trangthaidh}==1"><a th:href="@{'/cart/updatetrangthaidh/'+${hd.mahd}}"  class="fw-bold"  style="color: blue" >Xác nhận đơn hàng đã giao cho khách</a></p>
+                        </td>                    </tr>
                     </tbody>
                 </table>
             </form>
