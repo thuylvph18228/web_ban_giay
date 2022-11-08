@@ -12,8 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import poly.edu.DAO.ChucVuDAO;
 import poly.edu.DAO.KhachHangDAO;
+import poly.edu.DAO.NhanVienDAO;
+import poly.edu.Entity.ChucVu;
 import poly.edu.Entity.KhachHang;
+import poly.edu.Entity.NhanVien;
 
 import javax.servlet.http.HttpSession;
 import java.util.Base64;
@@ -31,20 +35,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     KhachHangDAO khachHangDAO;
 
     @Autowired
+    NhanVienDAO nhanVienDAO;
+
+    @Autowired
+    ChucVuDAO chucVuDAO;
+
+    @Autowired
     HttpSession session;
+
+    String roles;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(username -> {
             try {
                 KhachHang user = khachHangDAO.findByEmail(username);
-                String password = getPasswordEncoder().encode(user.getMatkhau());
-                Map<String, Object> authentication = new HashMap<>();
-                authentication.put("user", user);
-                byte[] token = (username + ":" + user.getMatkhau()).getBytes();
-                authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-                session.setAttribute("authentication", authentication);
-                return User.withUsername(username).password(password).roles().build();
+                NhanVien nhanVien = nhanVienDAO.findByEmail(username);
+                if (nhanVien == null) {
+                    String password = getPasswordEncoder().encode(user.getMatkhau());
+                    Map<String, Object> authentication = new HashMap<>();
+                    authentication.put("user", user);
+                    byte[] token = (username + ":" + user.getMatkhau()).getBytes();
+                    authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+                    session.setAttribute("authentication", authentication);
+                    return User.withUsername(username).password(password).roles().build();
+                } else {
+                    ChucVu chucVu = chucVuDAO.findByMaCV(nhanVien.getMacv());
+                    roles = chucVu.getTencv();
+
+                    String password = getPasswordEncoder().encode(nhanVien.getMatkhau());
+                    Map<String, Object> authentication = new HashMap<>();
+                    authentication.put("user", nhanVien);
+                    byte[] token = (username + ":" + nhanVien.getMatkhau()).getBytes();
+                    authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+                    session.setAttribute("authentication", authentication);
+                    return User.withUsername(username).password(password).roles(roles).build();
+                }
             } catch (NoSuchElementException e) {
                 throw new UsernameNotFoundException(username + " not found!");
             }
@@ -56,8 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated()
-                .antMatchers("/admin/**").hasAnyRole("STAF", "DIRE")
-                .antMatchers("/rest/authorities").hasRole("DIRE")
+                .antMatchers("/admin/**").hasAnyRole("Employee", "Admin")
+                .antMatchers("/rest/**").hasRole("Admin")
                 .anyRequest().permitAll();
 
         http.formLogin()

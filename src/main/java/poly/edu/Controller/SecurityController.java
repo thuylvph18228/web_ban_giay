@@ -16,6 +16,12 @@ public class SecurityController {
         return "security/login";
     }
 
+    @RequestMapping("/security/login/formadmin")
+    public String loginFormAdmin(Model model) {
+        model.addAttribute("message", "Vui lòng đăng nhập!");
+        return "security/loginnv";
+    }
+
     @RequestMapping("/security/login/success")
     public String loginSuccess(Model model) {
         model.addAttribute("message", "Đăng nhập thành công!");
@@ -37,7 +43,7 @@ public class SecurityController {
     @RequestMapping("/security/logoff/success")
     public String logoffSuccess(Model model) {
         model.addAttribute("message", "Bạn đã đăng xuất!");
-        return "redirect:/giay/product";
+        return "security/login";
     }
 
     @CrossOrigin("*")

@@ -25,7 +25,7 @@ public class NhanVienController {
     @Autowired
     NhanVienDAO nvdao;
 
-    @GetMapping("/admin/nhanvien/index")
+    @GetMapping("/rest/admin/nhanvien/index")
     public String index(Model model){
         List<ChucVu> listcv = cvdao.findAll();
         List<NhanVien> listnv = nvdao.findAll();
