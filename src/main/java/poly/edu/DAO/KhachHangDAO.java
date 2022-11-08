@@ -12,4 +12,7 @@ public interface KhachHangDAO extends JpaRepository<KhachHang, Integer> {
     @Query("SELECT e FROM KhachHang e WHERE e.sdt = ?1")
     KhachHang findBySdt(String sdt);
 
+    @Query("SELECT e FROM KhachHang e WHERE e.email = ?1")
+    KhachHang findByEmail(String username);
+
 }

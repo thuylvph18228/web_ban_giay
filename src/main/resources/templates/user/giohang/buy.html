@@ -1,0 +1,41 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <h1>Giỏ hàng</h1>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Họ và tên khách hàng</th>
+                        <th>Giày</th>
+                        <th>Ngày tạo</th>
+                        <th>Địa chỉ</th>
+                        <th>Sđt</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="gh : ${listgh}">
+
+                        <td th:each="listkh:${listkh}" th:if="${listkh.makh}==${gh.makh}" th:text="${listkh.ten}"/>
+                        <td th:each="listg:${listg}" th:if="${listg.mag}==${gh.mag}" th:text="${listg.ten}"/>
+                        <td th:text="${gh.ngaytao}"></td>
+                        <td th:text="${gh.diachi}"></td>
+                        <td th:text="${gh.sdt}"></td>
+                        <td th:text="${gh.soluong}"></td>
+                        <td>
+                            <p th:if="${gh.trangthai}==0">Chưa thanh toán</p>
+                            <p th:if="${gh.trangthai}==1">Đã thanh toan</p>
+                        </td>
+                        <td colspan="2">
+                            <a class="btn btn-outline-primary" th:href="@{'/user/giohang/edit/'+${gh.magh}}">Sửa</a>
+                            <a class="btn btn-outline-danger" th:href="@{'/user/giohang/delete/'+${gh.magh}}">Xoá</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>

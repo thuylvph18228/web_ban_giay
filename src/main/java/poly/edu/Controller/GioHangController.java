@@ -44,24 +44,24 @@ public class GioHangController {
     @Autowired
     ChiTietHoaDonDAO chiTietHoaDonDAO;
 
-    @GetMapping("/giohang/index")
+    @GetMapping("/user/giohang/index")
     public String listkh(Model model) {
         List<GioHang> listgh =gioHangDAO.findAll();
         model.addAttribute("listgh", listgh);
         List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
-        return ("giohang/index");
+        return ("user/giohang/index");
     }
 
-    @GetMapping("/giohang/create")
+    @GetMapping("/user/giohang/create")
     public String create(@ModelAttribute("giohang") GioHang gioHang, Model model) {
         List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
         model.addAttribute("listctg", listctg);
         model.addAttribute("savegh", "/savegh");
-        return "giohang/save";
+        return "user/giohang/save";
     }
 
-    @GetMapping("/giohang/edit/{magh}")
+    @GetMapping("/user/giohang/edit/{magh}")
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDAO.getById(magh);
@@ -69,15 +69,15 @@ public class GioHangController {
         model.addAttribute("listctg", listctg);
         model.addAttribute("giohang", gh);
 
-        return "giohang/save";
+        return "user/giohang/save";
     }
 
 
 
-    @GetMapping("/giohang/delete/{magh}")
+    @GetMapping("/user/giohang/delete/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {
         gioHangDAO.deleteById(magh);
-        return "redirect:/giohang/index";
+        return "redirect:/user/giohang/index";
     }
 
     @PostMapping("/savegh")
@@ -85,10 +85,10 @@ public class GioHangController {
         if (bindingResult.hasErrors()) {
             List<ChiTietGiay> listctg =chiTietGiayDAO.findAll();
             model.addAttribute("listctg", listctg);
-            return "giohang/save";
+            return "user/giohang/save";
         }
         gioHangDAO.save(gioHang);
-        return "redirect:/giohang/index";
+        return "redirect:/user/giohang/index";
     }
 
 

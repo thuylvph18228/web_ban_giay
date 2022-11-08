@@ -23,47 +23,47 @@ public class ChucVuController {
     private ChucVuDAO chucVuDAO;
 
 
-    @GetMapping("/chucvu/index")
+    @GetMapping("/admin/chucvu/index")
     public String listcv(Model model) {
         List<ChucVu> listcv = chucVuDAO.findAll();
         model.addAttribute("listcv", listcv);
-        return ("chucvu/index");
+        return ("admin/chucvu/index");
     }
 
-    @GetMapping("/chucvu/create")
+    @GetMapping("/admin/chucvu/create")
     public String create(@ModelAttribute("chucvu") ChucVu chucVu, Model model) {
         List<ChucVu> listcv = chucVuDAO.findAll();
         model.addAttribute("listcv", listcv);
         model.addAttribute("savecv", "/savecv");
 
-        return "chucvu/save";
+        return "admin/chucvu/save";
     }
     RedirectAttributes redirectAttributes;
-    @GetMapping("/chucvu/edit/{macv}")
+    @GetMapping("/admin/chucvu/edit/{macv}")
     public String edit(@PathVariable(name = "macv") int macv, Model model) {
         model.addAttribute("macv", macv);
         ChucVu cv = chucVuDAO.getById(macv);
         model.addAttribute("chucvu", cv);
         model.addAttribute("savecv", "/savecv");
         redirectAttributes.addAttribute("message","Cập nhật thành công");
-        return "chucvu/save";
+        return "admin/chucvu/save";
     }
 
-    @GetMapping("/chucvu/delete/{macv}")
+    @GetMapping("/admin/chucvu/delete/{macv}")
     public String delete(@PathVariable(name = "macv") int macv) {
         chucVuDAO.deleteById(macv);
         redirectAttributes.addAttribute("message","Xóa thành công");
-        return "redirect:/chucvu/index";
+        return "redirect:/admin/chucvu/index";
     }
 
     @PostMapping("/savecv")
     public String savecv(@Valid @ModelAttribute("chucvu")   ChucVu chucVu, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "chucvu/save";
+            return "admin/chucvu/save";
         }
 
         chucVuDAO.save(chucVu);
-        return "redirect:/chucvu/index";
+        return "redirect:/admin/chucvu/index";
     }
 
 }

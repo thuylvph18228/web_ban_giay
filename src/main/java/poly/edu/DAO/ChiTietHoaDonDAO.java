@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import poly.edu.Entity.ChiTietGiay;
 
+import org.springframework.data.jpa.repository.Query;
 import poly.edu.Entity.ChiTietHoaDon;
 import poly.edu.Entity.HoaDon;
 

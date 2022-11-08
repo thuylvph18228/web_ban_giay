@@ -25,24 +25,24 @@ public class NhanVienController {
     @Autowired
     NhanVienDAO nvdao;
 
-    @GetMapping("/nhanvien/index")
+    @GetMapping("/rest/admin/nhanvien/index")
     public String index(Model model){
         List<ChucVu> listcv = cvdao.findAll();
         List<NhanVien> listnv = nvdao.findAll();
         model.addAttribute("listcv", listcv);
         model.addAttribute("listnv", listnv);
-        return "nhanvien/index";
+        return "admin/nhanvien/index";
     }
 
-    @GetMapping("/nhanvien/create")
+    @GetMapping("/admin/nhanvien/create")
     public String create(@ModelAttribute("nhanvien")NhanVien nhanvien, Model model){
         List<ChucVu> listcv = cvdao.findAll();
         model.addAttribute("listcv", listcv);
         model.addAttribute("savenv", "/savenv");
-        return "nhanvien/save";
+        return "admin/nhanvien/save";
     }
 
-    @GetMapping("/nhanvien/edit/{manv}")
+    @GetMapping("/admin/nhanvien/edit/{manv}")
     public String edit(@PathVariable(name="manv") int manv, Model model){
         model.addAttribute("manv", manv);
         NhanVien nv = nvdao.getById(manv);
@@ -50,13 +50,13 @@ public class NhanVienController {
         model.addAttribute("listcv", listcv);
         model.addAttribute("nhanvien", nv);
         model.addAttribute("savenv", "/savenv");
-        return "nhanvien/save";
+        return "admin/nhanvien/save";
     }
 
-    @GetMapping("/nhanvien/delete/{manv}")
+    @GetMapping("/admin/nhanvien/delete/{manv}")
     public String delete(@PathVariable(name="manv") int manv){
         nvdao.deleteById(manv);
-        return "redirect:/nhanvien/index";
+        return "redirect:/admin/nhanvien/index";
     }
 
     @PostMapping("/savenv")
@@ -64,10 +64,10 @@ public class NhanVienController {
         if(bindingResult.hasErrors()){
             List<ChucVu> listcv = cvdao.findAll();
             model.addAttribute("listcv", listcv);
-            return "nhanvien/save";
+            return "admin/nhanvien/save";
         }else {
             nvdao.save(nhanvien);
-            return "redirect:/nhanvien/index";
+            return "redirect:/admin/nhanvien/index";
         }
     }
 }

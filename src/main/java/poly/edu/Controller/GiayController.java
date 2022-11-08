@@ -37,7 +37,7 @@ public class GiayController {
     @Autowired
     GioHangDAO gioHangDao;
 
-    @GetMapping("/giay/index")
+    @GetMapping("/admin/giay/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "size", defaultValue = "5") int size) {
@@ -50,7 +50,7 @@ public class GiayController {
         int index = p.getNumber();
         int pre = p.getNumber()-1;
         int next = p.getNumber()+1;
-        String baseUrl = "/giay/index?page=";
+        String baseUrl = "/admin/giay/index?page=";
 
         model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
@@ -60,7 +60,9 @@ public class GiayController {
         model.addAttribute("pre", pre);
         model.addAttribute("next", next);
         model.addAttribute("baseUrl", baseUrl);
-        return "giay/index";
+        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
+        model.addAttribute("giayfindnsx", "/giayfindnsx");
+        return "admin/giay/index";
     }
 
     @GetMapping("/giay/product")
@@ -79,7 +81,7 @@ public class GiayController {
         int next = p.getNumber()+1;
         String baseUrl = "/giay/product?page=";
 
-        model.addAttribute("data", p);
+        model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
         model.addAttribute("begin", begin);
@@ -89,26 +91,17 @@ public class GiayController {
         model.addAttribute("baseUrl", baseUrl);
 
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("giayfindname", "/giayfindname");
+        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
-        return "giay/product";
+        return "user/giay/product";
     }
 
-    @GetMapping("/giayfindname")
-    public String findbyName(Model model, @RequestParam("tengiay") String tengiay) {
-        List<Giay> listg = giaydao.findByNameLike(tengiay);
-        model.addAttribute("listg", listg);
-        return "giay/product";
-    }
-
-    @GetMapping("/giayfindnsx/{mansx}")
-    public String findbyNSX(@PathVariable("mansx") int mansx, Model model,
-                            @RequestParam(name = "page", defaultValue = "0") int page,
-                            @RequestParam(name = "size", defaultValue = "8") int size) {
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
+    @GetMapping("/giayfindnamelike")
+    public String findbyNameLike(Model model, @RequestParam("name") String tengiay,
+                                 @RequestParam(name = "page", defaultValue = "0") int page,
+                                 @RequestParam(name = "size", defaultValue = "8") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Giay> p = (Page<Giay>) giaydao.findByNsx(mansx);
+        Page<Giay> p = this.giaydao.findByNameLike(tengiay, pageable);
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;
@@ -118,7 +111,7 @@ public class GiayController {
         int next = p.getNumber()+1;
         String baseUrl = "/giay/product?page=";
 
-        model.addAttribute("data", p);
+        model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
         model.addAttribute("begin", begin);
@@ -126,37 +119,65 @@ public class GiayController {
         model.addAttribute("pre", pre);
         model.addAttribute("next", next);
         model.addAttribute("baseUrl", baseUrl);
-        return "giay/product";
+        return "user/giay/product";
     }
 
-    @GetMapping("/giay/create")
+    @GetMapping("/giayfindnsx/{mansx}")
+    public String findbyNSX(@PathVariable("mansx") int mansx, Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "8") int size) {
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = this.giaydao.findByNsx(mansx, pageable);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/giay/product?page=";
+
+        model.addAttribute("listg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+        return "user/giay/product";
+    }
+
+    @GetMapping("/admin/giay/create")
     public String create(@ModelAttribute("giay") Giay giay, Model model) {
         model.addAttribute("saveg", "/saveg");
-        return "giay/save";
+        return "admin/giay/save";
     }
 
-    @GetMapping("/giay/edit/{mag}")
+    @GetMapping("/adimin/giay/edit/{mag}")
     public String edit(@PathVariable(name = "mag") int mag, Model model) {
         model.addAttribute("mag", mag);
         Giay g = giaydao.getById(mag);
         model.addAttribute("giay", g);
         model.addAttribute("saveg", "/saveg");
-        return "giay/save";
+        return "admin/giay/save";
     }
 
-    @GetMapping("/giay/delete/{mag}")
+    @GetMapping("/admin/giay/delete/{mag}")
     public String delete(@PathVariable(name = "mag") int mag) {
         giaydao.deleteById(mag);
-        return "redirect:/giay/index";
+        return "redirect:/admin/giay/index";
     }
 
     @PostMapping("/saveg")
     public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "giay/save";
+            return "admin/giay/save";
         } else {
             giaydao.save(giay);
-            return "redirect:/giay/index";
+            return "redirect:/admin/giay/index";
         }
     }
 

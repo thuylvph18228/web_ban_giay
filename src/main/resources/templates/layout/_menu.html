@@ -14,29 +14,43 @@
                 <li class="nav-item">
                     <a href="/giay/product" class="nav-link">
                         <img src="https://img.icons8.com/dotty/344/smartphone--v1.png" alt="" width="30" height="24">
-                       Liên hệ
+                        Liên hệ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/viewfindcart" class="nav-link">
-                        <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt="" width="30" height="24">
+                    <a href="/user/cart/viewfindcart" class="nav-link">
+                        <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt=""
+                             width="30" height="24">
                         Đơn đã đặt
                     </a>
                 </li>
             </ul>
-            <div >
-                <a class="nav-link" href="/listcart">
+            <div>
+                <a type="button" class="nav-link btn position-relative" href="/user/cart/listcart">
                     <img src="https://cdn-icons-png.flaticon.com/128/3737/3737372.png" alt="" width="30" height="24">
-                    <span class="fw-bold text-danger">+</span>
-                    <span class="fw-bold text-danger" th:text="${session.myCartNum}"/></span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    th:if="${session.myCartToTal}!=null">
+                        [[ ${session.myCartNum} ]]
+                        <span class="visually-hidden">unread messages</span></span>
                 </a>
 
             </div>
 
-            <form th:action="${giayfindnamelike}" class="d-flex">
-                <input class="form-control me-2" type="search"  name="name"  placeholder="Nhập tên giày" aria-label="Search">
+            <form th:action="${giayfindnamelike}" class="ms-4 d-flex">
+                <input class="form-control me-2" type="search" name="name" placeholder="Nhập tên giày"
+                       aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Tìm</button>
             </form>
+            <div class="ms-4 d-flex">
+                <a href="/security/login/form" title="Login">
+                    <img src="https://img.icons8.com/small/512/login-rounded.png" width="35" height="35">
+                </a>
+            </div>
+            <div class="ms-4 d-flex">
+                <a href="/security/logoff" title="Logout">
+                    <img src="https://img.icons8.com/small/512/login-rounded-right.png" width="35" height="35">
+                </a>
+            </div>
         </div>
     </div>
 </nav>
