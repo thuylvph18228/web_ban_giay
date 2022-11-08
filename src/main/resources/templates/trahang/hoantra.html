@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+    <div class="row mt-3">
+        <h1>Hóa Đơn có thể hoàn trả</h1>
+        <form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Người nhận</th>
+                    <th>Hình thức thanh toán</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày thanh toán</th>
+                    <th>Ngày ship</th>
+                    <th>Ngày nhận</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="hd : ${listhd}">
+                    <td th:text="${hd.mahd}"></td>
+                    <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"></td>
+
+                    <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
+                    <td th:text="${hd.ngaytao}"></td>
+                    <td th:text="${hd.ngaythanhtoan}"></td>
+                    <td th:text="${hd.ngayship}"></td>
+                    <td th:text="${hd.ngaynhan}"></td>
+                    <td th:text="${hd.tongtien}"></td>
+                    <td>
+                        <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
+                        <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
+                    </td>
+                    <td><a href="#">Đăng kí hoàn trả</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>
