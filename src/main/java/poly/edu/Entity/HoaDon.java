@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -41,6 +42,8 @@ public class HoaDon {
     @Column(name="ngaynhan")
     private String ngaynhan;
 
+    @Column(name="trahang")
+    private int trahang;
 
     @Column(name="trangthaidh")
     private int trangthaidh;

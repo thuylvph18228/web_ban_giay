@@ -1,5 +1,6 @@
 package poly.edu.Entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.Date;
+
 
 @Entity
 @Data
 @Table(name = "nhanvien")
 @NoArgsConstructor
 @AllArgsConstructor
-public class NhanVien implements Serializable {
+public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="manv")
@@ -36,7 +36,7 @@ public class NhanVien implements Serializable {
     @Column(name="gioitinh")
     private String gioitinh;
 
-    @NotBlank(message = "Không được để trống email")
+
     @Email(message = "Sai định dạng email")
     @Column(name="email")
     private String email;
@@ -46,7 +46,6 @@ public class NhanVien implements Serializable {
     private String diachi;
 
     @Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "Sai định dạng")
-    @NotBlank(message = "Không được để trống sđt")
     @Column(name="sdt")
     private String sdt;
 
@@ -55,6 +54,7 @@ public class NhanVien implements Serializable {
     @Column(name="matkhau")
     private String matkhau;
 
+    @NotNull
     @Column(name="trangthai")
     private int trangthai;
 }

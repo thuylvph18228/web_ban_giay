@@ -12,7 +12,6 @@
                         <th>Ngày thanh toán</th>
                         <th>Ngày ship</th>
                         <th>Ngày nhận</th>
-                        <th>Sản phẩm</th>
                         <th>Sđt</th>
                         <th>Địa chỉ</th>
                         <th>Tổng tiền</th>
@@ -29,8 +28,6 @@
                         <td th:text="${hd.ngaythanhtoan}"></td>
                         <td th:text="${hd.ngayship}"></td>
                         <td th:text="${hd.ngaynhan}"></td>
-
-                        <td><p></p></td>
 
                         <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.sdt}"></td>
                         <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.diachi}"></td>

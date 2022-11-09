@@ -65,9 +65,9 @@ public class HoaDonController {
 
         return ("admin/hoadon/index");
     }
-    @GetMapping("/user/hoadon/findtrangthai")
-    public String findtrangthai( Model model){
-        List<HoaDon> listhd = hoaDonDAO.findByTrangthaidh();
+    @GetMapping("/admin/hoadon/findtrangthaicxn")
+    public String findtrangthaicxn( Model model){
+        List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn();
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -82,7 +82,53 @@ public class HoaDonController {
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
 
-        return "user/hoadon/findhdkhach";
+        return "admin/hoadon/findhdkhach";
+    }
+    @GetMapping("/admin/hoadon/findtrangthaidvc")
+    public String findtrangthaidvc( Model model){
+        List<HoaDon> listhd = hoaDonDAO.findByTrangthaidvc();
+        model.addAttribute("listhd", listhd);
+        List<NhanVien> listnv = nhanVienDAO.findAll();
+        model.addAttribute("listnv", listnv);
+        List<KhachHang> listkh = khachHangDAO.findAll();
+        model.addAttribute("listkh", listkh);
+        List<ThanhToan> listtt = thanhToanDAO.findAll();
+        model.addAttribute("listtt", listtt);
+        List<Giay> listg = giayDAO.findAll();
+        model.addAttribute("listg", listg);
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+        model.addAttribute("listctg", listctg);
+        List<Size> lists = sizeDAO.findAll();
+        model.addAttribute("lists", lists);
+
+        return "admin/hoadon/findhdkhach";
+    }
+    @GetMapping("/cart/updatetrangthaidh/{mahd}")
+    public String updatetrangthaihd(@PathVariable("mahd") int mahd, Model model) {
+        HoaDon hoaDon = hoaDonDAO.getById(mahd);
+        if(hoaDon.getTrangthaidh()==0){
+        hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
+        String date = String.valueOf(java.time.LocalDate.now());
+        hoaDon.setNgayship(date);
+        hoaDonDAO.save(hoaDon);
+            return "redirect:/admin/hoadon/findtrangthaicxn";
+        } else if(hoaDon.getTrangthaidh()==1&&hoaDon.getTrangthaihd()==0){
+            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
+            String date = String.valueOf(java.time.LocalDate.now());
+            hoaDon.setNgaynhan(date);
+            hoaDon.setNgaythanhtoan(date);
+            hoaDon.setTrangthaihd(1);
+            hoaDonDAO.save(hoaDon);
+            return "redirect:/admin/hoadon/findtrangthaidvc";
+        } else if (hoaDon.getTrangthaidh()==1&&hoaDon.getTrangthaihd()==1) {
+            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
+            String date = String.valueOf(java.time.LocalDate.now());
+            hoaDon.setNgaynhan(date);
+            hoaDonDAO.save(hoaDon);
+            return "redirect:/admin/hoadon/findtrangthaidvc";
+        }
+
+        return "redirect:/admin/hoadon/findtrangthai";
     }
 
 

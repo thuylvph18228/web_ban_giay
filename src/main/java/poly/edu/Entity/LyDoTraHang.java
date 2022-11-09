@@ -1,29 +1,21 @@
 package poly.edu.Entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "loaigiay")
+@Table(name = "lydotrahang")
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class LoaiGiay implements Serializable {
-
+public class LyDoTraHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="malg")
-    private int malg;
+    @Column(name="mald")
+    private int mald;
 
-    @NotBlank(message = "Không được để trống tên loại giày")
     @Column(name="ten")
     private String ten;
-
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+    <div class="container row mt-3">
+        <h1>Lịch sử trả hàng </h1>
+        <form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Lý do trả hàng</th>
+                    <th>Ghi chú </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" th :${listth}">
+                    <td th:text="${th.mahd}"></td>
+                    <td th:each=" kh :${listkh}"  th:if="${kh.makh}==${th.makh}" th:text="${kh.ten}"></td>
+                    <td th:each=" ld :${listld}"  th:if="${ld.mald}==${th.mald}" th:text="${ld.ten}"></td>
+                    <td th:text="${th.ghichu}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>

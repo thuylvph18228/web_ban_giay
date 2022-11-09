@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                    <a href="/giay/index" class="nav-link">
+                    <a href="/admin/giay/index" class="nav-link">
                         <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="" width="30" height="24">
                         Trang chủ
                     </a>
@@ -18,10 +18,10 @@
                         Thông tin sản phẩm
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/giay/index">Giày</a></li>
-                        <li><a class="dropdown-item" href="/chitietgiay/index">Chi tiết giày</a></li>
-                        <li><a class="dropdown-item" href="/size/index">Size</a></li>
-                        <li><a class="dropdown-item" href="/nsx/index">Nhà sản xuất</a></li>
+                        <li><a class="dropdown-item" href="/admin/giay/index">Giày</a></li>
+                        <li><a class="dropdown-item" href="/admin/chitietgiay/index">Chi tiết giày</a></li>
+                        <li><a class="dropdown-item" href="/admin/size/index">Size</a></li>
+                        <li><a class="dropdown-item" href="/admin/nsx/index">Nhà sản xuất</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -30,16 +30,21 @@
                         Quản lý người dùng
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="quanlynguoidung">
-                        <li><a class="dropdown-item" href="/nhanvien/index">Nhân viên</a></li>
-                        <li><a class="dropdown-item" href="/khachhang/index">Khách hàng</a></li>
+                        <li><a class="dropdown-item" href="/admin/nhanvien/index">Nhân viên</a></li>
+                        <li><a class="dropdown-item" href="/admin/khachhang/index">Khách hàng</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="/hoadon/findtrangthai" class="nav-link">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="giaohang" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/android/72/truck.png" alt="" width="30" height="24">
-                        Giao hàng
+                       Giao hàng
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="giaohang">
+                        <li><a class="dropdown-item" href="/admin/hoadon/findtrangthaicxn">Chờ xử lý</a></li>
+                        <li><a class="dropdown-item" href="/admin/hoadon/findtrangthaidvc">Đang vận chuyển thành công</a></li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt="" width="30" height="24">

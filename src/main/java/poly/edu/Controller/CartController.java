@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,6 @@ public class CartController {
     public NsxDAO nsxdao;
     @Autowired
     public LoaiGiayDAO lgdao;
-
 
     @Autowired
     public KhachHangDAO khachHangDAO;
@@ -53,6 +54,7 @@ public class CartController {
         model.addAttribute("listsize", listsize);
         model.addAttribute("listg", listg);
         model.addAttribute("savetthd", "/savetthd");
+        model.addAttribute("viewupdate", "/viewupdate/{mactg}");
         return "user/giohang/giohangkhach";
     }
 
@@ -78,8 +80,28 @@ public class CartController {
 
         return "user/giay/buy";
     }
-    @PostMapping("/user/cart/addproduct")
-    public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("soluong") int soluong,
+    @GetMapping("/user/cart/buynow/{mag}")
+    public String viewbuynow(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
+        Giay giay = giaydao.getById(mag);
+        List<Size> listsize = sdao.findAll();
+        List<Nsx> listnsx = nsxdao.findAll();
+        List<LoaiGiay> listlg = lgdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+
+        model.addAttribute("giay", giay);
+        model.addAttribute("listctg", listctg);
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listnsx", listnsx);
+        model.addAttribute("listlg", listlg);
+        model.addAttribute("listg", listg);
+        model.addAttribute("buynow", "/user/cart/buynow");
+
+
+        return "user/giay/buynow";
+    }
+    @PostMapping("/user/cart/buynow")
+    public String buynow(ModelMap mm, HttpSession session, @RequestParam("soluong") int soluong,
     @RequestParam("mactg") int mactg , Model model  ) {
 
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
@@ -107,7 +129,85 @@ public class CartController {
                     model.addAttribute("listnsx", listnsx);
                     model.addAttribute("listlg", listlg);
                     model.addAttribute("listg", listg);
-                    model.addAttribute("addproduct", "/cart/addproduct");
+                    model.addAttribute("addproduct", "/user/cart/addproduct");
+
+                    return "user/giay/buynow";
+                }else {
+                    item.setChiTietGiay(chiTietGiay);
+                    item.setSoluong(item.getSoluong() + soluong);
+                    cartItems.put(mactg, item);
+                }
+            } else {
+                if (soluong<1||soluong>chiTietGiay.getSoluong()) {
+                    model.addAttribute("error", "Vui lòng nhập lại giỏ hàng!!");
+                    List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(chiTietGiay.getMag());
+                    Giay giay = giaydao.getById(chiTietGiay.getMag());
+                    List<Size> listsize = sdao.findAll();
+                    List<Nsx> listnsx = nsxdao.findAll();
+                    List<LoaiGiay> listlg = lgdao.findAll();
+                    List<Giay> listg = giaydao.findAll();
+                    model.addAttribute("error", "Vui lòng nhập lại số lượng!!");
+                    model.addAttribute("giay", giay);
+                    model.addAttribute("listctg", listctg);
+                    model.addAttribute("listsize", listsize);
+                    model.addAttribute("listnsx", listnsx);
+                    model.addAttribute("listlg", listlg);
+                    model.addAttribute("listg", listg);
+                    model.addAttribute("addproduct", "/user/cart/addproduct");
+
+                    return "user/giay/buynow";
+                }else {
+                Cart item = new Cart();
+                item.setChiTietGiay(chiTietGiay);
+                item.setSoluong(soluong);
+                cartItems.put(mactg, item);
+                }
+            }
+            model.addAttribute("message", "Thêm sản phẩm vào giỏ hàng thành công");
+        }
+        List<Size> listsize = sdao.findAll();
+        List<Giay> listg = giaydao.findAll();
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
+        model.addAttribute("listsize", listsize);
+        model.addAttribute("listg", listg);
+        model.addAttribute("savetthd", "/savetthd");
+        session.setAttribute("myCartItems",cartItems);
+        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartNum", cartItems.size());
+        return "redirect:/user/cart/listcart";
+
+    }
+    @PostMapping("/user/cart/addproduct")
+    public String viewAdd(ModelMap mm, HttpSession session, @RequestParam("soluong") int soluong,
+                          @RequestParam("mactg") int mactg , Model model  ) {
+
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        if (cartItems == null) {
+            cartItems = new HashMap<>();
+        }
+
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+        if (chiTietGiay != null) {
+            if (cartItems.containsKey(mactg)) {
+                Cart item = cartItems.get(chiTietGiay.getMactg());
+                if (  soluong<1||soluong>chiTietGiay.getSoluong()+item.getSoluong()){
+                    model.addAttribute("error", "Vui lòng nhập lại giỏ hàng!!");
+                    List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(chiTietGiay.getMag());
+                    Giay giay = giaydao.getById(chiTietGiay.getMag());
+                    List<Size> listsize = sdao.findAll();
+                    List<Nsx> listnsx = nsxdao.findAll();
+                    List<LoaiGiay> listlg = lgdao.findAll();
+                    List<Giay> listg = giaydao.findAll();
+
+                    model.addAttribute("error", "Vui lòng nhập lại số lượng!!");
+                    model.addAttribute("giay", giay);
+                    model.addAttribute("listctg", listctg);
+                    model.addAttribute("listsize", listsize);
+                    model.addAttribute("listnsx", listnsx);
+                    model.addAttribute("listlg", listlg);
+                    model.addAttribute("listg", listg);
+                    model.addAttribute("addproduct", "/user/cart/addproduct");
 
                     return "user/giay/buy";
                 }else {
@@ -135,10 +235,10 @@ public class CartController {
 
                     return "user/giay/buy";
                 }else {
-                Cart item = new Cart();
-                item.setChiTietGiay(chiTietGiay);
-                item.setSoluong(soluong);
-                cartItems.put(mactg, item);
+                    Cart item = new Cart();
+                    item.setChiTietGiay(chiTietGiay);
+                    item.setSoluong(soluong);
+                    cartItems.put(mactg, item);
                 }
             }
             model.addAttribute("message", "Thêm sản phẩm vào giỏ hàng thành công");
@@ -168,28 +268,28 @@ public class CartController {
     }
 
 
-//    @GetMapping("/viewupdate/{mactg}")
-//    public String viewUpdate(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
-//        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
-//        System.out.println(cartItems);
-//        if (cartItems == null) {
-//            cartItems = new HashMap<>();
-//        }
-//        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
-//        session.setAttribute("myCartItems", cartItems);
-//        List<Giay> listg = giaydao.findAll();
-//        List<Size> lists = sdao.findAll();
-//
-//        model.addAttribute("lists", lists);
-//        model.addAttribute("chiTietGiay", chiTietGiay);
-//        model.addAttribute("listg", listg);
-//        model.addAttribute("updatecart", "/updatecart");
-//        return "giohang/save";
-//    }
+    @GetMapping("/user/viewupdate/{mactg}")
+    public String viewUpdate(@ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session, @PathVariable("mactg") int mactg) {
+        HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
+        System.out.println(cartItems);
+        if (cartItems == null) {
+            cartItems = new HashMap<>();
+        }
+        ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
+        session.setAttribute("myCartItems", cartItems);
+        List<Giay> listg = giaydao.findAll();
+        List<Size> lists = sdao.findAll();
 
-    @GetMapping("/user/cart/updatecart/{mactg}")
+        model.addAttribute("lists", lists);
+        model.addAttribute("chiTietGiay", chiTietGiay);
+        model.addAttribute("listg", listg);
+        model.addAttribute("updatecart", "/user/cart/updatecart");
+        return "user/giohang/save";
+    }
+
+    @PostMapping("/user/cart/updatecart")
     public String updatecart(@Valid @ModelAttribute("cart") Cart cart, Model model, ModelMap mm, HttpSession session,
-                    @RequestParam("soluong") String soluongmua ,    @PathVariable("mactg") int mactg) {
+                    @RequestParam("soluong") String soluongmua ,   @RequestParam  ("mactg") int mactg) {
         int soluong   = Integer.parseInt(soluongmua);
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         ChiTietGiay chiTietGiay = chiTietGiayDAO.getById(mactg);
@@ -205,7 +305,7 @@ public class CartController {
                     List<Giay> listg = giaydao.findAll();
                     model.addAttribute("listsize", listsize);
                     model.addAttribute("listg", listg);
-                    return "user/giohang/giohangkhach";
+                    return "giohang/giohangkhach";
                 }
                 item.setSoluong(soluong);
                 cartItems.put(mactg, item);

@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     byte[] token = (username + ":" + user.getMatkhau()).getBytes();
                     authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
                     session.setAttribute("authentication", authentication);
+                    session.setAttribute("email", username);
                     return User.withUsername(username).password(password).roles().build();
                 } else {
                     ChucVu chucVu = chucVuDAO.findByMaCV(nhanVien.getMacv());
