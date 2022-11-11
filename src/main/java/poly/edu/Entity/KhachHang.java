@@ -45,4 +45,7 @@ public class KhachHang {
     @Column(name="matkhau")
     private String matkhau;
 
+    @Column(name="macv")
+    private int macv;
+
 }
