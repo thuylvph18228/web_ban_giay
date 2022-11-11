@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/html">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarScroll">
@@ -11,36 +12,29 @@
                         Trang chủ
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/giay/product" class="nav-link">
-                        <img src="https://img.icons8.com/dotty/344/smartphone--v1.png" alt="" width="30" height="24">
-                        Liên hệ
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt="" width="30" height="24">
+                        Đơn hàng của bạn
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/viewfindcart" class="nav-link">
-                        <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt=""
-                             width="30" height="24">
-                        Đơn đã đặt
-                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/user/cart/processing">Đang xử lý</a></li>
+                        <li><a class="dropdown-item" href="/user/cart/shipping">Đang ship</a></li>
+                        <li><a class="dropdown-item" href="/user/cart/delivered">Đã mua</a></li>
+
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="/user/trahang/listtrahang" class="nav-link">
+                    <a class="nav-link dropdown-toggle" href="#" id="quanlynguoidung" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">
                         Trả hàng
                     </a>
-<!--                    <a class="nav-link dropdown-toggle" href="/user/trahang/listtrahang" id="trahang" role="button"-->
-<!--                       data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                        <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">-->
-<!--                        Trả hàng-->
-
-<!--                    <ul class="dropdown-menu" aria-labelledby="trahang">-->
-
-<!--                        <li><a class="dropdown-item" href="/trahang/listtrahang">Đăng kí trả hàng</a></li>-->
-<!--                        <li><a class="dropdown-item" href="/nsx/index">Lịch sử trả hàng</a></li>-->
-<!--                    </ul>-->
-<!--                    </a>a-->
+                    <ul class="dropdown-menu" aria-labelledby="quanlynguoidung">
+                        <li><a class="dropdown-item" href="/user/trahang/listtrahang">Đăng kí trả hàng</a></li>
+                        <li><a class="dropdown-item" href="/user/trahang/lichsutrahang">Lịch sử trả hàng</a></li>
+                    </ul>
                 </li>
+
             </ul>
             <div style="margin-right: 24px;">
                 <button type="button" class="btn position-relative">
@@ -50,7 +44,7 @@
                         <span th:if="${session.myCartNum}!=null"
                               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
                         >[['+' + ${session.myCartNum} ]]
-     <span class="visually-hidden">unread messages</span></span>
+                     <span class="visually-hidden">unread messages</span></span>
 
                     </a>
                 </button>

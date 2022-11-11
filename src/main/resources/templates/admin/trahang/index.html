@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+
 <body>
-$END$
+<main>
+  <div class="container row mt-3">
+    <h1>Lịch sử trả hàng </h1>
+    <form>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Mã hóa đơn</th>
+          <th>Khách hàng</th>
+          <th>Lý do trả hàng</th>
+          <th>Ghi chú </th>
+          <th>Thao tác </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" th :${listth}">
+          <td th:text="${th.mahd}"></td>
+          <td th:each=" kh :${listkh}"  th:if="${kh.makh}==${th.makh}" th:text="${kh.ten}"></td>
+          <td th:each=" ld :${listld}"  th:if="${ld.mald}==${th.mald}" th:text="${ld.ten}"></td>
+          <td th:text="${th.ghichu}"></td>
+          <td colspan="2">
+            <a class="btn btn-outline-primary" th:href="@{'/admin/trahang/updatecn/'+${th.math}}" >Chấp nhận</a>
+            <a class="btn btn-outline-danger" th:href="@{'/admin/trahang/updatetc/'+${th.math}}" >Từ chối</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</main>
 </body>
+
 </html>

@@ -12,4 +12,9 @@ import java.util.List;
 public interface TraHangDAO extends JpaRepository<TraHang, Integer> {
     @Query("SELECT t FROM TraHang t where t.makh  =?1")
     List<TraHang> lichsuTraHang(int makh);
+    @Query("SELECT t FROM TraHang t  where t.trangthai =0 and t.xacnhan=0")
+    List<TraHang> trahangcanxuly();
+
+    @Query("SELECT t FROM TraHang t where t.xacnhan =1 or  t.xacnhan = 2 and t.trangthai=1")
+    List<TraHang> trahangdaxuly();
 }

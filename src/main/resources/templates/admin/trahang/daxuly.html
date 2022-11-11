@@ -13,7 +13,8 @@
           <th>Khách hàng</th>
           <th>Lý do trả hàng</th>
           <th>Ghi chú </th>
-          <th>Thao tác </th>
+          <th>Trạng thái trả hàng</th>
+          <th>Trạng thái xử lý</th>
         </tr>
         </thead>
         <tbody>
@@ -22,10 +23,14 @@
           <td th:each=" kh :${listkh}"  th:if="${kh.makh}==${th.makh}" th:text="${kh.ten}"></td>
           <td th:each=" ld :${listld}"  th:if="${ld.mald}==${th.mald}" th:text="${ld.ten}"></td>
           <td th:text="${th.ghichu}"></td>
-          <td colspan="2">
-            <a class="btn btn-outline-primary" th:href="@{'/admin/trahang/updatecn/'+${th.math}}" >Chấp nhận</a>
-            <a class="btn btn-outline-danger" th:href="@{'/admin/trahang/updatetc/'+${th.math}}" >Từ chối</a>
-          </td>
+          <td th:if="${th.xacnhan}==0" >Đang xử lý</td>
+          <td th:if="${th.xacnhan}==1" >Chấp nhận</td>
+          <td th:if="${th.xacnhan}==2" >Từ chối</td>
+          <td th:if="${th.trangthai}==0" >Chưa xử lý</td>
+          <td th:if="${th.trangthai}==1" >Đã xử lý</td>
+
+
+
         </tr>
         </tbody>
       </table>

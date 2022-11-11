@@ -1,11 +1,13 @@
 <div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
     <main>
-        <div class="container row mt-3">
-            <h1>Đơn hàng cần xử lý</h1>
+        <div class="container row mt-3" >
+
+            <h1>Đơn hàng</h1>
             <form>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <th>Mã hóa đơn</th>
                         <th>Tên khách hàng</th>
                         <th>Địa chỉ</th>
                         <th>Thanh toán</th>
@@ -18,9 +20,10 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="hd:${listhd}">
-                        <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.ten}"/>
-                        <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.diachi}"/>
+                    <tr th:each="hd:${hoaDonList}">
+                        <td th:text="${hd.mahd}"/>
+                        <td th:each="kh : ${khachHangList}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.ten}"/>
+                        <td th:each="kh : ${khachHangList}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.diachi}"/>
                         <td>
                             <p th:if="${hd.trangthaihd}==0">Đã thanh toán</p>
                             <p th:if="${hd.trangthaihd}==1">Chưa thanh toán</p>

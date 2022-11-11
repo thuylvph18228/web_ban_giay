@@ -187,6 +187,41 @@ public class HoaDonController {
         hoaDonDAO.save(hoaDon);
         return "redirect:/admin/hoadon/index";
     }
+    @GetMapping("/user/cart/processing")
+    public String processing(Model model) {
 
+        String email = (String) httpSession.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+
+        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhprocessing(kh.getMakh());
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        model.addAttribute("khachHangList", khachHangList);
+
+        model.addAttribute("hoaDonList", hoaDonList);
+        return "user/hoadon/tinhtrangdh";
+    }
+
+    @GetMapping("/user/cart/shipping")
+    public String shipping(Model model) {
+
+        String email = (String) httpSession.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhshipping(kh.getMakh());
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        model.addAttribute("khachHangList", khachHangList);
+        model.addAttribute("hoaDonList", hoaDonList);
+        return "user/hoadon/tinhtrangdh";
+    }
+    @GetMapping("/user/cart/delivered")
+    public String delivered(Model model) {
+
+        String email = (String) httpSession.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhdelivered(kh.getMakh());
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        model.addAttribute("khachHangList", khachHangList);
+        model.addAttribute("hoaDonList", hoaDonList);
+        return "user/hoadon/tinhtrangdh";
+    }
 
 }

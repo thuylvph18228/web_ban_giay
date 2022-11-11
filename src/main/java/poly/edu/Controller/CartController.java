@@ -346,20 +346,20 @@ public class CartController {
         session.setAttribute("myCartNum", cartItems.size());
         return "redirect:/user/cart/listcart";
     }
-    @GetMapping("/user/cart/viewfindcart")
-    public String viewFindCart(Model model) {
-        model.addAttribute("yourorder", "/user/cart/yourorder");
-        return "user/hoadon/viewbysdt";
-    }
-    @GetMapping("/user/cart/yourorder")
-    public String yourorder(@RequestParam("sdt") String sdt,Model model) {
-
-        List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
-        List<KhachHang> khachHangList =khachHangDAO.findAll();
-        model.addAttribute("khachHangList", khachHangList);
-        model.addAttribute("hoaDonList", hoaDonList);
-        return "user/hoadon/findhdkhach";
-    }
+//    @GetMapping("/user/cart/viewfindcart")
+//    public String viewFindCart(Model model) {
+//        model.addAttribute("yourorder", "/user/cart/yourorder");
+//        return "user/hoadon/viewbysdt";
+//    }
+//    @GetMapping("/user/cart/yourorder")
+//    public String yourorder(@RequestParam("sdt") String sdt,Model model) {
+//
+//        List<HoaDon> hoaDonList=hoadondao.findBySdt(sdt);
+//        List<KhachHang> khachHangList =khachHangDAO.findAll();
+//        model.addAttribute("khachHangList", khachHangList);
+//        model.addAttribute("hoaDonList", hoaDonList);
+//        return "user/hoadon/findhdkhach";
+//    }
     @GetMapping("/user/cart/purchasedproduct/{mahd}")
     public String purchasedproduct(@PathVariable("mahd") int mahd, Model model) {
         List<ChiTietGiay> chiTietGiayList =  chiTietGiayDAO.findByMahd(mahd);

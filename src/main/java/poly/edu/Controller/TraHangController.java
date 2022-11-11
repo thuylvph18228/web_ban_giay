@@ -112,5 +112,45 @@ public class TraHangController {
 
          return "redirect:/user/trahang/listtrahang";
      }
+     @GetMapping("/admin/trahang/canxuly")
+     public String xulytrahang( @ModelAttribute("trahang") TraHang traHang, Model model) {
+         List<TraHang> listth =  traHangDAO.trahangcanxuly();
+         List<LyDoTraHang> listld=lyDoDAO.findAll();
+         List<KhachHang> listkh=khachHangDAO.findAll();
+         model.addAttribute("listkh",listkh);
+         model.addAttribute("listld",listld);
+         model.addAttribute("saveth", "/saveth");
+         model.addAttribute("listth",listth);
+
+         return ("admin/trahang/index");
+     }     @GetMapping("/admin/trahang/daxuly")
+     public String daxulytrahang( @ModelAttribute("trahang") TraHang traHang, Model model) {
+         List<TraHang> listth =  traHangDAO.trahangdaxuly();
+         List<LyDoTraHang> listld=lyDoDAO.findAll();
+         List<KhachHang> listkh=khachHangDAO.findAll();
+         model.addAttribute("listkh",listkh);
+         model.addAttribute("listld",listld);
+         model.addAttribute("saveth", "/saveth");
+         model.addAttribute("listth",listth);
+         return ("admin/trahang/daxuly");
+     }
+     @GetMapping("/admin/trahang/updatecn/{math}")
+     public String updatecn(@PathVariable(name = "math") int math) {
+         TraHang traHang = traHangDAO.getById(math);
+         traHang.setTrangthai(1);
+         traHang.setXacnhan(1);
+         traHangDAO.save(traHang);
+         return "redirect:/admin/trahang/daxuly";
+     }
+     @GetMapping("/admin/trahang/updatetc/{math}")
+     public String updatetc(@PathVariable(name = "math") int math) {
+         TraHang traHang = traHangDAO.getById(math);
+         traHang.setTrangthai(1);
+         traHang.setXacnhan(2);
+         traHangDAO.save(traHang);
+         return "redirect:/admin/trahang/daxuly";
+     }
+
+
 
  }
