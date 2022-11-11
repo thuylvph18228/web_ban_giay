@@ -23,8 +23,12 @@
           <td th:each=" ld :${listld}"  th:if="${ld.mald}==${th.mald}" th:text="${ld.ten}"></td>
           <td th:text="${th.ghichu}"></td>
           <td colspan="2">
-            <a class="btn btn-outline-primary" th:href="@{'/admin/trahang/updatecn/'+${th.math}}" >Chấp nhận</a>
-            <a class="btn btn-outline-danger" th:href="@{'/admin/trahang/updatetc/'+${th.math}}" >Từ chối</a>
+            <il><a class="btn btn-outline-primary" th:href="@{'/admin/trahang/updatecn/'+${th.math}}" >
+              <img src="https://img.icons8.com/windows/512/--checkmark-yes.png" width="25" height="21">
+            </a></il>
+            <il><a class="btn btn-outline-danger" th:href="@{'/admin/trahang/updatetc/'+${th.math}}" >
+              <img src="https://img.icons8.com/material-outlined/512/no-entry.png" width="25" height="21"></a>
+            </il>
           </td>
         </tr>
         </tbody>
