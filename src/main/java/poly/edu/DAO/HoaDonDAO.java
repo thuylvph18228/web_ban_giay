@@ -20,8 +20,20 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
     List<HoaDon> findByTrangthaicxn();
     @Query("SELECT h FROM HoaDon h where h.trangthaidh =1")
     List<HoaDon> findByTrangthaidvc();
+
     @Query(" SELECT e FROM HoaDon e  WHERE e.makh = ?1")
     List<HoaDon> findByMakh(int makh);
+
+
+    @Query(" SELECT e FROM HoaDon e  WHERE e.trangthaidh  =0 and e.makh = ?1")
+    List<HoaDon> findByMakhprocessing(int makh);
+
+    @Query(" SELECT e FROM HoaDon e  WHERE e.trangthaidh  =1 and e.makh = ?1")
+    List<HoaDon> findByMakhshipping(int makh);
+
+    @Query(" SELECT e FROM HoaDon e  WHERE e.trangthaidh  =2 and e.makh = ?1")
+    List<HoaDon> findByMakhdelivered(int makh);
+
 
     @Query("SELECT e FROM HoaDon e\n" +
             "WHERE e.mahd = (SELECT MAX(e.mahd) FROM HoaDon )")

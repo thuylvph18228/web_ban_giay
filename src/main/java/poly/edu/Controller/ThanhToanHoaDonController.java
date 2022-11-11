@@ -76,14 +76,12 @@ public class ThanhToanHoaDonController {
     @PostMapping("/savetthd")
     public String savett(ModelMap mm, HttpSession session, Model model,
                          @RequestParam("httt") Integer httt,
-                         @RequestParam("tongtien") Integer tongtien,
-                         @RequestParam("mactg") int mactg
+                         @RequestParam("tongtien") Integer tongtien
     ) {
         HashMap<Integer, Cart> cartItems = (HashMap<Integer, Cart>) session.getAttribute("myCartItems");
         if (cartItems == null) {
             cartItems = new HashMap<>();
         }
-
 
         HoaDon hoadon = new HoaDon();
         String date = String.valueOf(java.time.LocalDate.now());
@@ -109,6 +107,7 @@ public class ThanhToanHoaDonController {
                     chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                     chiTietHoaDonDAO.save(chiTietHoaDon);
 
+                    int mactg = entry.getValue().getChiTietGiay().getMactg();
                     ChiTietGiay ctg = chiTietGiayDAO.getById(mactg);
                     ctg.setSoluong(ctg.getSoluong() - entry.getValue().getSoluong());
                     chiTietGiayDAO.save(ctg);
@@ -131,6 +130,7 @@ public class ThanhToanHoaDonController {
                     chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                     chiTietHoaDonDAO.save(chiTietHoaDon);
 
+                    int mactg = entry.getValue().getChiTietGiay().getMactg();
                     ChiTietGiay ctg = chiTietGiayDAO.getById(mactg);
                     ctg.setSoluong(ctg.getSoluong() - entry.getValue().getSoluong());
                     chiTietGiayDAO.save(ctg);
@@ -156,6 +156,7 @@ public class ThanhToanHoaDonController {
                     chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                     chiTietHoaDonDAO.save(chiTietHoaDon);
 
+                    int mactg = entry.getValue().getChiTietGiay().getMactg();
                     ChiTietGiay ctg = chiTietGiayDAO.getById(mactg);
                     ctg.setSoluong(ctg.getSoluong() - entry.getValue().getSoluong());
                     chiTietGiayDAO.save(ctg);
@@ -178,6 +179,7 @@ public class ThanhToanHoaDonController {
                     chiTietHoaDon.setSoluong(entry.getValue().getSoluong());
                     chiTietHoaDonDAO.save(chiTietHoaDon);
 
+                    int mactg = entry.getValue().getChiTietGiay().getMactg();
                     ChiTietGiay ctg = chiTietGiayDAO.getById(mactg);
                     ctg.setSoluong(ctg.getSoluong() - entry.getValue().getSoluong());
                     chiTietGiayDAO.save(ctg);
@@ -207,7 +209,7 @@ public class ThanhToanHoaDonController {
 
 
         cartItems.clear();
-        session.setAttribute("myCartToTal",totalPrice(cartItems));
+        session.setAttribute("myCartToTal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
         return "user/hoadon/hdkh";
     }

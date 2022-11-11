@@ -52,6 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 KhachHang user = khachHangDAO.findByEmail(username);
                 NhanVien nhanVien = nhanVienDAO.findByEmail(username);
                 if (nhanVien == null) {
+                    ChucVu chucVu = chucVuDAO.findByMaCV(user.getMacv());
+                    roles = chucVu.getTencv();
+
                     String password = getPasswordEncoder().encode(user.getMatkhau());
                     Map<String, Object> authentication = new HashMap<>();
                     authentication.put("user", user);
@@ -59,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
                     session.setAttribute("authentication", authentication);
                     session.setAttribute("email", username);
-                    return User.withUsername(username).password(password).roles().build();
+                    return User.withUsername(username).password(password).roles(roles).build();
                 } else {
                     ChucVu chucVu = chucVuDAO.findByMaCV(nhanVien.getMacv());
                     roles = chucVu.getTencv();
