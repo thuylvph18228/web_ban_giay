@@ -1,0 +1,154 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <!-- Sale & Revenue Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <img class="ms-4" th:src="@{|/assets/images/icons8-line-chart-64.png|}">
+                        <div class="ms-2">
+                            <p class="mb-2">Doanh thu ngày</p>
+                            <h6 class="mb-0">$1234</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <img class="ms-4" th:src="@{|/assets/images/icons8-bar-chart-64.png|}">
+                        <div class="ms-2">
+                            <p class="mb-2">Doanh thu tháng</p>
+                            <h6 class="mb-0">$12342</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <img class="ms-4" th:src="@{|/assets/images/icons8-area-chart-64.png|}">
+                        <div class="ms-2">
+                            <p class="mb-2">Doanh thu quý</p>
+                            <h6 class="mb-0">$123423</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        <img class="ms-4" th:src="@{|/assets/images/icons8-pie-chart-64.png|}">
+                        <div class="ms-2">
+                            <p class="mb-2">Doanh thu năm</p>
+                            <h6 class="mb-0">$1234231</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sale & Revenue End -->
+
+        <!-- Sản phẩm bán chạy Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Sản phẩm bán chạy</h6>
+                    <a href="">Show All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Tên</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng đã bán</th>
+                            <th scope="col">Tổng giá trị</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="giay : ${giayList}">
+                            <td th:text="${giay.ten}"></td>
+                            <td><img width="100px" height="100px" th:src="@{${ giay.anh}}"></td>
+                            <td th:text="${giay.gia}"></td>
+                            <td></td>
+                            <td></td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Sản phẩm bán chạy End -->
+
+        <!-- Khách hàng thân thiết Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Khách hàng thân thiết</h6>
+                    <a href="">Show All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                        <tr class="text-dark">
+                            <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Invoice</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox"></td>
+                            <td>01 Jan 2045</td>
+                            <td>INV-0123</td>
+                            <td>Jhon Doe</td>
+                            <td>$123</td>
+                            <td>Paid</td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox"></td>
+                            <td>01 Jan 2045</td>
+                            <td>INV-0123</td>
+                            <td>Jhon Doe</td>
+                            <td>$123</td>
+                            <td>Paid</td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox"></td>
+                            <td>01 Jan 2045</td>
+                            <td>INV-0123</td>
+                            <td>Jhon Doe</td>
+                            <td>$123</td>
+                            <td>Paid</td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox"></td>
+                            <td>01 Jan 2045</td>
+                            <td>INV-0123</td>
+                            <td>Jhon Doe</td>
+                            <td>$123</td>
+                            <td>Paid</td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox"></td>
+                            <td>01 Jan 2045</td>
+                            <td>INV-0123</td>
+                            <td>Jhon Doe</td>
+                            <td>$123</td>
+                            <td>Paid</td>
+                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Khách hàng thân thiét End -->
+    </main>
+</div>

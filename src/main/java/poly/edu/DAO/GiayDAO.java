@@ -27,4 +27,13 @@ public interface GiayDAO extends JpaRepository<Giay, Integer> {
     @Query("SELECT g FROM Giay g join ChiTietGiay c on g.mag = c.mag where c.mansx=?1 group by g.mag")
     Page<Giay> findByNsx(int mansx, Pageable pageable);
 
+    @Query(value ="SELECT * from Giay g order by  g.mag desc limit 4 ", nativeQuery = true )
+    List<Giay> findByTop5New();
+
+    @Query(value = "SELECT * FROM Giay g \n" +
+            "join ChiTietGiay ctg on ctg.mag  = g.mag\n" +
+            "join ChiTietHoaDon c on c.mactg = ctg.mactg \n" +
+            "group by g.mag  \n" +
+            "order by sum(ctg.soluong) desc LIMIT 4"  ,nativeQuery = true)
+    List<Giay> findBySelling( );
 }
