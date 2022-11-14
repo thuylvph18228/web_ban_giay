@@ -18,7 +18,8 @@ public interface ChiTietHoaDonDAO extends JpaRepository<ChiTietHoaDon,Integer> {
             "  where c .mahd=?1 group by ctg .mactg")
     List<ChiTietHoaDon> findByMahd(int mahd);
 
-//    @Query(" SELECT e FROM ChiTietHoaDon e  WHERE e.mahd = ?1")
-//    List<HoaDon> findByMahd(int mahd);
+    @Query(" select c from ChiTietHoaDon c join HoaDon h " +
+            "on c.mahd = h.mahd where h.mahd  = ?1")
+    List<ChiTietHoaDon> findByMahdtrahang(int mahd);
 
 }

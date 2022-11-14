@@ -39,7 +39,7 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
             "WHERE e.mahd = (SELECT MAX(e.mahd) FROM HoaDon )")
     List<HoaDon> findMaxHDByMa(int mahd);
 
-    @Query("SELECT h  from HoaDon h where DATEDIFF( DATE(now()),h.ngaynhan )<7 and trahang= 0" +
+    @Query("SELECT h  from HoaDon h where DATEDIFF( DATE(now()),h.ngaynhan )<7 and h.trahang= 0 " +
             "group by h.mahd")
     List<HoaDon> findHDsmaller7();
 

@@ -72,6 +72,8 @@ public class GiayController {
         List<Nsx> listnsx = nsxdao.findAll();
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
+        List<Giay> pn = this.giaydao.findByTop5New();
+        List<Giay> ps = this.giaydao.findBySelling();
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;
@@ -82,6 +84,8 @@ public class GiayController {
         String baseUrl = "/giay/product?page=";
 
         model.addAttribute("listg", p);
+        model.addAttribute("listgn", pn);
+        model.addAttribute("listgs", ps);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
         model.addAttribute("begin", begin);
@@ -95,6 +99,7 @@ public class GiayController {
         model.addAttribute("giayfindnsx", "/giayfindnsx");
         return "user/giay/product";
     }
+
 
     @GetMapping("/giayfindnamelike")
     public String findbyNameLike(Model model, @RequestParam("name") String tengiay,
