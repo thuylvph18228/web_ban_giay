@@ -15,7 +15,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">
-                        Thông tin sản phẩm
+                        Sản phẩm
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/admin/giay/index">Giày</a></li>
@@ -27,7 +27,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="quanlynguoidung" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/material/344/person-male.png" alt="" width="30" height="24">
-                        Quản lý người dùng
+                        Người dùng
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="quanlynguoidung">
                         <li><a class="dropdown-item" href="/admin/nhanvien/index">Nhân viên</a></li>
@@ -59,6 +59,14 @@
                     <a href="#" class="nav-link">
                         <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png" alt="" width="30" height="24">
                         Xác nhận thanh toán
+                    </a>
+                </li>
+                <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                    class="nav-item">
+                    <a href="/admin/thongke" class="nav-link">
+                        <img src="https://img.icons8.com/small/512/combo-chart.png"
+                             alt="" width="24" height="24">
+                        Thống kê
                     </a>
                 </li>
             </ul>
