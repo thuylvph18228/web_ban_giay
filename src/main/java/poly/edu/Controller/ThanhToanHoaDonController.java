@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -73,8 +76,54 @@ public class ThanhToanHoaDonController {
         return "user/giohang/thanhtoan";
     }
 
+    @GetMapping("/user/hdkh")
+    public String hodonkh(HttpSession session, Model model,
+                         @RequestParam(name = "page", defaultValue = "0") int page,
+                         @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        String email = (String) session.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakh(kh.getMakh(), pageable);
+        model.addAttribute("listhd", listhd);
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/hdkh?page=";
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        List<KhachHang> listkh = khachHangDAO.findAll();
+        model.addAttribute("listkh", listkh);
+        List<ThanhToan> listtt = thanhToanDAO.findAll();
+        model.addAttribute("listtt", listtt);
+        List<Giay> listg = giayDAO.findAll();
+        model.addAttribute("listg", listg);
+
+        List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
+        model.addAttribute("listcthd", listcthd);
+        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
+        model.addAttribute("listctg", listctg);
+        List<Size> lists = sizeDAO.findAll();
+        model.addAttribute("lists", lists);
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
+
+        return "user/hoadon/hdkh";
+    }
+
     @PostMapping("/savetthd")
-    public String savett(ModelMap mm, HttpSession session, Model model,
+    public String savett(ModelMap mm, HttpSession session,
                          @RequestParam("httt") Integer httt,
                          @RequestParam("tongtien") Integer tongtien
     ) {
@@ -186,34 +235,12 @@ public class ThanhToanHoaDonController {
                 }
             }
         }
-        List<HoaDon> listhd = hoaDonDAO.findByMakh(kh.getMakh());
-        model.addAttribute("listhd", listhd);
-        listhd = hoaDonDAO.findMaxHDByMa(hoadon.getMahd());
-        model.addAttribute("listhdkh", listhd);
-
-        List<KhachHang> listkh = khachHangDAO.findAll();
-        model.addAttribute("listkh", listkh);
-        List<ThanhToan> listtt = thanhToanDAO.findAll();
-        model.addAttribute("listtt", listtt);
-        List<Giay> listg = giayDAO.findAll();
-        model.addAttribute("listg", listg);
-
-        List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
-        model.addAttribute("listcthd", listcthd);
-        List<ChiTietGiay> listctg = chiTietGiayDAO.findAll();
-        model.addAttribute("listctg", listctg);
-        List<Size> lists = sizeDAO.findAll();
-        model.addAttribute("lists", lists);
-        List<Nsx> listnsx = nsxdao.findAll();
-        model.addAttribute("listnsx", listnsx);
-
 
         cartItems.clear();
         session.setAttribute("myCartToTal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "user/hoadon/hdkh";
+        return "redirect:/user/hdkh";
     }
-
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {
         int count = 0;

@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,14 +56,37 @@ public class TraHangController {
     private SizeDAO sizeDAO;
 
     @GetMapping("/user/trahang/listtrahang")
-    public String listtrahang(Model model) {
+    public String listtrahang(Model model,
+                              @RequestParam(name = "page", defaultValue = "0") int page,
+                              @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findHDsmaller7(pageable);
+        model.addAttribute("listhd", listhd);
+
 
         List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
         model.addAttribute("listcthd", listcthd);
         String email = (String) session.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> listhd = hoaDonDAO.findHDsmaller7();
-        System.out.println(listhd);
+
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/trahang/listtrahang?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);

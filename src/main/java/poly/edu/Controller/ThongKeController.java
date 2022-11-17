@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import poly.edu.DAO.ChiTietGiayDAO;
-import poly.edu.DAO.ChiTietHoaDonDAO;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.Entity.ChiTietGiay;
-import poly.edu.Entity.ChiTietHoaDon;
-import poly.edu.Entity.Giay;
+import org.springframework.web.bind.annotation.RequestParam;
+import poly.edu.DAO.*;
+import poly.edu.Entity.*;
 
 import java.util.List;
 
@@ -23,16 +20,186 @@ public class ThongKeController {
     ChiTietGiayDAO chiTietGiayDAO;
 
     @Autowired
+    HoaDonDAO hoaDonDAO;
+
+    @Autowired
+    KhachHangDAO khachHangDAO;
+
+    @Autowired
     ChiTietHoaDonDAO chiTietHoaDonDAO;
 
-    @GetMapping("/admin/thongke")
+    @GetMapping("/admin/thongkengay")
     public String thongke(Model model){
-        List<Giay> giayList = giayDAO.findBySelling();
-        model.addAttribute("giayList", giayList);
-        List<ChiTietGiay> chiTietGiayList = chiTietGiayDAO.findAll();
-        model.addAttribute("chiTietGiayList", chiTietGiayList);
-        List<ChiTietHoaDon> chiTietHoaDonList = chiTietHoaDonDAO.findAll();
-        model.addAttribute("chiTietHoaDonList", chiTietHoaDonList);
-        return "admin/thongke/index";
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+
+        model.addAttribute("findByDay", "/admin/findByDay");
+
+        return "admin/thongke/thongkengay";
+    }
+
+    @GetMapping("/admin/findByDay")
+    public String findDoanhThuByNgay(Model model, @RequestParam("date") String date){
+        List<HoaDon> doanhthungay = hoaDonDAO.findDoanhThuByNgay(date);
+        int tongtienngay =0;
+        for (HoaDon dtn : doanhthungay){
+            tongtienngay += dtn.getTongtien();
+        }
+        model.addAttribute("tongtienngay", tongtienngay);
+
+        List<ChiTietHoaDon> soluong = chiTietHoaDonDAO.findSouluongByDay(date);
+        int soluongngay =0;
+        for (ChiTietHoaDon sln : soluong){
+            soluongngay += sln.getSoluong();
+        }
+        model.addAttribute("soluongngay", soluongngay);
+
+        int tonghoadon = doanhthungay.size();
+        System.out.println(doanhthungay);
+        model.addAttribute("tonghoadon", tonghoadon);
+
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+        return "admin/thongke/thongkengay";
+    }
+
+    @GetMapping("/admin/thongkethang")
+    public String thongkethang(Model model){
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+
+        model.addAttribute("findByMonth", "/admin/findByMonth");
+
+        return "admin/thongke/thongkethang";
+    }
+
+    @GetMapping("/admin/findByMonth")
+    public String findDoanhThuByMonth(Model model, @RequestParam("month") int month){
+        List<HoaDon> doanhthuthang = hoaDonDAO.findDoanhThuByMonth(month);
+        int tongtienthang =0;
+        for (HoaDon dtt : doanhthuthang){
+            tongtienthang += dtt.getTongtien();
+        }
+        model.addAttribute("tongtienthang", tongtienthang);
+
+        List<ChiTietHoaDon> soluong = chiTietHoaDonDAO.findSouluongByMonth(month);
+        int soluongthang =0;
+        for (ChiTietHoaDon sln : soluong){
+            soluongthang += sln.getSoluong();
+        }
+        model.addAttribute("soluongthang", soluongthang);
+
+        int tonghoadon = doanhthuthang.size();
+        model.addAttribute("tonghoadon", tonghoadon);
+
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+        return "admin/thongke/thongkethang";
+    }
+
+    @GetMapping("/admin/thongkenam")
+    public String thongkenam(Model model){
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+
+        model.addAttribute("findByYear", "/admin/findByYear");
+
+        return "admin/thongke/thongkenam";
+    }
+
+    @GetMapping("/admin/findByYear")
+    public String findDoanhThuByYear(Model model, @RequestParam("year") int year){
+        List<HoaDon> doanhthunam = hoaDonDAO.findDoanhThuByYear(year);
+        int tongtiennam =0;
+        for (HoaDon dtn : doanhthunam){
+            tongtiennam += dtn.getTongtien();
+        }
+        model.addAttribute("tongtiennam", tongtiennam);
+
+        List<ChiTietHoaDon> soluong = chiTietHoaDonDAO.findSouluongByYear(year);
+        int soluongnam =0;
+        for (ChiTietHoaDon sln : soluong){
+            soluongnam += sln.getSoluong();
+        }
+        model.addAttribute("soluongnam", soluongnam);
+
+        int tonghoadon = doanhthunam.size();
+        model.addAttribute("tonghoadon", tonghoadon);
+
+        List<Giay> ps = this.giayDAO.findBySellingTop5();
+        model.addAttribute("listgs", ps);
+
+        List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
+        model.addAttribute("listhd", hd);
+
+        List<KhachHang> kh = this.khachHangDAO.findAll();
+        model.addAttribute("listkh", kh);
+
+        List<ChiTietHoaDon> cthd = this.chiTietHoaDonDAO.findBySellingCthd();
+        model.addAttribute("listcthd", cthd);
+
+        List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
+        model.addAttribute("listctg", ctg);
+        return "admin/thongke/thongkenam";
     }
 }

@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -188,39 +191,107 @@ public class HoaDonController {
         return "redirect:/admin/hoadon/index";
     }
     @GetMapping("/user/cart/processing")
-    public String processing(Model model) {
+    public String processing(Model model,
+                             @RequestParam(name = "page", defaultValue = "0") int page,
+                             @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
 
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhprocessing(kh.getMakh());
+//        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhprocessing(kh.getMakh());
         List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
 
-        model.addAttribute("hoaDonList", hoaDonList);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhprocessing(kh.getMakh(), pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/processing?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
 
     @GetMapping("/user/cart/shipping")
-    public String shipping(Model model) {
+    public String shipping(Model model,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhshipping(kh.getMakh());
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhshipping(kh.getMakh(), pageable);
+        model.addAttribute("listhd", listhd);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/shipping?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+//        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhshipping(kh.getMakh());
         List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
-        model.addAttribute("hoaDonList", hoaDonList);
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
     @GetMapping("/user/cart/delivered")
-    public String delivered(Model model) {
+    public String delivered(Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhdelivered(kh.getMakh());
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhdelivered(kh.getMakh(), pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/delivered?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
-        model.addAttribute("hoaDonList", hoaDonList);
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
 
