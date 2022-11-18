@@ -8,13 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.DAO.GioHangDAO;
-import poly.edu.DAO.NsxDAO;
+import poly.edu.DAO.*;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
+import poly.edu.Entity.ThongBao;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,6 +23,10 @@ import java.util.List;
 public class GiayController {
     @Autowired
     HttpSession httpSession;
+
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
 
     @Autowired
     KhachHangDAO khachHangDao;
@@ -52,6 +54,12 @@ public class GiayController {
         int next = p.getNumber()+1;
         String baseUrl = "/admin/giay/index?page=";
 
+        List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
+//        model.addAttribute("size", size);
+        model.addAttribute("listtb", listtb);
+        httpSession.setAttribute("sizeth",listtb.size());
+//        httpSession.setAttribute("listb",listtb);
+
         model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
@@ -73,7 +81,7 @@ public class GiayController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
         List<Giay> pn = this.giaydao.findByTop5New();
-        List<Giay> ps = this.giaydao.findBySelling();
+        List<Giay> ps = this.giaydao.findBySellingTop5();
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;

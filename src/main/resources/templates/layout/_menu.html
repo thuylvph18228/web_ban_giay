@@ -125,14 +125,6 @@
                                 <li><a class="dropdown-item" href="/admin/trahang/daxuly">Đã xử lý</a></li>
                             </ul>
                         </li>
-                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
-                            class="nav-item">
-                            <a href="#" class="nav-link">
-                                <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png"
-                                     alt="" width="30" height="24">
-                                Xác nhận thanh toán
-                            </a>
-                        </li>
                         <li th:if="${#request.isUserInRole('Admin')}"
                             class="nav-item">
                             <div class="dropdown">

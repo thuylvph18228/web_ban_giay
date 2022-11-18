@@ -58,7 +58,7 @@
                             </td>
                             <td th:each="ctg : ${listctg}" th:if="${cthd.mactg}==${ctg.mactg}">
                                 <img th:each="g : ${listg}" th:if="${ctg.mag}==${g.mag}" width="200px" height="200px"
-                                     th:src="@{${ g.anh}}">
+                                     th:src="@{|/assets/images/${ g.anh}|}">
                             </td>
                             <td th:text="${cthd.soluong}"></td>
                             <td>

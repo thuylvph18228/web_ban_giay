@@ -5,7 +5,7 @@
         <div class="text-center">
 
           <h1>Chọn thông tin sản phầm</h1>
-          <img class="anh_san_pham" th:each="giay: ${giay}" th:src="${giay.anh}">
+          <img class="anh_san_pham" th:src="@{|/assets/images/${ giay.anh}|}">
           <div>
             <label class="fw-bold" th:each="giay: ${giay}">Tên:</label>
             <label th:text="${giay.ten}"></label>

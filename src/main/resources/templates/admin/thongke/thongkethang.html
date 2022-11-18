@@ -73,7 +73,7 @@
                         <tbody>
                         <tr th:each="giay : ${listgs}">
                             <td th:text="${giay.ten}"></td>
-                            <td><img width="100px" height="100px" th:src="@{${ giay.anh}}"></td>
+                            <td><img width="100px" height="100px" th:src="@{|/assets/images/${ giay.anh}|}"></td>
                             <td th:text="${giay.gia}"></td>
                             <td th:each="ctg : ${listctg}" th:if="${giay.mag}==${ctg.mag}">
                                 <span th:each="cthd : ${listcthd}" th:if="${ctg.mactg}==${cthd.mactg}"

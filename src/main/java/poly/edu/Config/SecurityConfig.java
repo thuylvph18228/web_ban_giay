@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
                     session.setAttribute("authentication", authentication);
                     session.setAttribute("email", username);
+                    session.setAttribute("roles", roles);
                     return User.withUsername(username).password(password).roles(roles).build();
                 } else {
                     ChucVu chucVu = chucVuDAO.findByMaCV(nhanVien.getMacv());
@@ -73,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     byte[] token = (username + ":" + nhanVien.getMatkhau()).getBytes();
                     authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
                     session.setAttribute("authentication", authentication);
+                    session.setAttribute("roles", roles);
                     return User.withUsername(username).password(password).roles(roles).build();
                 }
             } catch (NoSuchElementException e) {

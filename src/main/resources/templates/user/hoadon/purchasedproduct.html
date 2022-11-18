@@ -19,7 +19,7 @@
                         <td th:each="s : ${listsize}" th:if="${s.mas}==${ct.mas}" th:text="${s.ten}"/>
                         <td th:each="g : ${listg}" th:if="${ct.mag}==${g.mag}" th:text="${g.gia}"/>
                         <td class="text-center" th:each="g : ${listg}" th:if="${ct.mag}==${g.mag}"><img
-                                th:src="${g.anh} " width="200" height="180">
+                                th:src="@{|/assets/images/${ g.anh}|}" width="200" height="180">
                         </td>
                         <td th:each="c : ${chiTietHoaDonList}" th:if="${c.mactg}==${ct.mactg}" th:text="${c.soluong}"/>
                         </td>

@@ -17,6 +17,7 @@ import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,9 @@ public class ThanhToanHoaDonController {
 
     @Autowired
     KhachHangDAO khachHangDAO;
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
 
     @Autowired
     HoaDonDAO hoaDonDAO;
@@ -146,6 +150,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaythanhtoan(date);
                 hoadon.setTrangthaihd(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
@@ -169,6 +174,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setTrangthaidh(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
 
@@ -193,6 +199,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaytao(date);
                 hoadon.setNgaythanhtoan(date);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaihd(1);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
@@ -217,6 +224,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaytao(date);
                 hoadon.setTrangthaihd(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
@@ -235,6 +243,15 @@ public class ThanhToanHoaDonController {
                 }
             }
         }
+        ThongBao thongBao = new ThongBao();
+        thongBao.setMahd(hoadon.getMahd());
+        thongBao.setMakh(hoadon.getMakh());
+        KhachHang khachHang = khachHangDAO.getById(hoadon.getMakh());
+        thongBao.setTrangthai(0);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        thongBao.setNgaytao(String.valueOf(myDateObj));
+        thongBao.setMota("Khách hàng "+khachHang.getTen()+ " đã đặt hóa đơn ");
+        thongBaoDAO.save(thongBao);
 
         cartItems.clear();
         session.setAttribute("myCartToTal", totalPrice(cartItems));

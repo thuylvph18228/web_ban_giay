@@ -8,7 +8,15 @@
                         <img th:src="@{|/assets/images/icons8-line-chart-64.png|}">
                         <div class="ms-5">
                             <form th:action="${findByYear}">
-                                <input type="date" name="date" id="date" style="width: 117px">
+                                <select name="year">
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                </select>
                                 <button class="btn btn-outline-success" type="submit" style="height: 28px">
                                     <img src="https://img.icons8.com/small/512/search.png" width="24" height="24">
                                 </button>
@@ -60,7 +68,7 @@
                         <tbody>
                         <tr th:each="giay : ${listgs}">
                             <td th:text="${giay.ten}"></td>
-                            <td><img width="100px" height="100px" th:src="@{${ giay.anh}}"></td>
+                            <td><img width="100px" height="100px" th:src="@{|/assets/images/${ giay.anh}|}"></td>
                             <td th:text="${giay.gia}"></td>
                             <td th:each="ctg : ${listctg}" th:if="${giay.mag}==${ctg.mag}">
                                 <span th:each="cthd : ${listcthd}" th:if="${ctg.mactg}==${cthd.mactg}"
