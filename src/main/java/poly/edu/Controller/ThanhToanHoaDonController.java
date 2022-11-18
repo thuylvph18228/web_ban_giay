@@ -14,6 +14,7 @@ import poly.edu.Entity.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,9 @@ public class ThanhToanHoaDonController {
 
     @Autowired
     KhachHangDAO khachHangDAO;
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
 
     @Autowired
     HoaDonDAO hoaDonDAO;
@@ -207,6 +211,15 @@ public class ThanhToanHoaDonController {
         List<Nsx> listnsx = nsxdao.findAll();
         model.addAttribute("listnsx", listnsx);
 
+        ThongBao thongBao = new ThongBao();
+        thongBao.setMahd(hoadon.getMahd());
+        thongBao.setMakh(hoadon.getMakh());
+        KhachHang khachHang = khachHangDAO.getById(hoadon.getMakh());
+        thongBao.setTrangthai(0);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        thongBao.setNgaytao(String.valueOf(myDateObj));
+        thongBao.setMota("Khách hàng "+khachHang.getTen()+ " đã đặt hóa đơn ");
+        thongBaoDAO.save(thongBao);
 
         cartItems.clear();
         session.setAttribute("myCartToTal", totalPrice(cartItems));

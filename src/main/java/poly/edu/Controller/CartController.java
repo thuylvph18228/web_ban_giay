@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,6 +37,13 @@ public class CartController {
 
     @Autowired
     public KhachHangDAO khachHangDAO;
+
+    @Autowired
+    public DanhGiaDAO danhGiaDAO;
+
+    @Autowired
+    public HttpSession session;
+
     @Autowired
     public HoaDonDAO hoadondao;
 
@@ -62,14 +72,45 @@ public class CartController {
 
 
     @GetMapping("/user/cart/buy/{mag}")
-    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
+    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay,Model model, @PathVariable(name = "mag") int mag,
+                       @RequestParam(name = "page", defaultValue = "0") int page,
+                      @RequestParam(name = "size", defaultValue = "3") int size) {
         List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
         Giay giay = giaydao.getById(mag);
         List<Size> listsize = sdao.findAll();
+        List<KhachHang> listkh = khachHangDAO.findAll();
         List<Nsx> listnsx = nsxdao.findAll();
         List<LoaiGiay> listlg = lgdao.findAll();
         List<Giay> listg = giaydao.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<DanhGia> p = this.danhGiaDAO.findByDanhGia(pageable,mag);
 
+
+        List<DanhGia> listdg0 = danhGiaDAO.findByDanhGia0(mag);
+        List<DanhGia> listdg1 = danhGiaDAO.findByDanhGia1(mag);
+        List<DanhGia> listdg2 = danhGiaDAO.findByDanhGia2(mag);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/user/cart/buy/"+mag+"/?page=";
+
+        model.addAttribute("listdg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+        session.setAttribute("listdg0", listdg0.size());
+        session.setAttribute("listdg1", listdg1.size());
+        session.setAttribute("listdg2", listdg2.size());
+        model.addAttribute("listkh", listkh);
+//        model.addAttribute("listdg", listdg);
         model.addAttribute("giay", giay);
         model.addAttribute("listctg", listctg);
         model.addAttribute("listsize", listsize);
@@ -80,6 +121,7 @@ public class CartController {
 
         return "user/giay/buy";
     }
+
     @GetMapping("/user/cart/buynow/{mag}")
     public String viewbuynow(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name = "mag") int mag, Model model) {
         List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+  <div>
+    <form method="post" th:action="${savedg}" th:object="${danhgia}">
+      <h1>Vui lòng đánh giá sản phẩm</h1>
+      <div>
+        <label>Mã hóa đơn</label>
+
+        <input class="form-control"  th:each="hd : ${hoadon}" th:value="${hd.mahd}" name="mahd" hidden>
+        <input class="form-control"  th:each="hd : ${hoadon}" th:value="${hd.mahd}" name="mahd" disabled>
+
+      </div>
+      <label>Sản phẩm</label>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Mã giày</th>
+          <th>Tên giày</th>
+          <th>Ảnh</th>
+          <th>Giá</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="g:${listg}">
+          <td th:text="${g.mag}"/>
+          <td th:text="${g.ten}"/>
+          <td ><img th:src="${g.anh}" width="200" height="180"></td>
+          <td th:text="${g.gia}"/>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <label>Đánh giá:</label>
+        <select class="form-select" th:field="*{loaidg}" >
+          <option  value="2" >Không hài lòng</option>
+          <option  value="1" >Hài lòng</option>
+          <option  value="0" >Rất hài lòng</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Mô tả</label>
+        <input class="form-control" type="text"  th:field="*{mota}" name="mota">
+      </div>
+
+      <button class="btn btn-primary mt-3" type="submit">Gửi</button>
+    </form>
+  </div>
+</main>
+</body>
+
+</html>

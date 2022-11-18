@@ -8,13 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.DAO.GioHangDAO;
-import poly.edu.DAO.NsxDAO;
+import poly.edu.DAO.*;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
+import poly.edu.Entity.ThongBao;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,6 +23,10 @@ import java.util.List;
 public class GiayController {
     @Autowired
     HttpSession httpSession;
+
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
 
     @Autowired
     KhachHangDAO khachHangDao;
@@ -51,6 +53,12 @@ public class GiayController {
         int pre = p.getNumber()-1;
         int next = p.getNumber()+1;
         String baseUrl = "/admin/giay/index?page=";
+
+        List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
+//        model.addAttribute("size", size);
+        model.addAttribute("listtb", listtb);
+        httpSession.setAttribute("sizeth",listtb.size());
+//        httpSession.setAttribute("listb",listtb);
 
         model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
