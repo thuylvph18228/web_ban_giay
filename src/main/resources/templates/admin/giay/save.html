@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-check">
                     <label>Ảnh</label>
-                    <input class="form-control" type="text" th:field="*{anh}" name="anh">
+                    <input class="form-control" type="file" th:field="*{anh}" name="anh">
                     <span class="text-danger" th:if="${#fields.hasErrors('anh')}" th:errors="*{anh}"></span>
                 </div>
                 <div class="form-check">

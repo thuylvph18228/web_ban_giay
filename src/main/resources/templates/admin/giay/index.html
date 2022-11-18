@@ -17,10 +17,13 @@
                     <tr th:each="g : ${listg}">
                         <td th:text="${g.ten}"></td>
                         <td th:text="${g.gia}"></td>
-                        <td><img width="100px" height="100px" th:src="@{${ g.anh}}"></td>
+                        <td>
+                            <img width="100px" height="100px"
+                                 th:src="@{|/assets/images/${ g.anh}|}">
+                        </td>
                         <td th:text="${g.mota}"></td>
                         <td colspan="2">
-                            <a class="btn btn-outline-primary" th:href="@{'/admin/giay/edit/'+${g.mag}}"></a>
+                            <a class="btn btn-outline-primary" th:href="@{'/admin/giay/edit/'+${g.mag}}">Sửa</a>
                             <a class="btn btn-outline-danger" th:href="@{'/admin/giay/delete/'+${g.mag}}">Xoá</a>
                         </td>
                     </tr>

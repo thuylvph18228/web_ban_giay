@@ -28,7 +28,7 @@
         <tr th:each="g:${listg}">
           <td th:text="${g.mag}"/>
           <td th:text="${g.ten}"/>
-          <td ><img th:src="${g.anh}" width="200" height="180"></td>
+          <td ><img th:src="@{|/assets/images/${ g.anh}|}" width="200" height="180"></td>
           <td th:text="${g.gia}"/>
         </tr>
         </tbody>

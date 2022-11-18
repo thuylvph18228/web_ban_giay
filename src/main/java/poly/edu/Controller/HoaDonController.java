@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,7 +48,6 @@ public class HoaDonController {
     private ChiTietGiayDAO chiTietGiayDAO;
     @Autowired
     private SizeDAO sizeDAO;
-
     @GetMapping("/admin/hoadon/index")
     public String listhd(Model model) {
 
@@ -69,13 +71,34 @@ public class HoaDonController {
 
         return ("admin/hoadon/index");
     }
-
     @GetMapping("/admin/hoadon/findtrangthaicxn")
-    public String findtrangthaicxn(Model model) {
-        List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn();
-        httpSession.setAttribute("sizehdcxn", listhd.size());
+    public String findtrangthaicxn( Model model,
+                                    @RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size){
+
+        Pageable pageable = PageRequest.of(page, size);
+        List<HoaDon> listhd0 = hoaDonDAO.findByTrangthaicxn();
+        httpSession.setAttribute("sizehdcxn",listhd0.size());
         List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc", listhd1.size());
+        httpSession.setAttribute("sizehddvc",listhd1.size());
+        Page<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn(pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/admin/hoadon/findtrangthaicxn?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -114,14 +137,35 @@ public class HoaDonController {
         model.addAttribute("lists", lists);
         List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
         model.addAttribute("listtb", listtb);
-        httpSession.setAttribute("sizeth", listtb.size());
+        httpSession.setAttribute("sizeth",listtb.size());
         return "admin/hoadon/findhdkhach";
     }
-
     @GetMapping("/admin/hoadon/findtrangthaidvc")
-    public String findtrangthaidvc(Model model) {
-        List<HoaDon> listhd = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc", listhd.size());
+    public String findtrangthaidvc( Model model,
+                                    @RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size){
+        List<HoaDon> listh = hoaDonDAO.findByTrangthaidvc();
+        httpSession.setAttribute("sizehddvc",listh.size());
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByTrangthaidvcPage(pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/admin/hoadon/findtrangthaidvc?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -138,7 +182,6 @@ public class HoaDonController {
 
         return "admin/hoadon/findhdkhach";
     }
-
     @GetMapping("/cart/updatetrangthaidh/{mahd}")
     public String updatetrangthaihd(@PathVariable("mahd") int mahd, Model model) {
         HoaDon hoaDon = hoaDonDAO.getById(mahd);
@@ -149,6 +192,7 @@ public class HoaDonController {
             ThongBao thongBao = thongBaoDAO.findThongBaoByMahd(hoaDon.getMahd());
             thongBao.setMatb(thongBao.getMatb());
             thongBao.setTrangthai(1);
+
             LocalDateTime myDateObj = LocalDateTime.now();
             thongBao.setNgayxem(String.valueOf(myDateObj));
             thongBaoDAO.save(thongBao);
@@ -240,9 +284,10 @@ public class HoaDonController {
         hoaDonDAO.save(hoaDon);
         return "redirect:/admin/hoadon/index";
     }
-
     @GetMapping("/user/cart/processing")
-    public String processing(Model model) {
+    public String processing(Model model,
+                             @RequestParam(name = "page", defaultValue = "0") int page,
+                             @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
@@ -251,30 +296,99 @@ public class HoaDonController {
         List<KhachHang> khachHangList = khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
 
-        model.addAttribute("hoaDonList", hoaDonList);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhprocessing(kh.getMakh(), pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/processing?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
 
     @GetMapping("/user/cart/shipping")
-    public String shipping(Model model) {
+    public String shipping(Model model,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
         List<HoaDon> hoaDonList = hoaDonDAO.findByMakhshipping(kh.getMakh());
-        List<KhachHang> khachHangList = khachHangDAO.findAll();
+       // List<KhachHang> khachHangList = khachHangDAO.findAll();
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhshipping(kh.getMakh(), pageable);
+        model.addAttribute("listhd", listhd);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/shipping?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+//        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhshipping(kh.getMakh());
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
-        model.addAttribute("hoaDonList", hoaDonList);
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
-
     @GetMapping("/user/cart/delivered")
-    public String delivered(Model model) {
+    public String delivered(Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "10") int size) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
         List<HoaDon> hoaDonList = hoaDonDAO.findByMakhdelivered(kh.getMakh());
-        List<KhachHang> khachHangList = khachHangDAO.findAll();
+      //  List<KhachHang> khachHangList = khachHangDAO.findAll();
         System.out.println(hoaDonList);
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByMakhdelivered(kh.getMakh(), pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/cart/delivered?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("hoaDonList", hoaDonList);
         return "user/hoadon/tinhtrangdh";

@@ -50,6 +50,6 @@ public interface GiayDAO extends JpaRepository<Giay, Integer> {
             "join ChiTietGiay ctg on ctg.mag  = g.mag\n" +
             "join ChiTietHoaDon c on c.mactg = ctg.mactg \n" +
             "group by g.mag  \n" +
-            "order by sum(ctg.soluong) desc LIMIT 4"  ,nativeQuery = true)
-    List<Giay> findBySelling( );
+            "order by sum(ctg.soluong) desc LIMIT 5"  ,nativeQuery = true)
+    List<Giay> findBySellingTop5( );
 }

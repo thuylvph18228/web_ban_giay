@@ -81,7 +81,7 @@ public class GiayController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
         List<Giay> pn = this.giaydao.findByTop5New();
-        List<Giay> ps = this.giaydao.findBySelling();
+        List<Giay> ps = this.giaydao.findBySellingTop5();
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;

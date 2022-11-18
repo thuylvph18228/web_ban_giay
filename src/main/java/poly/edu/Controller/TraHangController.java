@@ -1,6 +1,9 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,14 +56,37 @@ public class TraHangController {
     private SizeDAO sizeDAO;
 
     @GetMapping("/user/trahang/listtrahang")
-    public String listtrahang(Model model) {
+    public String listtrahang(Model model,
+                              @RequestParam(name = "page", defaultValue = "0") int page,
+                              @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findHDsmaller7(pageable);
+        model.addAttribute("listhd", listhd);
+
 
         List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
         model.addAttribute("listcthd", listcthd);
         String email = (String) session.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> listhd = hoaDonDAO.findHDsmaller7();
-        System.out.println(listhd);
+
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/trahang/listtrahang?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -123,8 +149,29 @@ public class TraHangController {
     }
 
     @GetMapping("/admin/trahang/canxuly")
-    public String xulytrahang(@ModelAttribute("trahang") TraHang traHang, Model model) {
-        List<TraHang> listth = traHangDAO.trahangcanxuly();
+    public String xulytrahang(@ModelAttribute("trahang") TraHang traHang, Model model,
+                              @RequestParam(name = "page", defaultValue = "0") int page,
+                              @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TraHang> listth = traHangDAO.trahangcanxuly(pageable);
+        int firstPage = 0;
+        int totalPages = listth.getTotalPages()-1;
+        int end = listth.getTotalPages()-1;
+        int begin = 0;
+        int index = listth.getNumber();
+        int pre = listth.getNumber()-1;
+        int next = listth.getNumber()+1;
+        String baseUrl = "/admin/trahang/canxuly?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         List<LyDoTraHang> listld = lyDoDAO.findAll();
         List<KhachHang> listkh = khachHangDAO.findAll();
         model.addAttribute("listkh", listkh);
@@ -136,8 +183,29 @@ public class TraHangController {
     }
 
     @GetMapping("/admin/trahang/daxuly")
-    public String daxulytrahang(@ModelAttribute("trahang") TraHang traHang, Model model) {
-        List<TraHang> listth = traHangDAO.trahangdaxuly();
+    public String daxulytrahang(@ModelAttribute("trahang") TraHang traHang, Model model,
+                                @RequestParam(name = "page", defaultValue = "0") int page,
+                                @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TraHang> listth = traHangDAO.trahangdaxuly(pageable);
+        int firstPage = 0;
+        int totalPages = listth.getTotalPages()-1;
+        int end = listth.getTotalPages()-1;
+        int begin = 0;
+        int index = listth.getNumber();
+        int pre = listth.getNumber()-1;
+        int next = listth.getNumber()+1;
+        String baseUrl = "/admin/trahang/canxuly?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         List<LyDoTraHang> listld = lyDoDAO.findAll();
         List<KhachHang> listkh = khachHangDAO.findAll();
         model.addAttribute("listkh", listkh);

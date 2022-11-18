@@ -27,7 +27,7 @@
                                 th:text="${size.ten}"></td>
                             <td class="text-center" th:each="g:${listg}" th:if="${g.mag}==${s.value.chiTietGiay.mag}">
                                 <img
-                                        th:src="${g.anh} " width="200" height="180"></td>
+                                        th:src="@{|/assets/images/${ g.anh}|}" width="200" height="180"></td>
                             <td th:each="ct:${chiTietGiayList}" th:if="${ct.mactg}==${s.value.chiTietGiay.mactg}"
                                 th:text="${ct.soluong}"></td>
                             <td><input type="number" class="form-control" th:value="${s.value.soluong}" name="soluong">
