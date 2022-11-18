@@ -1,13 +1,13 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.KhachHangDAO;
 import poly.edu.Entity.KhachHang;
 
@@ -23,8 +23,29 @@ public class KhachHangController {
 
 
     @GetMapping("/admin/khachhang/index")
-    public String listkh(Model model) {
-        List<KhachHang> listkh = khachHangDAO.findAll();
+    public String listkh(Model model,
+                         @RequestParam(name = "page", defaultValue = "0") int page,
+                         @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<KhachHang> listkh = khachHangDAO.findAll(pageable);
+        int firstPage = 0;
+        int totalPages = listkh.getTotalPages()-1;
+        int end = listkh.getTotalPages()-1;
+        int begin = 0;
+        int index = listkh.getNumber();
+        int pre = listkh.getNumber()-1;
+        int next = listkh.getNumber()+1;
+        String baseUrl = "/admin/khachhang/index?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listkh", listkh);
         return ("admin/khachhang/index");
     }

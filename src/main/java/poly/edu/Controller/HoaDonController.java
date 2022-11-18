@@ -69,8 +69,28 @@ public class HoaDonController {
         return ("admin/hoadon/index");
     }
     @GetMapping("/admin/hoadon/findtrangthaicxn")
-    public String findtrangthaicxn( Model model){
-        List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn();
+    public String findtrangthaicxn( Model model,
+                                    @RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn(pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/admin/hoadon/findtrangthaicxn?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -88,8 +108,29 @@ public class HoaDonController {
         return "admin/hoadon/findhdkhach";
     }
     @GetMapping("/admin/hoadon/findtrangthaidvc")
-    public String findtrangthaidvc( Model model){
-        List<HoaDon> listhd = hoaDonDAO.findByTrangthaidvc();
+    public String findtrangthaidvc( Model model,
+                                    @RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HoaDon> listhd = hoaDonDAO.findByTrangthaidvc(pageable);
+        int firstPage = 0;
+        int totalPages = listhd.getTotalPages()-1;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/admin/hoadon/findtrangthaidvc?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);

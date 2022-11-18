@@ -1,13 +1,13 @@
 package poly.edu.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.SizeDAO;
 import poly.edu.Entity.Size;
 
@@ -21,8 +21,28 @@ public class SizeController {
 
 
     @GetMapping("/admin/size/index")
-    public String listS(Model model) {
-        List<Size> lists = sizeDAO.findAll();
+    public String listS(Model model,
+                        @RequestParam(name = "page", defaultValue = "0") int page,
+                        @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Size> lists = sizeDAO.findAll(pageable);
+        int firstPage = 0;
+        int totalPages = lists.getTotalPages()-1;
+        int end = lists.getTotalPages()-1;
+        int begin = 0;
+        int index = lists.getNumber();
+        int pre = lists.getNumber()-1;
+        int next = lists.getNumber()+1;
+        String baseUrl = "/admin/size/index?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("lists", lists);
         return ("admin/size/index");
     }

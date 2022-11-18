@@ -21,9 +21,9 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
     List<HoaDon> findBySdt(String sdt);
 
     @Query("SELECT h FROM HoaDon h where h.trangthaidh=0")
-    List<HoaDon> findByTrangthaicxn();
+    Page<HoaDon> findByTrangthaicxn(Pageable pageable);
     @Query("SELECT h FROM HoaDon h where h.trangthaidh =1")
-    List<HoaDon> findByTrangthaidvc();
+    Page<HoaDon> findByTrangthaidvc(Pageable pageable);
 
     @Query(" SELECT e FROM HoaDon e  WHERE e.makh = ?1")
     Page<HoaDon> findByMakh(int makh, Pageable pageable);
