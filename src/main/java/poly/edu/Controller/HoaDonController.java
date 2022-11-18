@@ -45,6 +45,7 @@ public class HoaDonController {
     private ChiTietGiayDAO chiTietGiayDAO;
     @Autowired
     private SizeDAO sizeDAO;
+
     @GetMapping("/admin/hoadon/index")
     public String listhd(Model model) {
 
@@ -68,12 +69,13 @@ public class HoaDonController {
 
         return ("admin/hoadon/index");
     }
+
     @GetMapping("/admin/hoadon/findtrangthaicxn")
-    public String findtrangthaicxn( Model model){
+    public String findtrangthaicxn(Model model) {
         List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn();
-        httpSession.setAttribute("sizehdcxn",listhd.size());
+        httpSession.setAttribute("sizehdcxn", listhd.size());
         List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc",listhd1.size());
+        httpSession.setAttribute("sizehddvc", listhd1.size());
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -89,10 +91,12 @@ public class HoaDonController {
         model.addAttribute("lists", lists);
         List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
         model.addAttribute("listtb", listtb);
-        httpSession.setAttribute("sizeth",listtb.size());
+        httpSession.setAttribute("sizeth", listtb.size());
         return "admin/hoadon/findhdkhach";
-    }@GetMapping("/admin/hoadon/findtrangthaicxn/{mahd}")
-    public String findtrangthaicxnbymahd(@PathVariable("mahd")  int mahd, Model model){
+    }
+
+    @GetMapping("/admin/hoadon/findtrangthaicxn/{mahd}")
+    public String findtrangthaicxnbymahd(@PathVariable("mahd") int mahd, Model model) {
         List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxnbymahd(mahd);
 
         model.addAttribute("listhd", listhd);
@@ -110,13 +114,14 @@ public class HoaDonController {
         model.addAttribute("lists", lists);
         List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
         model.addAttribute("listtb", listtb);
-        httpSession.setAttribute("sizeth",listtb.size());
+        httpSession.setAttribute("sizeth", listtb.size());
         return "admin/hoadon/findhdkhach";
     }
+
     @GetMapping("/admin/hoadon/findtrangthaidvc")
-    public String findtrangthaidvc( Model model){
+    public String findtrangthaidvc(Model model) {
         List<HoaDon> listhd = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc",listhd.size());
+        httpSession.setAttribute("sizehddvc", listhd.size());
         model.addAttribute("listhd", listhd);
         List<NhanVien> listnv = nhanVienDAO.findAll();
         model.addAttribute("listnv", listnv);
@@ -133,27 +138,27 @@ public class HoaDonController {
 
         return "admin/hoadon/findhdkhach";
     }
+
     @GetMapping("/cart/updatetrangthaidh/{mahd}")
     public String updatetrangthaihd(@PathVariable("mahd") int mahd, Model model) {
         HoaDon hoaDon = hoaDonDAO.getById(mahd);
-        if(hoaDon.getTrangthaidh()==0){
-        hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
-        String date = String.valueOf(java.time.LocalDate.now());
-        hoaDon.setNgayship(date);
+        if (hoaDon.getTrangthaidh() == 0) {
+            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh() + 1);
+            String date = String.valueOf(java.time.LocalDate.now());
+            hoaDon.setNgayship(date);
             ThongBao thongBao = thongBaoDAO.findThongBaoByMahd(hoaDon.getMahd());
             thongBao.setMatb(thongBao.getMatb());
             thongBao.setTrangthai(1);
-
             LocalDateTime myDateObj = LocalDateTime.now();
             thongBao.setNgayxem(String.valueOf(myDateObj));
             thongBaoDAO.save(thongBao);
             List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
-            httpSession.setAttribute("sizeth",listtb.size());
-            model.addAttribute("listb",listtb);
-           hoaDonDAO.save(hoaDon);
+            httpSession.setAttribute("sizeth", listtb.size());
+            model.addAttribute("listb", listtb);
+            hoaDonDAO.save(hoaDon);
             return "redirect:/admin/hoadon/findtrangthaicxn";
-        } else if(hoaDon.getTrangthaidh()==1&&hoaDon.getTrangthaihd()==0){
-            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
+        } else if (hoaDon.getTrangthaidh() == 1 && hoaDon.getTrangthaihd() == 0) {
+            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh() + 1);
             String date = String.valueOf(java.time.LocalDate.now());
             hoaDon.setNgaynhan(date);
             hoaDon.setNgaythanhtoan(date);
@@ -168,8 +173,8 @@ public class HoaDonController {
 //            httpSession.setAttribute("listb",listtb);
 
             return "redirect:/admin/hoadon/findtrangthaidvc";
-        } else if (hoaDon.getTrangthaidh()==1&&hoaDon.getTrangthaihd()==1) {
-            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh()+1);
+        } else if (hoaDon.getTrangthaidh() == 1 && hoaDon.getTrangthaihd() == 1) {
+            hoaDon.setTrangthaidh(hoaDon.getTrangthaidh() + 1);
             String date = String.valueOf(java.time.LocalDate.now());
             hoaDon.setNgaynhan(date);
             hoaDonDAO.save(hoaDon);
@@ -220,7 +225,7 @@ public class HoaDonController {
     }
 
     @PostMapping("/savehd")
-    public String save(@Valid @ModelAttribute("hoadon")   HoaDon hoaDon, BindingResult bindingResult, Model model) {
+    public String save(@Valid @ModelAttribute("hoadon") HoaDon hoaDon, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<KhachHang> listkh = khachHangDAO.findAll();
             model.addAttribute("listkh", listkh);
@@ -235,14 +240,15 @@ public class HoaDonController {
         hoaDonDAO.save(hoaDon);
         return "redirect:/admin/hoadon/index";
     }
+
     @GetMapping("/user/cart/processing")
     public String processing(Model model) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
 
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhprocessing(kh.getMakh());
-        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhprocessing(kh.getMakh());
+        List<KhachHang> khachHangList = khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
 
         model.addAttribute("hoaDonList", hoaDonList);
@@ -254,19 +260,21 @@ public class HoaDonController {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhshipping(kh.getMakh());
-        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhshipping(kh.getMakh());
+        List<KhachHang> khachHangList = khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("hoaDonList", hoaDonList);
         return "user/hoadon/tinhtrangdh";
     }
+
     @GetMapping("/user/cart/delivered")
     public String delivered(Model model) {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList=hoaDonDAO.findByMakhdelivered(kh.getMakh());
-        List<KhachHang> khachHangList =khachHangDAO.findAll();
+        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhdelivered(kh.getMakh());
+        List<KhachHang> khachHangList = khachHangDAO.findAll();
+        System.out.println(hoaDonList);
         model.addAttribute("khachHangList", khachHangList);
         model.addAttribute("hoaDonList", hoaDonList);
         return "user/hoadon/tinhtrangdh";

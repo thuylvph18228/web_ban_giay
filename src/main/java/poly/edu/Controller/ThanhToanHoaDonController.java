@@ -101,6 +101,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaythanhtoan(date);
                 hoadon.setTrangthaihd(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
@@ -124,6 +125,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setTrangthaidh(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
 
@@ -148,6 +150,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaytao(date);
                 hoadon.setNgaythanhtoan(date);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaihd(1);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
@@ -172,6 +175,7 @@ public class ThanhToanHoaDonController {
                 hoadon.setNgaytao(date);
                 hoadon.setTrangthaihd(0);
                 hoadon.setTrahang(0);
+                hoadon.setDanhgia(0);
                 hoadon.setTrangthaidh(0);
                 hoadon.setTongtien(tongtien);
                 hoaDonDAO.save(hoadon);
