@@ -77,10 +77,8 @@ public class HoaDonController {
                                     @RequestParam(name = "size", defaultValue = "10") int size){
 
         Pageable pageable = PageRequest.of(page, size);
-        List<HoaDon> listhd0 = hoaDonDAO.findByTrangthaicxn();
-        httpSession.setAttribute("sizehdcxn",listhd0.size());
-        List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc",listhd1.size());
+
+
         Page<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn(pageable);
         int firstPage = 0;
         int totalPages = listhd.getTotalPages()-1;
@@ -90,7 +88,10 @@ public class HoaDonController {
         int pre = listhd.getNumber()-1;
         int next = listhd.getNumber()+1;
         String baseUrl = "/admin/hoadon/findtrangthaicxn?page=";
-
+        List<HoaDon> listhd0 = hoaDonDAO.findByTrangthaicxnSize();
+        httpSession.setAttribute("sizehdcxn",listhd0.size());
+        List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
+        httpSession.setAttribute("sizehddvc",listhd1.size());
         model.addAttribute("firstPage", firstPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
@@ -208,13 +209,13 @@ public class HoaDonController {
             hoaDon.setNgaythanhtoan(date);
             hoaDon.setTrangthaihd(1);
             hoaDonDAO.save(hoaDon);
-//            ThongBao thongBao = thongBaoDAO.findThongBaoByMahd(hoaDon.getMahd());
-//            thongBao.setMatb(thongBao.getMatb());
-//            thongBao.setTrangthai(1);
-//            thongBaoDAO.save(thongBao);
-//            List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
-//            httpSession.setAttribute("sizeth",listtb.size());
-//            httpSession.setAttribute("listb",listtb);
+            ThongBao thongBao = thongBaoDAO.findThongBaoByMahd(hoaDon.getMahd());
+            thongBao.setMatb(thongBao.getMatb());
+            thongBao.setTrangthai(1);
+            thongBaoDAO.save(thongBao);
+            List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
+            httpSession.setAttribute("sizeth",listtb.size());
+            httpSession.setAttribute("listb",listtb);
 
             return "redirect:/admin/hoadon/findtrangthaidvc";
         } else if (hoaDon.getTrangthaidh() == 1 && hoaDon.getTrangthaihd() == 1) {
@@ -292,7 +293,7 @@ public class HoaDonController {
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
 
-        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhprocessing(kh.getMakh());
+     //   List<HoaDon> hoaDonList = hoaDonDAO.findByMakhprocessing();
         List<KhachHang> khachHangList = khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
 
@@ -327,7 +328,7 @@ public class HoaDonController {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhshipping(kh.getMakh());
+        //List<HoaDon> hoaDonList = (List<HoaDon>) hoaDonDAO.findByMakhshipping(kh.getMakh());
        // List<KhachHang> khachHangList = khachHangDAO.findAll();
 
         Pageable pageable = PageRequest.of(page, size);
@@ -364,9 +365,9 @@ public class HoaDonController {
 
         String email = (String) httpSession.getAttribute("email");
         KhachHang kh = khachHangDAO.findByEmail(email);
-        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhdelivered(kh.getMakh());
-      //  List<KhachHang> khachHangList = khachHangDAO.findAll();
-        System.out.println(hoaDonList);
+//        List<HoaDon> hoaDonList = hoaDonDAO.findByMakhdelivered(kh.getMakh(),Pageable.unpaged());
+      // List<KhachHang> khachHangList = khachHangDAO.findAll();
+      //  System.out.println(hoaDonList);
 
         Pageable pageable = PageRequest.of(page, size);
         Page<HoaDon> listhd = hoaDonDAO.findByMakhdelivered(kh.getMakh(), pageable);
@@ -390,7 +391,7 @@ public class HoaDonController {
 
         List<KhachHang> khachHangList =khachHangDAO.findAll();
         model.addAttribute("khachHangList", khachHangList);
-        model.addAttribute("hoaDonList", hoaDonList);
+        model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
 

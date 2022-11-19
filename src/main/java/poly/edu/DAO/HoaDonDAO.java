@@ -23,6 +23,9 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
     @Query("SELECT h FROM HoaDon h where h.trangthaidh=0")
     Page<HoaDon> findByTrangthaicxn(Pageable pageable);
 
+    @Query("SELECT h FROM HoaDon h where h.trangthaidh=0")
+    List<HoaDon> findByTrangthaicxnSize();
+
     @Query("SELECT h FROM HoaDon h where h.trangthaidh=0 and h.mahd=?1")
     List<HoaDon> findByTrangthaicxnbymahd(int mahd);
 
@@ -50,9 +53,10 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
             "WHERE e.mahd = (SELECT MAX(e.mahd) FROM HoaDon )")
     List<HoaDon> findMaxHDByMa(int mahd);
 
-    @Query("SELECT h  from HoaDon h where DATEDIFF( DATE(now()),h.ngaynhan )<7 and h.trahang= 0 " +
-            "group by h.mahd")
-    Page<HoaDon> findHDsmaller7( Pageable pageable);
+    @Query("SELECT h FROM HoaDon h " +
+            "where DATEDIFF( DATE(now()),h.ngaynhan )<7 and h.trahang= 0 and h.makh =?1" +
+            "            group by h.mahd")
+    Page<HoaDon> findHDsmaller7( int makh ,Pageable pageable);
 
     @Query(value = "SELECT *, sum(c.soluong) as soluong\n" +
             "FROM Giay g\n" +

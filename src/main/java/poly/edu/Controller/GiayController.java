@@ -17,7 +17,9 @@ import poly.edu.Entity.ThongBao;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GiayController {
@@ -78,10 +80,14 @@ public class GiayController {
                           @RequestParam(name = "page", defaultValue = "0") int page,
                           @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
+        httpSession.setAttribute("listnsx", listnsx);
+        System.out.println(listnsx);
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
         List<Giay> pn = this.giaydao.findByTop5New();
+        httpSession.setAttribute("pn", pn);
         List<Giay> ps = this.giaydao.findBySellingTop5();
+        httpSession.setAttribute("ps", ps);
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;

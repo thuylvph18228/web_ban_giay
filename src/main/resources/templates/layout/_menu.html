@@ -42,6 +42,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <li th:if="${#request.isUserInRole('Customer')}" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="nsx" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">
+                                Các thương hiệu giày
+                            </a>
+                            <ul  class="dropdown-menu" aria-labelledby="nsx">
+                                <li  th:each="nsx:${session.listnsx}"><a class="dropdown-item" th:text="${nsx.ten}" th:href="@{'/giayfindnsx/'+${nsx.mansx}}">Đăng kí trả hàng</a></li>
+                            </ul>
+                        </li>
                         <div th:if="${#request.isUserInRole('Customer')}"
                              style="margin-right: 24px;  margin-left: 270px">
                             <a class="nav-link btn position-relative" href="/user/cart/listcart">

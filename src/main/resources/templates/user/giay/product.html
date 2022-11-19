@@ -1,9 +1,9 @@
 <div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
     <main>
+        <div class="row all_card" th:if="${listgn}!=null">
         <h2 class="text-center fw-bold" style="color: crimson">
             <img src="https://cdn-icons-png.flaticon.com/128/331/331953.png" width="40"
                  height="40">Các sản phẩm mới của cửa hàng</h2>
-        <div class="row all_card">
             <div th:each="g : ${listgn}" class="card mt-2 col-3">
                 <img class="mt-2" th:src="@{|/assets/images/${ g.anh}|}">
                 <div class="card-body">
@@ -20,10 +20,11 @@
             </div>
         </div>
         <hr>
-        <h2 class="text-center fw-bold" style="color: crimson">
+        <div class="row all_card">
+        <h2 class="text-center fw-bold" th:if="${listgs}!=null" style="color: crimson">
             <img src="https://cdn-icons-png.flaticon.com/128/331/331953.png" width="40"
                  height="40">Top các sản phẩm bán chạy</h2>
-        <div class="row all_card">
+
             <div th:each="g : ${listgs}" class="card mt-2 col-3">
                 <img class="mt-2" th:src="@{|/assets/images/${ g.anh}|}">
                 <div class="card-body">

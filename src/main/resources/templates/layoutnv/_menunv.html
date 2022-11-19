@@ -90,7 +90,7 @@
                         >[['+' + ${session.sizeth} ]]
                                     <span class="visually-hidden">unread messages</span></span>
                     </a>
-                    <ul  class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                    <ul th:if="${listb}!=null"  class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                         <li  class=" text-dark" th:each="tb : ${listtb}"><a    th:href="@{'/admin/hoadon/findtrangthaicxn/'+${tb.mahd}}" class="dropdown-item dropdown-toggle-split" th:text="${tb.mota} " ></a></li>
                     </ul>
                 </button>
