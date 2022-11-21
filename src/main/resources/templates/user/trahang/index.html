@@ -16,7 +16,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each=" th :${listth}">
+                <tr th:each=" th :${listhd}">
                     <td th:text="${th.mahd}"></td>
                     <td th:each=" kh :${listkh}"  th:if="${kh.makh}==${th.makh}" th:text="${kh.ten}"></td>
                     <td th:each=" ld :${listld}"  th:if="${ld.mald}==${th.mald}" th:text="${ld.ten}"></td>
@@ -25,6 +25,49 @@
                 </tbody>
             </table>
         </form>
+        <div class="row m-0 mt-2">
+            <ul class="pagination justify-content-center">
+                <button style="width: 54.47px" th:disabled="${index == 0} ? 'true' : 'false'"
+                        th:hidden="${index != 0} ? 'true' : 'false'">First
+                </button>
+                <li th:hidden="${index == 0} ? 'true' : 'false'">
+                    <a class="page-link" th:href="@{|${baseUrl}${firstPage}|}">First</a>
+                </li>
+                <button style="width: 34.09px" th:disabled="${index == 0} ? 'true' : 'false'"
+                        th:hidden="${index != 0} ? 'true' : 'false'">&laquo;
+                </button>
+                <li th:hidden="${index == 0} ? 'true' : 'false'">
+                    <a class="page-link" aria-label="Previous"
+                       title="Go to previous page" th:href="@{|${baseUrl}${pre}|}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="item : ${#numbers.sequence(begin,end)}"
+                    th:class="${item==index}? 'page-item disable' : 'page-item'">
+                    <a class="page-link" aria-label="Previous"
+                       th:href="@{|${baseUrl}${item}|}">
+                        <span th:text="${item}+1">1</span>
+                    </a>
+                </li>
+
+                <button style="width: 34.09px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                        th:hidden="${index != totalPages} ? 'true' : 'false'">&raquo;
+                </button>
+                <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                    <a class="page-link" aria-label="Next"
+                       title="Go to next page" th:href="@{|${baseUrl}${next}|}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <button style="width: 54.47px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                        th:hidden="${index != totalPages} ? 'true' : 'false'">Last
+                </button>
+                <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                    <a class="page-link" th:href="@{|${baseUrl}${totalPages}|}">Last</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </main>
 </body>

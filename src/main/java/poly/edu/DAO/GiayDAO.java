@@ -37,7 +37,7 @@ public interface GiayDAO extends JpaRepository<Giay, Integer> {
 //            "order by sum(ctg.soluong) desc LIMIT 4"  ,nativeQuery = true)
 //    List<Giay> findBySelling( );
 
-    @Query( value = "SELECT e FROM Giay e WHERE e.ten LIKE %?1%" ,nativeQuery = true)
+    @Query( value = "SELECT * FROM Giay e WHERE e.ten LIKE %?1%" ,nativeQuery = true)
     Page<Giay> findByNameLike(String name, Pageable pageable);
 
     @Query("SELECT g FROM Giay g join ChiTietGiay c on g.mag = c.mag where c.mansx=?1 group by g.mag")
@@ -50,6 +50,6 @@ public interface GiayDAO extends JpaRepository<Giay, Integer> {
             "join ChiTietGiay ctg on ctg.mag  = g.mag\n" +
             "join ChiTietHoaDon c on c.mactg = ctg.mactg \n" +
             "group by g.mag  \n" +
-            "order by sum(ctg.soluong) desc LIMIT 5"  ,nativeQuery = true)
+            "order by sum(ctg.soluong) desc LIMIT 4"  ,nativeQuery = true)
     List<Giay> findBySellingTop5( );
 }

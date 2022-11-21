@@ -81,7 +81,6 @@ public class GiayController {
                           @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
         httpSession.setAttribute("listnsx", listnsx);
-        System.out.println(listnsx);
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
         List<Giay> pn = this.giaydao.findByTop5New();
@@ -109,7 +108,7 @@ public class GiayController {
         model.addAttribute("baseUrl", baseUrl);
 
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
+        httpSession.setAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
         return "user/giay/product";
     }
@@ -121,7 +120,7 @@ public class GiayController {
                                  @RequestParam(name = "size", defaultValue = "8") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findByNameLike(tengiay, pageable);
-
+        System.out.println(p);
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;
         int begin = 0;
@@ -137,6 +136,7 @@ public class GiayController {
         model.addAttribute("index", index);
         model.addAttribute("pre", pre);
         model.addAttribute("next", next);
+        model.addAttribute("giayfindnamelike","/giayfindnamelike");
         model.addAttribute("baseUrl", baseUrl);
         return "user/giay/product";
     }
