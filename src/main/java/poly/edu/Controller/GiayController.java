@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import poly.edu.DAO.*;
+import poly.edu.Entity.DanhGia;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
@@ -27,7 +28,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GiayController {
@@ -43,6 +46,9 @@ public class GiayController {
 
     @Autowired
     NsxDAO nsxdao;
+
+    @Autowired
+    DanhGiaDAO danhGiaDAo;
     @Autowired
     GiayDAO giaydao;
 
@@ -89,10 +95,16 @@ public class GiayController {
                           @RequestParam(name = "page", defaultValue = "0") int page,
                           @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
+        List<DanhGia> listdg = danhGiaDAo.findByDanhGia();
+        httpSession.setAttribute("sizedg", listdg.size());
+        System.out.println();
+        httpSession.setAttribute("listnsx", listnsx);
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);
         List<Giay> pn = this.giaydao.findByTop5New();
+        httpSession.setAttribute("pn", pn);
         List<Giay> ps = this.giaydao.findBySellingTop5();
+        httpSession.setAttribute("ps", ps);
 
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;
@@ -114,7 +126,7 @@ public class GiayController {
         model.addAttribute("baseUrl", baseUrl);
 
         model.addAttribute("listnsx", listnsx);
-        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
+        httpSession.setAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
         return "user/giay/product";
     }
@@ -126,7 +138,7 @@ public class GiayController {
                                  @RequestParam(name = "size", defaultValue = "8") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findByNameLike(tengiay, pageable);
-
+        System.out.println(p);
         int totalPages = p.getTotalPages()-1;
         int end = p.getTotalPages()-1;
         int begin = 0;
@@ -142,6 +154,7 @@ public class GiayController {
         model.addAttribute("index", index);
         model.addAttribute("pre", pre);
         model.addAttribute("next", next);
+        model.addAttribute("giayfindnamelike","/giayfindnamelike");
         model.addAttribute("baseUrl", baseUrl);
         return "user/giay/product";
     }

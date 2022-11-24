@@ -15,7 +15,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">
-                        Sản phẩm
+                        Thông tin sản phẩm
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/admin/giay/index">Giày</a></li>
@@ -27,7 +27,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="quanlynguoidung" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/material/344/person-male.png" alt="" width="30" height="24">
-                        Người dùng
+                        Quản lý người dùng
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="quanlynguoidung">
                         <li><a class="dropdown-item" href="/rest/admin/nhanvien/index">Nhân viên</a></li>
@@ -37,7 +37,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="giaohang" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/android/72/truck.png" alt="" width="30" height="24">
-                       Giao hàng
+                        Giao hàng
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="giaohang">
                         <li><a class="dropdown-item" href="/admin/hoadon/findtrangthaicxn">Chờ xử lý
@@ -55,7 +55,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="trahang" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://img.icons8.com/android/72/truck.png" alt="" width="30" height="24">
-                       Xử lý đơn hoàn trả
+                        Xử lý đơn hoàn trả
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="tranghang">
                         <li><a class="dropdown-item" href="/admin/trahang/canxuly">Cần xử lý</a></li>
@@ -90,8 +90,9 @@
                         >[['+' + ${session.sizeth} ]]
                                     <span class="visually-hidden">unread messages</span></span>
                     </a>
-                    <ul  class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                        <li  class=" text-dark" th:each="tb : ${listtb}"><a    th:href="@{'/admin/hoadon/findtrangthaicxn/'+${tb.mahd}}" class="dropdown-item dropdown-toggle-split" th:text="${tb.mota} " ></a></li>
+                    <ul th:if="${session.listtb}!=null" class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+                        <li  class=" text-dar" th:each="tb : ${session.listtb}"><a    th:href="@{'/admin/hoadon/findtrangthaicxn/'+${tb.mahd}}" class="dropdown-item dropdown-toggle-split" th:text="${tb.mota} " ></a></li>
+
                     </ul>
                 </button>
             </div>

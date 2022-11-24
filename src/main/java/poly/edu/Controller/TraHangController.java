@@ -60,15 +60,14 @@ public class TraHangController {
                               @RequestParam(name = "page", defaultValue = "0") int page,
                               @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<HoaDon> listhd = hoaDonDAO.findHDsmaller7(pageable);
+        String email = (String) session.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+        Page<HoaDon> listhd = hoaDonDAO.findHDsmaller7(kh.getMakh(),pageable);
         model.addAttribute("listhd", listhd);
 
 
         List<ChiTietHoaDon> listcthd = chiTietHoaDonDAO.findAll();
         model.addAttribute("listcthd", listcthd);
-        String email = (String) session.getAttribute("email");
-        KhachHang kh = khachHangDAO.findByEmail(email);
-
         int firstPage = 0;
         int totalPages = listhd.getTotalPages()-1;
         int end = listhd.getTotalPages()-1;
@@ -117,14 +116,38 @@ public class TraHangController {
     }
 
     @GetMapping("/user/trahang/lichsutrahang")
-    public String lichsutrahang(@ModelAttribute("trahang") TraHang traHang, Model model) {
-        List<TraHang> listth = traHangDAO.lichsuTraHang(1);
+    public String lichsutrahang(@ModelAttribute("trahang") TraHang traHang, Model model,
+                                @RequestParam(name = "page", defaultValue = "0") int page,
+                                @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        String email = (String) session.getAttribute("email");
+        KhachHang kh = khachHangDAO.findByEmail(email);
+
+        Page<TraHang> listhd = traHangDAO.lichsuTraHang(kh.getMakh(),pageable);
         List<LyDoTraHang> listld = lyDoDAO.findAll();
         List<KhachHang> listkh = khachHangDAO.findAll();
-        model.addAttribute("listkh", listkh);
+
+        int totalPages = listhd.getTotalPages()-1;
+        int firstPage = 0;
+        int end = listhd.getTotalPages()-1;
+        int begin = 0;
+        int index = listhd.getNumber();
+        int pre = listhd.getNumber()-1;
+        int next = listhd.getNumber()+1;
+        String baseUrl = "/user/trahang/lichsutrahang?page=";
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        model.addAttribute("listhd", listhd);
         model.addAttribute("listld", listld);
         model.addAttribute("saveth", "/saveth");
-        model.addAttribute("listth", listth);
 
         return ("user/trahang/index");
     }
@@ -154,6 +177,7 @@ public class TraHangController {
                               @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<TraHang> listth = traHangDAO.trahangcanxuly(pageable);
+
         int firstPage = 0;
         int totalPages = listth.getTotalPages()-1;
         int end = listth.getTotalPages()-1;

@@ -23,6 +23,9 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
     @Query("SELECT h FROM HoaDon h where h.trangthaidh=0")
     Page<HoaDon> findByTrangthaicxn(Pageable pageable);
 
+    @Query("SELECT h FROM HoaDon h where h.trangthaidh=0")
+    List<HoaDon> findByTrangthaicxnSize();
+
     @Query("SELECT h FROM HoaDon h where h.trangthaidh=0 and h.mahd=?1")
     List<HoaDon> findByTrangthaicxnbymahd(int mahd);
 
@@ -46,20 +49,25 @@ public interface HoaDonDAO extends JpaRepository<HoaDon,Integer> {
     Page<HoaDon> findByMakhdelivered(int makh, Pageable pageable);
 
 
-    @Query("SELECT e FROM HoaDon e\n" +
-            "WHERE e.mahd = (SELECT MAX(e.mahd) FROM HoaDon )")
-    List<HoaDon> findMaxHDByMa(int mahd);
+    @Query( value = "SELECT * FROM HoaDon h where EXTRACT(Month FROM h.ngaythanhtoan)\n" +
+            "group by  EXTRACT(Month FROM h.ngaythanhtoan)",nativeQuery = true)
+    List<HoaDon> findByMonthNTT();
 
-    @Query("SELECT h  from HoaDon h where DATEDIFF( DATE(now()),h.ngaynhan )<7 and h.trahang= 0 " +
-            "group by h.mahd")
-    Page<HoaDon> findHDsmaller7( Pageable pageable);
+    @Query(value = "SELECT * FROM HoaDon h where EXTRACT(YEAR FROM h.ngaythanhtoan)\n" +
+            "group by  EXTRACT(YEAR FROM h.ngaythanhtoan)",nativeQuery = true)
+    List<HoaDon> findByYearNTT();
+
+    @Query("SELECT h FROM HoaDon h " +
+            "where DATEDIFF( DATE(now()),h.ngaynhan )<7 and h.trahang= 0 and h.makh =?1" +
+            "            group by h.mahd")
+    Page<HoaDon> findHDsmaller7( int makh ,Pageable pageable);
 
     @Query(value = "SELECT *, sum(c.soluong) as soluong\n" +
             "FROM Giay g\n" +
             "         join ChiTietGiay ctg on ctg.mag = g.mag\n" +
             "         join ChiTietHoaDon c on c.mactg = ctg.mactg\n" +
             "         join hoadon hd on hd.mahd = c.mahd\n" +
-            "group by g.mag\n" +
+            "group by hd.makh  \n" +
             "order by sum(c.soluong) desc\n" +
             "LIMIT 5;", nativeQuery = true)
     List<HoaDon> findBySellingHd();
