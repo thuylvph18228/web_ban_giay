@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
-import poly.edu.Entity.DanhGia;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
@@ -19,8 +18,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.util.HashMap;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class GiayController {
@@ -76,6 +79,7 @@ public class GiayController {
         model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
+        model.addAttribute("upload", "/admin/giay/upload");
         return "admin/giay/index";
     }
 

@@ -48,6 +48,7 @@ public class HoaDonController {
     private ChiTietGiayDAO chiTietGiayDAO;
     @Autowired
     private SizeDAO sizeDAO;
+
     @GetMapping("/admin/hoadon/index")
     public String listhd(Model model) {
 
@@ -77,8 +78,10 @@ public class HoaDonController {
                                     @RequestParam(name = "size", defaultValue = "10") int size){
 
         Pageable pageable = PageRequest.of(page, size);
-
-
+//        List<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn();
+//        httpSession.setAttribute("sizehdcxn",listhd.size());
+//        List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
+//        httpSession.setAttribute("sizehddvc",listhd1.size());
         Page<HoaDon> listhd = hoaDonDAO.findByTrangthaicxn(pageable);
         int firstPage = 0;
         int totalPages = listhd.getTotalPages()-1;
@@ -88,10 +91,7 @@ public class HoaDonController {
         int pre = listhd.getNumber()-1;
         int next = listhd.getNumber()+1;
         String baseUrl = "/admin/hoadon/findtrangthaicxn?page=";
-        List<HoaDon> listhd0 = hoaDonDAO.findByTrangthaicxnSize();
-        httpSession.setAttribute("sizehdcxn",listhd0.size());
-        List<HoaDon> listhd1 = hoaDonDAO.findByTrangthaidvc();
-        httpSession.setAttribute("sizehddvc",listhd1.size());
+
         model.addAttribute("firstPage", firstPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("end", end);
@@ -183,6 +183,7 @@ public class HoaDonController {
 
         return "admin/hoadon/findhdkhach";
     }
+
     @GetMapping("/cart/updatetrangthaidh/{mahd}")
     public String updatetrangthaihd(@PathVariable("mahd") int mahd, Model model) {
         HoaDon hoaDon = hoaDonDAO.getById(mahd);
@@ -285,6 +286,7 @@ public class HoaDonController {
         hoaDonDAO.save(hoaDon);
         return "redirect:/admin/hoadon/index";
     }
+
     @GetMapping("/user/cart/processing")
     public String processing(Model model,
                              @RequestParam(name = "page", defaultValue = "0") int page,
@@ -358,6 +360,7 @@ public class HoaDonController {
         model.addAttribute("hoaDonList", listhd);
         return "user/hoadon/tinhtrangdh";
     }
+
     @GetMapping("/user/cart/delivered")
     public String delivered(Model model,
                             @RequestParam(name = "page", defaultValue = "0") int page,

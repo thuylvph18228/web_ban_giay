@@ -28,7 +28,7 @@ public class ThongKeController {
     @Autowired
     ChiTietHoaDonDAO chiTietHoaDonDAO;
 
-    @GetMapping("/admin/thongkengay")
+    @GetMapping("/rest/admin/thongkengay")
     public String thongke(Model model){
         List<Giay> ps = this.giayDAO.findBySellingTop5();
         model.addAttribute("listgs", ps);
@@ -45,12 +45,12 @@ public class ThongKeController {
         List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
         model.addAttribute("listctg", ctg);
 
-        model.addAttribute("findByDay", "/admin/findByDay");
+        model.addAttribute("findByDay", "/rest/admin/findByDay");
 
         return "admin/thongke/thongkengay";
     }
 
-    @GetMapping("/admin/findByDay")
+    @GetMapping("/rest/admin/findByDay")
     public String findDoanhThuByNgay(Model model, @RequestParam("date") String date){
         List<HoaDon> doanhthungay = hoaDonDAO.findDoanhThuByNgay(date);
         int tongtienngay =0;
@@ -87,7 +87,7 @@ public class ThongKeController {
         return "admin/thongke/thongkengay";
     }
 
-    @GetMapping("/admin/thongkethang")
+    @GetMapping("/rest/admin/thongkethang")
     public String thongkethang(Model model){
         List<Giay> ps = this.giayDAO.findBySellingTop5();
         model.addAttribute("listgs", ps);
@@ -104,12 +104,12 @@ public class ThongKeController {
         List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
         model.addAttribute("listctg", ctg);
 
-        model.addAttribute("findByMonth", "/admin/findByMonth");
+        model.addAttribute("findByMonth", "/rest/admin/findByMonth");
 
         return "admin/thongke/thongkethang";
     }
 
-    @GetMapping("/admin/findByMonth")
+    @GetMapping("/rest/admin/findByMonth")
     public String findDoanhThuByMonth(Model model, @RequestParam("month") int month){
 
 //        List<HoaDon> listmonth = hoaDonDAO.findByMonthNTT();
@@ -148,7 +148,7 @@ public class ThongKeController {
         return "admin/thongke/thongkethang";
     }
 
-    @GetMapping("/admin/thongkenam")
+    @GetMapping("/rest/admin/thongkenam")
     public String thongkenam(Model model){
         List<Giay> ps = this.giayDAO.findBySellingTop5();
         model.addAttribute("listgs", ps);
@@ -166,12 +166,12 @@ public class ThongKeController {
         List<ChiTietGiay> ctg = this.chiTietGiayDAO.findBySellingCtg();
         model.addAttribute("listctg", ctg);
 
-        model.addAttribute("findByYear", "/admin/findByYear");
+        model.addAttribute("findByYear", "/rest/admin/findByYear");
 
         return "admin/thongke/thongkenam";
     }
 
-    @GetMapping("/admin/findByYear")
+    @GetMapping("/rest/admin/findByYear")
     public String findDoanhThuByYear(Model model, @RequestParam("year") int year){
         List<HoaDon> doanhthunam = hoaDonDAO.findDoanhThuByYear(year);
         int tongtiennam =0;

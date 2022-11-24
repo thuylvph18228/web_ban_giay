@@ -23,8 +23,6 @@ public class Giay implements Serializable {
     @Column(name="mag")
     private int mag;
 
-
-
     @NotBlank(message = "Không được để trống tên")
     @Column(name="ten")
     private String ten;
@@ -41,4 +39,5 @@ public class Giay implements Serializable {
     @NotBlank(message = "Không được để trống mô tả")
     @Column(name="mota")
     private String mota;
+
 }
