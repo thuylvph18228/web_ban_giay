@@ -1,5 +1,9 @@
 package poly.edu.Controller;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import poly.edu.DAO.*;
 import poly.edu.Entity.Giay;
 
@@ -17,6 +22,11 @@ import poly.edu.Entity.ThongBao;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -70,6 +80,7 @@ public class GiayController {
         model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("giayfindnamelike", "/giayfindnamelike");
         model.addAttribute("giayfindnsx", "/giayfindnsx");
+        model.addAttribute("upload", "/admin/giay/upload");
         return "admin/giay/index";
     }
 

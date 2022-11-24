@@ -41,7 +41,6 @@ public class DanhGiaController {
     public String save(@RequestParam("mahd") int mahd ,@RequestParam("mota") String danhgia , @ModelAttribute("danhgia") DanhGia danhGia, Model model) {
         List<Giay> listg = giayDAO.findByMahd(mahd);
 
-        HoaDon hoadon = hoaDonDAO.getById(mahd);
         String email = (String) session.getAttribute("email");
         for (Giay giay :  listg){
             System.out.println(giay);
@@ -50,6 +49,9 @@ public class DanhGiaController {
             danhGia.setMag(giay.getMag());
             System.out.println(danhGia.getMota());
             danhGia.setMota(danhGia.getMota());
+            HoaDon hoaDon  =  hoaDonDAO.getById(mahd);
+            hoaDon.setDanhgia(1);
+            hoaDonDAO.save(hoaDon);
             danhGiaDAO.save(danhGia);
         }
         return "redirect:/user/cart/delivered";

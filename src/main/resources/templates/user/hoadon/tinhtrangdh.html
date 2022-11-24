@@ -41,7 +41,10 @@
                             <a th:href="@{'/user/cart/purchasedproduct/'+${hd.mahd}}">Xem chi tiết</a>
                         </td>
                         <td th:text="${hd.tongtien}"></td>
-                        <td th:if="${hd.trangthaidh}==2"><a th:href="@{'/user/danhgia/create/'+${hd.mahd}}">Đánh giá</a></td>
+                        <td  th:if="${hd.trangthaidh}==2  ">
+                            <label th:if="${hd.danhgia}==1" >Đã đánh giá</label>
+                            <a th:href="@{'/user/danhgia/create/'+${hd.mahd}}" th:if="${hd.danhgia}==0">Đánh giá</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
