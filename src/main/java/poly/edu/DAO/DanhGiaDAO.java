@@ -13,6 +13,8 @@ public interface DanhGiaDAO extends JpaRepository<DanhGia, Integer> {
     Page<DanhGia> findByDanhGia(Pageable mag, int pageable);
     @Query("SELECT d FROM DanhGia d  where d.loaidg =0 and d.mag=?1")
     List<DanhGia> findByDanhGia0(int mag);
+    @Query("SELECT d FROM DanhGia d  where d.loaidg =0 ")
+    List<DanhGia> findByDanhGia();
     @Query("SELECT d FROM DanhGia d  where d.loaidg =1 and d.mag=?1")
     List<DanhGia> findByDanhGia1(int mag);
     @Query("SELECT d FROM DanhGia d  where d.loaidg =2 and d.mag=?1")

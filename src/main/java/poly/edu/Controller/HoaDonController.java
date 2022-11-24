@@ -114,7 +114,7 @@ public class HoaDonController {
         List<Size> lists = sizeDAO.findAll();
         model.addAttribute("lists", lists);
         List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
-        model.addAttribute("listtb", listtb);
+        httpSession.setAttribute("listtb", listtb);
         httpSession.setAttribute("sizeth", listtb.size());
         return "admin/hoadon/findhdkhach";
     }

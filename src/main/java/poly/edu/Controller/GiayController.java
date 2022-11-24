@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
+import poly.edu.Entity.DanhGia;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
@@ -35,6 +36,9 @@ public class GiayController {
 
     @Autowired
     NsxDAO nsxdao;
+
+    @Autowired
+    DanhGiaDAO danhGiaDAo;
     @Autowired
     GiayDAO giaydao;
 
@@ -80,6 +84,9 @@ public class GiayController {
                           @RequestParam(name = "page", defaultValue = "0") int page,
                           @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Nsx> listnsx = nsxdao.findAll();
+        List<DanhGia> listdg = danhGiaDAo.findByDanhGia();
+        httpSession.setAttribute("sizedg", listdg.size());
+        System.out.println();
         httpSession.setAttribute("listnsx", listnsx);
         Pageable pageable = PageRequest.of(page, size);
         Page<Giay> p = this.giaydao.findAll(pageable);

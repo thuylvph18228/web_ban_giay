@@ -111,6 +111,9 @@ public class ThongKeController {
 
     @GetMapping("/admin/findByMonth")
     public String findDoanhThuByMonth(Model model, @RequestParam("month") int month){
+
+//        List<HoaDon> listmonth = hoaDonDAO.findByMonthNTT();
+//        model.addAttribute("listmonth", listmonth);
         List<HoaDon> doanhthuthang = hoaDonDAO.findDoanhThuByMonth(month);
         int tongtienthang =0;
         for (HoaDon dtt : doanhthuthang){
@@ -149,6 +152,7 @@ public class ThongKeController {
     public String thongkenam(Model model){
         List<Giay> ps = this.giayDAO.findBySellingTop5();
         model.addAttribute("listgs", ps);
+
 
         List<HoaDon> hd = this.hoaDonDAO.findBySellingHd();
         model.addAttribute("listhd", hd);
