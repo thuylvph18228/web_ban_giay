@@ -7,15 +7,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li  class="nav-item">
-                        <a href="/giay/product" class="navbar-brand">
-                            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="" width="30"
-                                 height="24">
-                            Trang chủ
-                        </a>
-                    </li>
                     <th:block th:if="${#request.remoteUser}">
-
+                        <li th:if="${#request.isUserInRole('Customer')}" class="nav-item">
+                            <a href="/giay/product" class="navbar-brand">
+                                <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="" width="30"
+                                     height="24">
+                                Trang chủ
+                            </a>
+                        </li>
                         <li th:if="${#request.isUserInRole('Customer')}" class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,8 +63,8 @@
                                     <span class="visually-hidden">unread messages</span></span>
                             </a>
                         </div>
-                        <form  th:action="${giayfindnamelike}"
-                               class="ms-4 d-flex">
+                        <form th:if="${#request.isUserInRole('Customer')}" th:action="${giayfindnamelike}"
+                              class="ms-4 d-flex">
                             <input class="form-control me-2" type="search" name="name" placeholder="Nhập tên giày"
                                    aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Tìm</button>

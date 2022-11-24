@@ -59,7 +59,7 @@ public class SecurityController {
             return "redirect:/admin/hoadon/findtrangthaicxn";
         }if (roles.equals("Admin")){
             model.addAttribute("message", "Đăng nhập thành công!");
-            return "redirect:/admin/thongkengay";
+            return "redirect:/rest/admin/thongkengay";
         }
         return "security/login";
 
