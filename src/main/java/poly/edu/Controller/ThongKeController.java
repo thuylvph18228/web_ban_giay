@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import poly.edu.DAO.*;
 import poly.edu.Entity.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -16,6 +17,12 @@ public class ThongKeController {
     @Autowired
     GiayDAO giayDAO;
 
+    @Autowired
+    HttpSession httpSession;
+
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
     @Autowired
     ChiTietGiayDAO chiTietGiayDAO;
 
@@ -46,7 +53,10 @@ public class ThongKeController {
         model.addAttribute("listctg", ctg);
 
         model.addAttribute("findByDay", "/rest/admin/findByDay");
-
+        List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
+//        model.addAttribute("size", size);
+        httpSession.setAttribute("sizeth",listtb.size());
+        httpSession.setAttribute("listb",listtb);
         return "admin/thongke/thongkengay";
     }
 

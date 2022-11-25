@@ -256,7 +256,7 @@ public class ThanhToanHoaDonController {
         cartItems.clear();
         session.setAttribute("myCartToTal", totalPrice(cartItems));
         session.setAttribute("myCartNum", cartItems.size());
-        return "redirect:/user/hdkh";
+        return "redirect:/giay/product";
     }
 
     public int totalPrice(HashMap<Integer, Cart> cartItems) {

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import poly.edu.DAO.*;
+import poly.edu.Entity.DanhGia;
 import poly.edu.Entity.Giay;
 
 import poly.edu.Entity.Nsx;
@@ -65,9 +66,8 @@ public class GiayController {
 
         List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
 //        model.addAttribute("size", size);
-        model.addAttribute("listtb", listtb);
         httpSession.setAttribute("sizeth",listtb.size());
-//        httpSession.setAttribute("listb",listtb);
+        httpSession.setAttribute("listb",listtb);
 
         model.addAttribute("listg", p);
         model.addAttribute("totalPages", totalPages);
