@@ -1,0 +1,29 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div>
+            <h1>Loại Giày</h1>
+            <a class="btn btn-primary" th:href="@{/admin/loaigiay/create}">Thêm mới</a>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Mã loại giày</th>
+                        <th>Tên loại giay</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="lg : ${listlg}">
+                        <td th:text="${lg.malg}"></td>
+                        <td th:text="${lg.ten}"></td>
+                        <td colspan="2">
+                            <a class="btn btn-outline-primary" th:href="@{'/admin/loaigiay/edit/'+${lg.malg}}">Sửa</a>
+                            <a class="btn btn-outline-danger" th:href="@{'/admin/loaigiay/delete/'+${lg.malg}}">Xoá</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>

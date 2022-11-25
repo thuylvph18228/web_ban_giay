@@ -1,0 +1,30 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div>
+            <form method="post" th:action="${saveg}" th:object="${giay}">
+                <input hidden type="text" th:field="*{mag}">
+                <div class="form-check">
+                    <label>Tên giày:</label>
+                    <input class="form-control" type="text" th:field="*{ten}" name="ten">
+                    <span class="text-danger" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}"></span>
+                </div>
+                <div class="form-check">
+                    <label>Giá:</label>
+                    <input class="form-control" type="number" th:field="*{gia}" name="gia">
+                    <span class="text-danger" th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}"></span>
+                </div>
+                <div class="form-check">
+                    <label>Ảnh</label>
+                    <input class="form-control" type="file" th:field="*{anh}" name="anh">
+                    <span class="text-danger" th:if="${#fields.hasErrors('anh')}" th:errors="*{anh}"></span>
+                </div>
+                <div class="form-check">
+                    <label>Mô tả</label>
+                    <input class="form-control" type="text" th:field="*{mota}" name="mota">
+                    <span class="text-danger" th:if="${#fields.hasErrors('mota')}" th:errors="*{mota}"></span>
+                </div>
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+        </div>
+    </main>
+</div>

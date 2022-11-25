@@ -1,0 +1,95 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <h1>Đơn hàng cần xử lý</h1>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Tên khách hàng</th>
+                        <th>Địa chỉ</th>
+                        <th>Thanh toán</th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th>Ngày mua</th>
+                        <th>Ngày ship</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="hd:${listhd}">
+                        <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.ten}"/>
+                        <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.diachi}"/>
+                        <td>
+                            <p th:if="${hd.trangthaihd}==0">Đã thanh toán</p>
+                            <p th:if="${hd.trangthaihd}==1">Chưa thanh toán</p>
+                        </td>
+                        <td>
+                            <p th:if="${hd.trangthaidh}==0">Đang xử lý</p>
+                            <p th:if="${hd.trangthaidh}==1">Đang vận chuyển</p>
+                            <p th:if="${hd.trangthaidh}==2">Đã giao hàng</p>
+                        </td>
+                        <td th:text="${hd.ngaytao}"></td>
+                        <td>
+                            <p th:if="${hd.ngayship}!=null" th:text="${hd.ngayship}"></p>
+                            <p th:if="${hd.ngayship}==null">Đang xử lý</p></td>
+
+                        <td>
+                            <a th:href="@{'/user/cart/purchasedproduct/'+${hd.mahd}}">Xem chi tiết</a>
+                        </td>
+                        <td th:text="${hd.tongtien}"></td>
+                        <td  class=" ">
+                            <p th:if="${hd.trangthaidh}==0"><a th:href="@{'/cart/updatetrangthaidh/'+${hd.mahd}}" class="fw-bold" style="color: blue" >Xác nhận đơn hàng đang vận chuyển</a></p>
+                            <p th:if="${hd.trangthaidh}==1"><a th:href="@{'/cart/updatetrangthaidh/'+${hd.mahd}}"  class="fw-bold"  style="color: blue" >Xác nhận đơn hàng đã giao cho khách</a></p>
+                        </td>                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <div class="row m-0 mt-2">
+                <ul class="pagination justify-content-center">
+                    <button style="width: 54.47px" th:disabled="${index == 0} ? 'true' : 'false'"
+                            th:hidden="${index != 0} ? 'true' : 'false'">First
+                    </button>
+                    <li th:hidden="${index == 0} ? 'true' : 'false'">
+                        <a class="page-link" th:href="@{|${baseUrl}${firstPage}|}">First</a>
+                    </li>
+                    <button style="width: 34.09px" th:disabled="${index == 0} ? 'true' : 'false'"
+                            th:hidden="${index != 0} ? 'true' : 'false'">&laquo;
+                    </button>
+                    <li th:hidden="${index == 0} ? 'true' : 'false'">
+                        <a class="page-link" aria-label="Previous"
+                           title="Go to previous page" th:href="@{|${baseUrl}${pre}|}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="item : ${#numbers.sequence(begin,end)}"
+                        th:class="${item==index}? 'page-item disable' : 'page-item'">
+                        <a class="page-link" aria-label="Previous"
+                           th:href="@{|${baseUrl}${item}|}">
+                            <span th:text="${item}+1">1</span>
+                        </a>
+                    </li>
+
+                    <button style="width: 34.09px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                            th:hidden="${index != totalPages} ? 'true' : 'false'">&raquo;
+                    </button>
+                    <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                        <a class="page-link" aria-label="Next"
+                           title="Go to next page" th:href="@{|${baseUrl}${next}|}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <button style="width: 54.47px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                            th:hidden="${index != totalPages} ? 'true' : 'false'">Last
+                    </button>
+                    <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                        <a class="page-link" th:href="@{|${baseUrl}${totalPages}|}">Last</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</div>

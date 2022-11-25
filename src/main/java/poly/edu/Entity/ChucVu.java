@@ -18,6 +18,7 @@ public class ChucVu implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="macv")
     private int macv;
+
     @NotNull(message = "Không được để trống")
     @Column(name="tencv")
     private String tencv;

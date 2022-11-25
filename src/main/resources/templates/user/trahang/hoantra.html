@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+    <div class="row mt-3">
+        <h1>Hóa Đơn có thể hoàn trả</h1>
+        <form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Người nhận</th>
+                    <th>Hình thức thanh toán</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày thanh toán</th>
+                    <th>Ngày ship</th>
+                    <th>Ngày nhận</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="hd : ${listhd}">
+                    <td th:text="${hd.mahd}"></td>
+                    <td th:each="kh : ${listkh}" th:if="${kh.makh}==${hd.makh}" th:text="${kh.ten}"></td>
+
+                    <td th:each="tt:${listtt}" th:if="${tt.mahttt}==${hd.mahttt}" th:text="${tt.ten}"/>
+                    <td th:text="${hd.ngaytao}"></td>
+                    <td th:text="${hd.ngaythanhtoan}"></td>
+                    <td th:text="${hd.ngayship}"></td>
+                    <td th:text="${hd.ngaynhan}"></td>
+                    <td th:text="${hd.tongtien}"></td>
+                    <td>
+                        <p th:if="${hd.trangthaihd}==1">Đã thanh toán</p>
+                        <p th:if="${hd.trangthaihd}==0">Chưa thanh toán</p>
+                    </td>
+                    <td><a th:href="@{'/user/trahang/trahang/'+${hd.mahd}}">Đăng kí hoàn trả</a ></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="row m-0 mt-2">
+            <ul class="pagination justify-content-center">
+                <button style="width: 54.47px" th:disabled="${index == 0} ? 'true' : 'false'"
+                        th:hidden="${index != 0} ? 'true' : 'false'">First
+                </button>
+                <li th:hidden="${index == 0} ? 'true' : 'false'">
+                    <a class="page-link" th:href="@{|${baseUrl}${firstPage}|}">First</a>
+                </li>
+                <button style="width: 34.09px" th:disabled="${index == 0} ? 'true' : 'false'"
+                        th:hidden="${index != 0} ? 'true' : 'false'">&laquo;
+                </button>
+                <li th:hidden="${index == 0} ? 'true' : 'false'">
+                    <a class="page-link" aria-label="Previous"
+                       title="Go to previous page" th:href="@{|${baseUrl}${pre}|}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="item : ${#numbers.sequence(begin,end)}"
+                    th:class="${item==index}? 'page-item disable' : 'page-item'">
+                    <a class="page-link" aria-label="Previous"
+                       th:href="@{|${baseUrl}${item}|}">
+                        <span th:text="${item}+1">1</span>
+                    </a>
+                </li>
+
+                <button style="width: 34.09px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                        th:hidden="${index != totalPages} ? 'true' : 'false'">&raquo;
+                </button>
+                <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                    <a class="page-link" aria-label="Next"
+                       title="Go to next page" th:href="@{|${baseUrl}${next}|}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <button style="width: 54.47px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                        th:hidden="${index != totalPages} ? 'true' : 'false'">Last
+                </button>
+                <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                    <a class="page-link" th:href="@{|${baseUrl}${totalPages}|}">Last</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

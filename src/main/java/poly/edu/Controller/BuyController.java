@@ -11,7 +11,6 @@ import poly.edu.Entity.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BuyController {
@@ -21,6 +20,7 @@ public class BuyController {
 
     @Autowired
     KhachHangDAO khachHangDao;
+
 
     @Autowired
     GiayDAO giaydao;
@@ -32,8 +32,6 @@ public class BuyController {
     @Autowired
     NsxDAO nsxdao;
 
-    @Autowired
-    MauSacDAO msdao;
 
     @Autowired
     LoaiGiayDAO lgdao;
@@ -45,94 +43,58 @@ public class BuyController {
     @Autowired
     ChiTietGiayDAO chiTietGiayDAO;
 
-    @GetMapping("/giohang/ghk")
-    public String ghk( Model model) {
+    @GetMapping("/user/giohang/ghk")
+    public String ghk(Model model) {
 
-        String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        List<GioHang> listgh = (List<GioHang>) gioHangDao.findByMakh(khachHang.getMakh());
-        System.out.println(listgh);
-        model.addAttribute("listgh", listgh);
-        List<Giay> listg =giaydao.findAll();
+//        String email = (String) httpSession.getAttribute("email");
+//        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
+//        List<GioHang> listgh = (List<GioHang>) gioHangDao.findByMakh(khachHang.getMakh());
+//        model.addAttribute("listgh", listgh);
+        List<Giay> listg = giaydao.findAll();
         model.addAttribute("listg", listg);
-        List<KhachHang> listkh =khachHangDao.findAll();
+        List<KhachHang> listkh = khachHangDao.findAll();
         model.addAttribute("listkh", listkh);
-            return ("giohang/giohangkhach");
+        return ("user/giohang/giohangkhach");
     }
-    @GetMapping("/giohang/editkh/{magh}")
+
+    @GetMapping("/user/giohang/editkh/{magh}")
     public String edit(@PathVariable(name = "magh") int magh, Model model) {
         model.addAttribute("magh", magh);
         GioHang gh = gioHangDao.getById(magh);
 
-        Giay giay = (Giay) giaydao.getById(gh.getMag());
+        Giay giay = (Giay) giaydao.getById(gh.getMactg());
         model.addAttribute("listg", giay);
-        String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        model.addAttribute("listkh", khachHang);
+//        String email = (String) httpSession.getAttribute("email");
+//        KhachHang khachHang = khachHangDao.findByEmailEquals(email);
+//        model.addAttribute("listkh", khachHang);
         model.addAttribute("giohang", gh);
         model.addAttribute("savegh", "/saveghk");
-        return "giohang/savekh";
+        return "user/giohang/savekh";
     }
 
-    @GetMapping("/giay/buy/{mag}")
-    public String buy(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, @PathVariable(name="mag") int mag, Model model){
 
-        List<ChiTietGiay> listctg = chiTietGiayDAO.findByMag(mag);
-        //List<ChiTietGiay> lists = chiTietGiayDAO.findByMas(mag);
-
-        Giay giay = giaydao.getById(mag);
-        List<Size> listsize = sdao.findAll();
-        List<Nsx> listnsx = nsxdao.findAll();
-        List<MauSac> listms = msdao.findAll();
-        List<LoaiGiay> listlg = lgdao.findAll();
-        List<Giay> listg = giaydao.findAll();
-
-
-        model.addAttribute("giay", giay);
-        model.addAttribute("listctg", listctg);
-        model.addAttribute("listsize", listsize);
-        model.addAttribute("listnsx", listnsx);
-        model.addAttribute("listms", listms);
-        model.addAttribute("listlg", listlg);
-
-        model.addAttribute("listg", listg);
-        return "giay/buy";
-    }
 
     @PostMapping("/savegiohang")
-    public String savegh( @Valid @RequestParam("soluong") int soluong, @RequestParam("mag") int mag,
-                         @RequestParam("diachi") String diachi, @RequestParam("sdt") String sdt,
-                         GioHang gioHang, Model model, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return "giay/buy";
-        }
-        String email = (String) httpSession.getAttribute("email");
-        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-        gioHang.setMakh(khachHang.getMakh());
-        String date = String.valueOf(java.time.LocalDate.now());
-        gioHang.setMag(mag);
-        gioHang.setSoluong(soluong);
-        gioHang.setDiachi(diachi);
-        gioHang.setSdt(sdt);
-        gioHang.setNgaytao(String.valueOf(date));
-        gioHang.setTrangthai(Integer.parseInt("0"));
+    public String savegh(@ModelAttribute("chitietgiay") ChiTietGiay chiTietGiay, GioHang gioHang) {
+        gioHang.setMactg(chiTietGiay.getMactg());
+        gioHang.setSoluong(1);
         gioHangDao.save(gioHang);
-        return "redirect:/giohang/ghk";
+        return "redirect:/giohang/indext";
     }
 
-    @GetMapping("/giohang/deleteghk/{magh}")
+    @GetMapping("/user/giohang/deleteghk/{magh}")
     public String delete(@PathVariable(name = "magh") int magh) {
         gioHangDao.deleteById(magh);
-        return "redirect:/giohang/ghk";
+        return "redirect:/user/giohang/ghk";
     }
 
     @PostMapping("/saveghk")
-    public String save(@Valid @ModelAttribute("giohang")   GioHang gioHang, BindingResult bindingResult, Model model) {
+    public String save(@Valid @ModelAttribute("giohang") GioHang gioHang, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
 
-            return "redirect:/giohang/ghk";
+            return "redirect:/user/giohang/ghk";
         }
         gioHangDao.save(gioHang);
-        return "redirect:/giohang/ghk";
+        return "redirect:/user/giohang/ghk";
     }
 }

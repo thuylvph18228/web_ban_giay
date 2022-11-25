@@ -1,0 +1,171 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <th:block th:if="${#request.remoteUser}">
+                        <li th:if="${#request.isUserInRole('Customer')}" class="nav-item">
+                            <a href="/giay/product" class="navbar-brand">
+                                <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="" width="30"
+                                     height="24">
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Customer')}" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/material-rounded/344/shopping-basket-success.png"
+                                     alt=""
+                                     width="30" height="24">
+                                Đơn hàng của bạn
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/user/cart/processing">Đang xử lý</a></li>
+                                <li><a class="dropdown-item" href="/user/cart/shipping">Đang ship</a></li>
+                                <li><a class="dropdown-item" href="/user/cart/delivered">Đã mua</a></li>
+
+                            </ul>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Customer')}" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="trahang" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30" height="24">
+                                Trả hàng
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="trahang">
+                                <li><a class="dropdown-item" href="/user/trahang/listtrahang">Đăng kí trả hàng</a></li>
+                                <li><a class="dropdown-item" href="/user/trahang/lichsutrahang">Lịch sử trả hàng</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li  class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="nsx" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/ios-filled/512/suppression.png" alt="" width="30" height="24">
+                                Các thương hiệu giày
+                            </a>
+                            <ul  class="dropdown-menu" aria-labelledby="nsx">
+                                <li  th:each="nsx:${session.listnsx}"><a class="dropdown-item" th:text="${nsx.ten}" th:href="@{'/giayfindnsx/'+${nsx.mansx}}">Đăng kí trả hàng</a></li>
+                            </ul>
+                        </li>
+                        <div th:if="${#request.isUserInRole('Customer')}"
+                             style="margin-right: 24px;  margin-left: 270px">
+                            <a class="nav-link btn position-relative" href="/user/cart/listcart">
+                                <img src="https://cdn-icons-png.flaticon.com/128/3737/3737372.png" alt="" width="30"
+                                     height="24">
+                                <span th:if="${session.myCartNum}!=null"
+                                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                                >[['+' + ${session.myCartNum} ]]
+                                    <span class="visually-hidden">unread messages</span></span>
+                            </a>
+                        </div>
+                        <form th:if="${#request.isUserInRole('Customer')}" th:action="${giayfindnamelike}"
+                              class="ms-4 d-flex">
+                            <input class="form-control me-2" type="search" name="name" placeholder="Nhập tên giày"
+                                   aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Tìm</button>
+                        </form>
+
+
+                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                            class="nav-item">
+                            <a href="/admin/giay/index" class="nav-link">
+                                <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="" width="30"
+                                     height="24">
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                            class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="ttsanpham" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/metro/344/trainers.png" alt="" width="30"
+                                     height="24">
+                                Sản phẩm
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="ttsanpham">
+                                <li><a class="dropdown-item" href="/admin/giay/index">Giày</a></li>
+                                <li><a class="dropdown-item" href="/admin/chitietgiay/index">Chi tiết giày</a></li>
+                                <li><a class="dropdown-item" href="/admin/size/index">Size</a></li>
+                                <li><a class="dropdown-item" href="/admin/nsx/index">Nhà sản xuất</a></li>
+                            </ul>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                            class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="quanlynguoidung" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/material/344/person-male.png" alt="" width="30"
+                                     height="24">
+                                Người dùng
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="quanlynguoidung">
+                                <li><a class="dropdown-item" href="/rest/admin/nhanvien/index">Nhân viên</a></li>
+                                <li><a class="dropdown-item" href="/admin/khachhang/index">Khách hàng</a></li>
+                            </ul>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                            class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="giaohang" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/android/72/truck.png" alt="" width="30"
+                                     height="24">
+                                Giao hàng
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="giaohang">
+                                <li><a class="dropdown-item" href="/admin/hoadon/findtrangthaicxn">Chờ xử lý</a>
+                                </li>
+                                <li><a class="dropdown-item" href="/admin/hoadon/findtrangthaidvc">Đang vận chuyển
+                                    thành công</a></li>
+                            </ul>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Employee')}"
+                            class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dontrahang" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://img.icons8.com/android/72/truck.png" alt="" width="30"
+                                     height="24">
+                                Xử lý đơn hoàn trả
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dontranghang">
+                                <li><a class="dropdown-item" href="/admin/trahang/canxuly">Cần xử lý</a></li>
+                                <li><a class="dropdown-item" href="/admin/trahang/daxuly">Đã xử lý</a></li>
+                            </ul>
+                        </li>
+                        <li th:if="${#request.isUserInRole('Admin')}"
+                            class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="thongke" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://img.icons8.com/small/512/combo-chart.png"
+                                         alt="" width="24" height="24">
+                                    Thống kê
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="thongke">
+                                    <li><a class="dropdown-item" href="/rest/admin/thongkengay">Thống kê ngày</a></li>
+                                    <li><a class="dropdown-item" href="/rest/admin/thongkethang">Thống kê tháng</a></li>
+                                    <li><a class="dropdown-item" href="/rest/admin/thongkenam">Thống kê năm</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </th:block>
+
+                </ul>
+
+                <div class="ms-4 d-flex">
+                    <a href="/security/login/form" title="Login">
+                        <img src="https://img.icons8.com/small/512/login-rounded.png" width="35" height="35">
+                    </a>
+                </div>
+                <div class="ms-4 d-flex">
+                    <a href="/security/logoff" title="Logout">
+                        <img src="https://img.icons8.com/small/512/login-rounded-right.png" width="35" height="35">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

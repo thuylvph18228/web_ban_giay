@@ -1,0 +1,51 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+  <main>
+    <div class="container row mt-3">
+      <form method="post" th:action="${buynow}" th:object="${chitietgiay}">
+        <div class="text-center">
+
+          <h1>Chọn thông tin sản phầm</h1>
+          <img class="anh_san_pham" th:src="@{|/assets/images/${ giay.anh}|}">
+          <div>
+            <label class="fw-bold" th:each="giay: ${giay}">Tên:</label>
+            <label th:text="${giay.ten}"></label>
+          </div>
+          <div>
+            <label class="fw-bold" th:each="giay: ${giay}">Giá:</label>
+            <label th:text="${giay.gia}"></label>
+          </div>
+          <div>
+            <label class="fw-bold">Mô tả:</label>
+            <label th:text="${giay.mota}"></label>
+          </div>
+          <div class="form-check">
+            <div>
+              <label class="fw-bold"> Chọn size</label>
+              <select class="" name="mactg">
+                <div th:each="size: ${listsize}">
+                  <option th:each="ctg: ${listctg}" th:value="${ctg.mactg}"
+                          th:if="${ctg.mas}==${size.mas}" th:text="${size.ten}">
+                  </option>
+                </div>
+              </select>
+            </div>
+            <div th:each="ct:${listctg}" class="form-check">
+              <div></div>
+              <label>Số lượng còn size của </label>
+              <label th:each="size: ${listsize}"
+                     th:if="${ct.mas}==${size.mas}"
+                     th:text="${size.ten}"></label>
+              <label> là: </label> <label th:text="${ct.soluong}"></label>
+            </div>
+            <div class="form-check">
+              <label>Số lượng mua</label>
+              <input type="number" value="1" name="soluong">
+              <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

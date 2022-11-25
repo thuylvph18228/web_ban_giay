@@ -1,0 +1,120 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <!-- Doanh thu Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4" style="height: 122px">
+                        <img th:src="@{|/assets/images/icons8-line-chart-64.png|}">
+                        <div class="ms-5">
+                            <form th:action="${findByYear}">
+                                <select name="year">
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                </select>
+                                <button class="btn btn-outline-success" type="submit" style="height: 28px">
+                                    <img src="https://img.icons8.com/small/512/search.png" width="24" height="24">
+                                </button>
+                            </form>
+                            <h6 th:if="${tongtiennam}==null" class="mb-2">[[ 'Doanh thu trong năm: ' + '0' + ' VNĐ' ]]</h6>
+                            <h6 th:if="${tongtiennam}!=null" class="mb-2">[[ 'Doanh thu trong năm: ' + ${tongtiennam} + ' VNĐ' ]]</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4" style="height: 122px">
+                        <img class="ms-4" th:src="@{|/assets/images/icons8-bar-chart-64.png|}">
+                        <div class="ms-5">
+                            <h6 th:if="${soluongnam}==null" class="mb-2">[[ 'Số lượng đã bán: ' + '0' ]]</h6>
+                            <h6 th:if="${soluongnam}!=null" class="mb-2">[[ 'Số lượng đã bán: ' + ${soluongnam} ]]</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="bg-light rounded d-flex align-items-center justify-content-center p-4" style="height: 122px">
+                        <img class="ms-4 " th:src="@{|/assets/images/icons8-pie-chart-64.png|}">
+                        <div class="ms-5">
+                            <h6 th:if="${tonghoadon}==null" class="mb-2">[[ 'Số lượng hoá đơn: ' + '0' ]]</h6>
+                            <h6 th:if="${tonghoadon}!=null" class="mb-2">[[ 'Số lượng hoá đơn: ' + ${tonghoadon} ]]</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Doanh thu End -->
+
+        <!-- Sản phẩm bán chạy Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Sản phẩm bán chạy</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Tên</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng đã bán</th>
+                            <th scope="col">Tổng giá trị</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="giay : ${listgs}">
+                            <td th:text="${giay.ten}"></td>
+                            <td><img width="100px" height="100px" th:src="@{|/assets/images/${ giay.anh}|}"></td>
+                            <td th:text="${giay.gia}"></td>
+                            <td th:each="ctg : ${listctg}" th:if="${giay.mag}==${ctg.mag}">
+                                <span th:each="cthd : ${listcthd}" th:if="${ctg.mactg}==${cthd.mactg}"
+                                      th:text="${cthd.soluong}"></span>
+                            </td>
+                            <td th:each="ctg : ${listctg}" th:if="${giay.mag}==${ctg.mag}">
+                                <span th:each="cthd : ${listcthd}" th:if="${ctg.mactg}==${cthd.mactg}">
+                                    [[ ${giay.gia} * ${cthd.soluong} ]]
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Sản phẩm bán chạy End -->
+
+        <!-- Khách hàng thân thiết Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Khách hàng thân thiết</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Sđt</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="hd : ${listhd}">
+                            <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.ten}"></td>
+                            <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.diachi}"></td>
+                            <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.sdt}"></td>
+                            <td th:each="kh : ${listkh}" th:if="${hd.makh}==${kh.makh}" th:text="${kh.email}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Khách hàng thân thiét End -->
+    </main>
+</div>

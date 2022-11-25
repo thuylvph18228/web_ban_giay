@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -41,10 +42,19 @@ public class HoaDon {
     @Column(name="ngaynhan")
     private String ngaynhan;
 
-    @Column(name="tennguoinhan")
-    private String tennguoinhan;
+    @Column(name="trahang")
+    private int trahang;
 
-    @NotBlank(message = "Không được để trống địa chỉ")
-    @Column(name="diachi")
-    private String diachi;
+    @Column(name="danhgia")
+    private int danhgia;
+
+    @Column(name="trangthaidh")
+    private int trangthaidh;
+
+    @Column(name="trangthaihd")
+    private int trangthaihd;
+
+    @Column(name="tongtien")
+    private int tongtien;
+
 }

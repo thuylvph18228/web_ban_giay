@@ -1,13 +1,14 @@
 package poly.edu.Entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotBlank;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
@@ -29,24 +30,14 @@ public class ChiTietGiay implements Serializable {
     @Column(name="mansx")
     private int mansx;
 
-    @Column(name="mams")
-    private int mams;
-
     @Column(name="malg")
     private int malg;
 
     @Column(name="mag")
     private int mag;
 
-
-    @Column(name="ten")
-    private String ten;
-
-//    @NotBlank(message = "Không được để trống")
-    @Column(name="mota")
-    private String mota;
-
-    @Column(name="soluong")
+    @NotNull()
+    @Min(value = 1, message = "Giá phải lớn hơn 0")    @Column(name="soluong")
     private int soluong;
 
 }

@@ -1,0 +1,134 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <div class="col-8">
+                <form method="post" th:action="${addproduct}" th:object="${chitietgiay}">
+                    <div class="text-center">
+
+                        <h1>Chọn thông tin sản phầm</h1>
+                        <img class="anh_san_pham" th:each="giay: ${giay}" th:src="@{|/assets/images/${ giay.anh}|}">
+                        <div>
+                            <label class="fw-bold" th:each="giay: ${giay}">Tên:</label>
+                            <label th:text="${giay.ten}"></label>
+                        </div>
+                        <div>
+                            <label class="fw-bold" th:each="giay: ${giay}">Giá:</label>
+                            <label th:text="${giay.gia}"></label>
+                        </div>
+                        <div>
+                            <label class="fw-bold">Mô tả:</label>
+                            <label th:text="${giay.mota}"></label>
+                        </div>
+                        <div class="form-check">
+                            <div>
+                                <label class="fw-bold"> Chọn size</label>
+                                <select class="" name="mactg">
+                                    <div th:each="size: ${listsize}">
+                                        <option th:each="ctg: ${listctg}" th:value="${ctg.mactg}"
+                                                th:if="${ctg.mas}==${size.mas}" th:text="${size.ten}">
+                                        </option>
+                                    </div>
+                                </select>
+                            </div>
+                            <div th:each="ct:${listctg}" class="form-check">
+                                <div></div>
+                                <label>Số lượng còn size của </label>
+                                <label th:each="size: ${listsize}"
+                                       th:if="${ct.mas}==${size.mas}"
+                                       th:text="${size.ten}"></label>
+                                <label> là: </label> <label th:text="${ct.soluong}"></label>
+                            </div>
+                            <div class="form-check">
+                                <label>Số lượng mua</label>
+                                <input type="number" value="1" name="soluong">
+                                <div th:if="${error}" class="text-danger  fw-bold" th:text="${error}"/>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4 text-center">
+                <h1  style="margin: 15px">Đánh giá</h1>
+
+                <label  class=" fw-bold position-relative"> Rất hài lòng &nbsp;
+                    <span th:if="${session.listdg0}!=null"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger text-white"
+                    >[[${session.listdg0} ]]
+                                    <span class="visually-hidden">unread messages</span></span>
+                </label>
+                <label  class="  fw-bold  position-relative">&nbsp;&nbsp; Hài lòng
+                    <span th:if="${session.listdg1}!=null"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger text-white"
+                    >[[ ${session.listdg1} ]]
+                                    <span class="visually-hidden">unread messages</span></span>
+                </label>
+                <label  class="  fw-bold  position-relative">  &nbsp;&nbsp; Không hài lòng
+                    <span th:if="${session.listdg2}!=null"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger text-white"
+                    >[[${session.listdg2} ]]
+                                    <span class="visually-hidden">unread messages</span></span>
+                </label>
+                <hr>
+                <div th:each="dg:${listdg}">
+                    <ul ><label class="fw-bold">Tên khách hàng : </label>
+                        <label th:each="kh:${listkh}" th:if="${kh.makh}==${dg.makh}" th:text="${kh.ten}"></label>
+                    </ul>
+                    <ul>
+                        <label class="fw-bold"> Đánh giá : </label>
+                        <label th:if="${dg.loaidg}==0">Rất hài lòng</label>
+                        <label th:if="${dg.loaidg}==1">Hài lòng</label>
+                        <label th:if="${dg.loaidg}==2">Không hài lòng</label>
+                    </ul>
+                    <ul><label class="fw-bold"> Mô tả : </label>
+                        <label th:text="${dg.mota}"></label>
+                 </ul>
+                 <hr>
+             </div>
+                <div class="row m-0 mt-2">
+                    <ul class="pagination justify-content-center">
+                        <button style="width: 54.47px" th:disabled="${index == 0} ? 'true' : 'false'"
+                                th:hidden="${index != 0} ? 'true' : 'false'">First
+                        </button>
+                        <li th:hidden="${index == 0} ? 'true' : 'false'">
+                            <a class="page-link" th:href="@{/templates/admin/giay/product?page=0}">First</a>
+                        </li>
+                        <button style="width: 34.09px" th:disabled="${index == 0} ? 'true' : 'false'"
+                                th:hidden="${index != 0} ? 'true' : 'false'">&laquo;
+                        </button>
+                        <li th:hidden="${index == 0} ? 'true' : 'false'">
+                            <a class="page-link" aria-label="Previous"
+                               title="Go to previous page" th:href="@{|${baseUrl}${pre}|}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="item : ${#numbers.sequence(begin,end)}"
+                            th:class="${item==index}? 'page-item disable' : 'page-item'">
+                            <a class="page-link" aria-label="Previous"
+                               th:href="@{|${baseUrl}${item}|}">
+                                <span th:text="${item}+1">1</span>
+                            </a>
+                        </li>
+
+                        <button style="width: 34.09px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                                th:hidden="${index != totalPages} ? 'true' : 'false'">&raquo;
+                        </button>
+                        <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                            <a class="page-link" aria-label="Next"
+                               title="Go to next page" th:href="@{|${baseUrl}${next}|}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <button style="width: 54.47px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                                th:hidden="${index != totalPages} ? 'true' : 'false'">Last
+                        </button>
+                        <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                            <a class="page-link" th:href="@{|${baseUrl}${totalPages}|}">Last</a>
+                        </li>
+                    </ul>
+                </div>
+         </div>
+        </div>
+    </main>
+</div>

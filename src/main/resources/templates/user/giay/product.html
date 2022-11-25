@@ -1,0 +1,125 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="row all_card" th:if="${listgn}!=null">
+        <h2 class="text-center fw-bold" style="color: crimson">
+            <img src="https://cdn-icons-png.flaticon.com/128/331/331953.png" width="40"
+                 height="40">Các sản phẩm mới của cửa hàng</h2>
+            <div th:each="g : ${listgn}" class="card mt-2 col-3">
+                <img class="mt-2" th:src="@{|/assets/images/${ g.anh}|}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${ g.ten}"></h5>
+                    <p class="card-text" th:text="${ g.gia}"></p>
+                    <p >
+                        <img width="70px" height="25px"
+                             th:src="@{|/assets/images/stars.png|}">
+                        <label th:if="${g.mag}==${session.sizedg}">5</label>
+                    </p>
+                    <div>
+                        <a th:href="@{'/user/cart/buy/'+${g.mag}}" class="btn btn_cart btn-success">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNmZmZmZmYiPjxwYXRoIGQ9Ik0xMC43NSwxMC43NXYxMC43NWgyMS41YzIuMzA5NTcsMCA0LjI4MzIxLDEuNTExNzIgNS4wMzkwNiwzLjY5NTMxbDEwLjAzNjE0LDg5LjUyNzM0YzAuOTIzODIsOC4xNDY0OSA3Ljg5NDUzLDE0LjMxOTMzIDE2LjA0MTAxLDE0LjMxOTMzYy01LjQ1ODk4LDAuNTg3OSAtOS42MTYyMSw1LjIwNzAzIC05LjYxNjIxLDEwLjcwODAxYzAsNS45MjA5IDQuODI5MSwxMC43NSAxMC43NSwxMC43NWM1LjkyMDksMCAxMC43NSwtNC44MjkxIDEwLjc1LC0xMC43NWMwLC01LjUwMDk4IC00LjE5OTIyLC0xMC4xMjAxMSAtOS42NTgyLC0xMC43MDgwMWg1MS41MjQ0MWMtNS40NTg5OCwwLjU4NzkgLTkuNjE2MjEsNS4yMDcwMyAtOS42MTYyMSwxMC43MDgwMWMwLDUuOTIwOSA0LjgyOTEsMTAuNzUgMTAuNzUsMTAuNzVjNS45MjA5LDAgMTAuNzUsLTQuODI5MSAxMC43NSwtMTAuNzVjMCwtNS41MDA5OCAtNC4xOTkyMiwtMTAuMTIwMTEgLTkuNzAwMiwtMTAuNzA4MDFoOS43MDAydi0xMC43NWgtNjUuNjMzNzljLTIuNzcxNDgsMCAtNS4wMzkwNiwtMS45NzM2MiAtNS4zMzMsLTQuNzQ1MTFsLTAuNjcxODcsLTYuMDQ2ODdoNjguMTk1MzFjNy42NDI1NywwIDE0LjMxOTMzLC01LjQ1ODk4IDE1LjgzMTA1LC0xMi45MzM1OWwxMC4yODgwOCwtNTEuNTY2NDFoLTExLjkyNTc4djQuODcxMDlsLTguOTAyMzQsNDQuNTUzNzFjLTAuNTQ1OSwyLjU2MTUzIC0yLjY4NzUsNC4zMjUyIC01LjI5MTAxLDQuMzI1MmgtNjkuNDU1MDhsLTguMzE0NDUsLTc0LjE1ODJsLTAuMTY3OTcsLTAuNTAzOTFjLTIuMDU3NjMsLTYuNzE4NzUgLTguMzE0NDYsLTExLjMzNzkgLTE1LjM2OTE1LC0xMS4zMzc5ek04NiwyMS41djIxLjVoLTIxLjV2MTAuNzVoMjEuNXYyMS41aDEwLjc1di0yMS41aDIxLjV2LTEwLjc1aC0yMS41di0yMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"
+                                 width="30" height="20">
+                        </a>
+                        <a th:href="@{'/user/cart/buynow/'+${g.mag}}" class="btn btn_buy btn-success">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row all_card" th:if="${listgs}!=null">
+            <hr>
+        <h2 class="text-center fw-bold"  style="color: crimson">
+            <img src="https://cdn-icons-png.flaticon.com/128/331/331953.png" width="40"
+                 height="40">Top các sản phẩm bán chạy</h2>
+
+            <div th:each="g : ${listgs}" class="card mt-2 col-3">
+                <img class="mt-2" th:src="@{|/assets/images/${ g.anh}|}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${ g.ten}"></h5>
+                    <p class="card-text" th:text="${ g.gia}"></p>
+                    <p >
+                        <img width="70px" height="25px"
+                        th:src="@{|/assets/images/stars.png|}">
+                    <label th:if="${g.mag}==${session.sizedg}">5</label>
+                    </p>
+                    <div>
+                        <a th:href="@{'/user/cart/buy/'+${g.mag}}" class="btn btn_cart btn-success">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNmZmZmZmYiPjxwYXRoIGQ9Ik0xMC43NSwxMC43NXYxMC43NWgyMS41YzIuMzA5NTcsMCA0LjI4MzIxLDEuNTExNzIgNS4wMzkwNiwzLjY5NTMxbDEwLjAzNjE0LDg5LjUyNzM0YzAuOTIzODIsOC4xNDY0OSA3Ljg5NDUzLDE0LjMxOTMzIDE2LjA0MTAxLDE0LjMxOTMzYy01LjQ1ODk4LDAuNTg3OSAtOS42MTYyMSw1LjIwNzAzIC05LjYxNjIxLDEwLjcwODAxYzAsNS45MjA5IDQuODI5MSwxMC43NSAxMC43NSwxMC43NWM1LjkyMDksMCAxMC43NSwtNC44MjkxIDEwLjc1LC0xMC43NWMwLC01LjUwMDk4IC00LjE5OTIyLC0xMC4xMjAxMSAtOS42NTgyLC0xMC43MDgwMWg1MS41MjQ0MWMtNS40NTg5OCwwLjU4NzkgLTkuNjE2MjEsNS4yMDcwMyAtOS42MTYyMSwxMC43MDgwMWMwLDUuOTIwOSA0LjgyOTEsMTAuNzUgMTAuNzUsMTAuNzVjNS45MjA5LDAgMTAuNzUsLTQuODI5MSAxMC43NSwtMTAuNzVjMCwtNS41MDA5OCAtNC4xOTkyMiwtMTAuMTIwMTEgLTkuNzAwMiwtMTAuNzA4MDFoOS43MDAydi0xMC43NWgtNjUuNjMzNzljLTIuNzcxNDgsMCAtNS4wMzkwNiwtMS45NzM2MiAtNS4zMzMsLTQuNzQ1MTFsLTAuNjcxODcsLTYuMDQ2ODdoNjguMTk1MzFjNy42NDI1NywwIDE0LjMxOTMzLC01LjQ1ODk4IDE1LjgzMTA1LC0xMi45MzM1OWwxMC4yODgwOCwtNTEuNTY2NDFoLTExLjkyNTc4djQuODcxMDlsLTguOTAyMzQsNDQuNTUzNzFjLTAuNTQ1OSwyLjU2MTUzIC0yLjY4NzUsNC4zMjUyIC01LjI5MTAxLDQuMzI1MmgtNjkuNDU1MDhsLTguMzE0NDUsLTc0LjE1ODJsLTAuMTY3OTcsLTAuNTAzOTFjLTIuMDU3NjMsLTYuNzE4NzUgLTguMzE0NDYsLTExLjMzNzkgLTE1LjM2OTE1LC0xMS4zMzc5ek04NiwyMS41djIxLjVoLTIxLjV2MTAuNzVoMjEuNXYyMS41aDEwLjc1di0yMS41aDIxLjV2LTEwLjc1aC0yMS41di0yMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"
+                                 width="30" height="20">
+                        </a>
+                        <a th:href="@{'/user/cart/buynow/'+${g.mag}}" class="btn btn_buy btn-success">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <h2 class="text-center fw-bold" >
+           Các sản phẩm có tại cửa hàng</h2>
+        <div class="row all_card">
+            <div th:each="g : ${listg}" class="card mt-2 col-3">
+                <img class="mt-2" th:src="@{|/assets/images/${ g.anh}|}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${ g.ten}"></h5>
+                    <p class="card-text" th:text="${ g.gia}"></p>
+                    <p >
+                        <img width="70px" height="25px"
+                             th:src="@{|/assets/images/stars.png|}">
+                        <label th:if="${g.mag}==${session.sizedg}">5</label>
+                    </p>
+                    <div>
+                        <a th:href="@{'/user/cart/buy/'+${g.mag}}" class="btn btn_cart btn-success">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiNmZmZmZmYiPjxwYXRoIGQ9Ik0xMC43NSwxMC43NXYxMC43NWgyMS41YzIuMzA5NTcsMCA0LjI4MzIxLDEuNTExNzIgNS4wMzkwNiwzLjY5NTMxbDEwLjAzNjE0LDg5LjUyNzM0YzAuOTIzODIsOC4xNDY0OSA3Ljg5NDUzLDE0LjMxOTMzIDE2LjA0MTAxLDE0LjMxOTMzYy01LjQ1ODk4LDAuNTg3OSAtOS42MTYyMSw1LjIwNzAzIC05LjYxNjIxLDEwLjcwODAxYzAsNS45MjA5IDQuODI5MSwxMC43NSAxMC43NSwxMC43NWM1LjkyMDksMCAxMC43NSwtNC44MjkxIDEwLjc1LC0xMC43NWMwLC01LjUwMDk4IC00LjE5OTIyLC0xMC4xMjAxMSAtOS42NTgyLC0xMC43MDgwMWg1MS41MjQ0MWMtNS40NTg5OCwwLjU4NzkgLTkuNjE2MjEsNS4yMDcwMyAtOS42MTYyMSwxMC43MDgwMWMwLDUuOTIwOSA0LjgyOTEsMTAuNzUgMTAuNzUsMTAuNzVjNS45MjA5LDAgMTAuNzUsLTQuODI5MSAxMC43NSwtMTAuNzVjMCwtNS41MDA5OCAtNC4xOTkyMiwtMTAuMTIwMTEgLTkuNzAwMiwtMTAuNzA4MDFoOS43MDAydi0xMC43NWgtNjUuNjMzNzljLTIuNzcxNDgsMCAtNS4wMzkwNiwtMS45NzM2MiAtNS4zMzMsLTQuNzQ1MTFsLTAuNjcxODcsLTYuMDQ2ODdoNjguMTk1MzFjNy42NDI1NywwIDE0LjMxOTMzLC01LjQ1ODk4IDE1LjgzMTA1LC0xMi45MzM1OWwxMC4yODgwOCwtNTEuNTY2NDFoLTExLjkyNTc4djQuODcxMDlsLTguOTAyMzQsNDQuNTUzNzFjLTAuNTQ1OSwyLjU2MTUzIC0yLjY4NzUsNC4zMjUyIC01LjI5MTAxLDQuMzI1MmgtNjkuNDU1MDhsLTguMzE0NDUsLTc0LjE1ODJsLTAuMTY3OTcsLTAuNTAzOTFjLTIuMDU3NjMsLTYuNzE4NzUgLTguMzE0NDYsLTExLjMzNzkgLTE1LjM2OTE1LC0xMS4zMzc5ek04NiwyMS41djIxLjVoLTIxLjV2MTAuNzVoMjEuNXYyMS41aDEwLjc1di0yMS41aDIxLjV2LTEwLjc1aC0yMS41di0yMS41eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"
+                                 width="30" height="20">
+                        </a>
+                        <a th:href="@{'/user/cart/buynow/'+${g.mag}}" class="btn btn_buy btn-success">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0 mt-2">
+                <ul class="pagination justify-content-center">
+                    <button style="width: 54.47px" th:disabled="${index == 0} ? 'true' : 'false'"
+                            th:hidden="${index != 0} ? 'true' : 'false'">First
+                    </button>
+                    <li th:hidden="${index == 0} ? 'true' : 'false'">
+                        <a class="page-link" th:href="@{/templates/admin/giay/product?page=0}">First</a>
+                    </li>
+                    <button style="width: 34.09px" th:disabled="${index == 0} ? 'true' : 'false'"
+                            th:hidden="${index != 0} ? 'true' : 'false'">&laquo;
+                    </button>
+                    <li th:hidden="${index == 0} ? 'true' : 'false'">
+                        <a class="page-link" aria-label="Previous"
+                           title="Go to previous page" th:href="@{|${baseUrl}${pre}|}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="item : ${#numbers.sequence(begin,end)}"
+                        th:class="${item==index}? 'page-item disable' : 'page-item'">
+                        <a class="page-link" aria-label="Previous"
+                           th:href="@{|${baseUrl}${item}|}">
+                            <span th:text="${item}+1">1</span>
+                        </a>
+                    </li>
+
+                    <button style="width: 34.09px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                            th:hidden="${index != totalPages} ? 'true' : 'false'">&raquo;
+                    </button>
+                    <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                        <a class="page-link" aria-label="Next"
+                           title="Go to next page" th:href="@{|${baseUrl}${next}|}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <button style="width: 54.47px" th:disabled="${index == totalPages} ? 'true' : 'false'"
+                            th:hidden="${index != totalPages} ? 'true' : 'false'">Last
+                    </button>
+                    <li th:hidden="${index == totalPages} ? 'true' : 'false'">
+                        <a class="page-link" th:href="@{|${baseUrl}${totalPages}|}">Last</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+</div>

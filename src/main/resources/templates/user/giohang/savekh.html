@@ -1,0 +1,9 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <form method="post" th:action="${savegh}" th:object="${giohang}">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layoutnv/indexnv :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <h1>Thanh toán </h1>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Thanh toán</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" tt :${listtt}">
+                        <td th:text="${tt.ten}"></td>
+                        <td colspan="2">
+                            <a class="btn btn-outline-primary"
+                               th:href="@{'/admin/thanhtoan/edit/'+${tt.mahttt}}">Sửa</a>
+                            <a class="btn btn-outline-danger"
+                               th:href="@{'/admin/thanhtoan/delete/'+${tt.mahttt}}">Xoá</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>

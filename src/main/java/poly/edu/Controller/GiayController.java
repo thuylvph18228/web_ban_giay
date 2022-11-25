@@ -1,109 +1,220 @@
 package poly.edu.Controller;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import poly.edu.DAO.GiayDAO;
-import poly.edu.DAO.KhachHangDAO;
-import poly.edu.DAO.GioHangDAO;
+import org.springframework.web.multipart.MultipartFile;
+import poly.edu.DAO.*;
+import poly.edu.Entity.DanhGia;
 import poly.edu.Entity.Giay;
-import poly.edu.Entity.GioHang;
-import poly.edu.Entity.KhachHang;
+
+import poly.edu.Entity.Nsx;
+import poly.edu.Entity.ThongBao;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Date;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GiayController {
     @Autowired
     HttpSession httpSession;
 
+
+    @Autowired
+    ThongBaoDAO thongBaoDAO;
+
     @Autowired
     KhachHangDAO khachHangDao;
 
+    @Autowired
+    NsxDAO nsxdao;
+
+    @Autowired
+    DanhGiaDAO danhGiaDAo;
     @Autowired
     GiayDAO giaydao;
 
     @Autowired
     GioHangDAO gioHangDao;
 
-    @GetMapping("/giay/index")
-    public String index(Model model){
-        List<Giay> listg = giaydao.findAll();
-        model.addAttribute("listg", listg);
-        return "giay/index";
+    @GetMapping("/admin/giay/index")
+    public String index(Model model,
+                        @RequestParam(name = "page", defaultValue = "0") int page,
+                        @RequestParam(name = "size", defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = this.giaydao.findAll(pageable);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/admin/giay/index?page=";
+
+        List<ThongBao> listtb = thongBaoDAO.findByThongBaoChuaXem();
+//        model.addAttribute("size", size);
+        model.addAttribute("listtb", listtb);
+        httpSession.setAttribute("sizeth",listtb.size());
+//        httpSession.setAttribute("listb",listtb);
+
+        model.addAttribute("listg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+        model.addAttribute("giayfindnamelike", "/giayfindnamelike");
+        model.addAttribute("giayfindnsx", "/giayfindnsx");
+        model.addAttribute("upload", "/admin/giay/upload");
+        return "admin/giay/index";
     }
 
     @GetMapping("/giay/product")
-    public String product(Model model){
-        List<Giay> listg = giaydao.findAll();
-        model.addAttribute("listg", listg);
-        return "giay/product";
-    }
-    @GetMapping("/giay/create")
-    public String create(@ModelAttribute("giay")Giay giay, Model model){
-        model.addAttribute("saveg", "/saveg");
-        return "giay/save";
+    public String product(Model model,
+                          @RequestParam(name = "page", defaultValue = "0") int page,
+                          @RequestParam(name = "size", defaultValue = "8") int size) {
+        List<Nsx> listnsx = nsxdao.findAll();
+        List<DanhGia> listdg = danhGiaDAo.findByDanhGia();
+        httpSession.setAttribute("sizedg", listdg.size());
+        System.out.println();
+        httpSession.setAttribute("listnsx", listnsx);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = this.giaydao.findAll(pageable);
+        List<Giay> pn = this.giaydao.findByTop5New();
+        httpSession.setAttribute("pn", pn);
+        List<Giay> ps = this.giaydao.findBySellingTop5();
+        httpSession.setAttribute("ps", ps);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/giay/product?page=";
+
+        model.addAttribute("listg", p);
+        model.addAttribute("listgn", pn);
+        model.addAttribute("listgs", ps);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+
+        model.addAttribute("listnsx", listnsx);
+        httpSession.setAttribute("giayfindnamelike", "/giayfindnamelike");
+        model.addAttribute("giayfindnsx", "/giayfindnsx");
+        return "user/giay/product";
     }
 
-    @GetMapping("/giay/edit/{mag}")
-    public String edit(@PathVariable(name="mag") int mag, Model model){
+
+    @GetMapping("/giayfindnamelike")
+    public String findbyNameLike(Model model, @RequestParam("name") String tengiay,
+                                 @RequestParam(name = "page", defaultValue = "0") int page,
+                                 @RequestParam(name = "size", defaultValue = "8") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = this.giaydao.findByNameLike(tengiay, pageable);
+        System.out.println(p);
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/giay/product?page=";
+
+        model.addAttribute("listg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("giayfindnamelike","/giayfindnamelike");
+        model.addAttribute("baseUrl", baseUrl);
+        return "user/giay/product";
+    }
+
+    @GetMapping("/giayfindnsx/{mansx}")
+    public String findbyNSX(@PathVariable("mansx") int mansx, Model model,
+                            @RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "8") int size) {
+        List<Nsx> listnsx = nsxdao.findAll();
+        model.addAttribute("listnsx", listnsx);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Giay> p = this.giaydao.findByNsx(mansx, pageable);
+
+        int totalPages = p.getTotalPages()-1;
+        int end = p.getTotalPages()-1;
+        int begin = 0;
+        int index = p.getNumber();
+        int pre = p.getNumber()-1;
+        int next = p.getNumber()+1;
+        String baseUrl = "/giay/product?page=";
+
+        model.addAttribute("listg", p);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("end", end);
+        model.addAttribute("begin", begin);
+        model.addAttribute("index", index);
+        model.addAttribute("pre", pre);
+        model.addAttribute("next", next);
+        model.addAttribute("baseUrl", baseUrl);
+        return "user/giay/product";
+    }
+
+    @GetMapping("/admin/giay/create")
+    public String create(@ModelAttribute("giay") Giay giay, Model model) {
+        model.addAttribute("saveg", "/saveg");
+        return "admin/giay/save";
+    }
+
+    @GetMapping("/admin/giay/edit/{mag}")
+    public String edit(@PathVariable(name = "mag") int mag, Model model) {
         model.addAttribute("mag", mag);
         Giay g = giaydao.getById(mag);
         model.addAttribute("giay", g);
         model.addAttribute("saveg", "/saveg");
-        return "giay/save";
+        return "admin/giay/save";
     }
 
-    @GetMapping("/giay/delete/{mag}")
-    public String delete(@PathVariable(name="mag") int mag){
+    @GetMapping("/admin/giay/delete/{mag}")
+    public String delete(@PathVariable(name = "mag") int mag) {
         giaydao.deleteById(mag);
-        return "redirect:/giay/index";
+        return "redirect:/admin/giay/index";
     }
-//    @GetMapping("/giay/buy/{mag}")
-//    public String buy(@PathVariable(name="mag") int mag, Model model){
-//        model.addAttribute("mag", mag);
-//        String email = (String) httpSession.getAttribute("email");
-//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-//        System.out.println(khachHang);
-//        model.addAttribute("khachHang", khachHang);
-//        Giay g = giaydao.getById(mag);
-//        httpSession.setAttribute(String.valueOf(mag),"mag");
-//        model.addAttribute("giay", g);
-//        model.addAttribute("savegiohang", "/savegiohang");
-//        return "giay/buy";
-//    }
-//
-//    @PostMapping("/savegiohang")
-//    public String savegh( @RequestParam("soluong") int soluong,@RequestParam("mag") int mag,
-//                          @RequestParam("diachi") String diachi,@RequestParam("sdt") String sdt,
-//                           GioHang gioHang, Model model){
-//        String email = (String) httpSession.getAttribute("email");
-//        KhachHang khachHang =  khachHangDao.findByEmailEquals(email);
-//        gioHang.setMakh(khachHang.getMakh());
-//        String date = String.valueOf(java.time.LocalDate.now());
-//        gioHang.setMag(mag);
-//        gioHang.setSoluong(soluong);
-//        gioHang.setDiachi(diachi);
-//        gioHang.setSdt(sdt);
-//        gioHang.setNgaytao(String.valueOf(date));
-//        gioHang.setTrangthai(Integer.parseInt("0"));
-//        gioHangDao.save(gioHang);
-//        return "redirect:/giohang/index";
-//    }
-
 
     @PostMapping("/saveg")
-    public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "giay/save";
-        }else {
+    public String saveg(@Valid @ModelAttribute("giay") Giay giay, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:admin/giay/create";
+        } else {
             giaydao.save(giay);
-            return "redirect:/giay/index";
+            return "redirect:/admin/giay/index";
         }
     }
 

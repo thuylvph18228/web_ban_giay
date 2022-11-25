@@ -29,7 +29,7 @@ public class ChiTietHoaDonController {
     @Autowired
     GiayDAO gdao;
 
-    @GetMapping("/chitiethoadon/index")
+    @GetMapping("/admin/chitiethoadon/index")
     public String index(Model model){
         List<ChiTietHoaDon> listcthd = cthddao.findAll();
         List<ChiTietGiay> listctg = ctgdao.findAll();
@@ -40,10 +40,10 @@ public class ChiTietHoaDonController {
         model.addAttribute("listctg", listctg);
         model.addAttribute("listhd", listhd);
         model.addAttribute("listg", listg);
-        return "chitiethoadon/index";
+        return "admin/chitiethoadon/index";
     }
 
-    @GetMapping("/chitiethoadon/create")
+    @GetMapping("/admin/chitiethoadon/create")
     public String create(@ModelAttribute("chitiethoadon")ChiTietHoaDon chitiethoadon, Model model){
         List<ChiTietGiay> listctg = ctgdao.findAll();
         List<HoaDon> listhd = hddao.findAll();
@@ -51,10 +51,10 @@ public class ChiTietHoaDonController {
         model.addAttribute("listctg", listctg);
         model.addAttribute("listhd", listhd);
         model.addAttribute("savecthd", "/savecthd");
-        return "chitiethoadon/save";
+        return "admin/chitiethoadon/save";
     }
 
-    @GetMapping("/chitiethoadon/edit/{macthd}")
+    @GetMapping("/admin/chitiethoadon/edit/{macthd}")
     public String edit(@PathVariable(name="macthd") int macthd, Model model){
         model.addAttribute("macthd", macthd);
         ChiTietHoaDon cthd = cthddao.getById(macthd);
@@ -67,22 +67,22 @@ public class ChiTietHoaDonController {
         model.addAttribute("listg", listg);
         model.addAttribute("chitiethoadon", cthd);
         model.addAttribute("savecthd", "/savecthd");
-        return "chitiethoadon/save";
+        return "admin/chitiethoadon/save";
     }
 
-    @GetMapping("/chitiethoadon/delete/{macthd}")
+    @GetMapping("/admin/chitiethoadon/delete/{macthd}")
     public String delete(@PathVariable(name="macthd") int macthd){
         cthddao.deleteById(macthd);
-        return "redirect:/chitiethoadon/index";
+        return "redirect:/admin/chitiethoadon/index";
     }
 
     @PostMapping("/savecthd")
     public String save(@Valid @ModelAttribute("chitiethoadon") ChiTietHoaDon chitiethoadon, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "chitiethoadon/save";
+            return "admin/chitiethoadon/save";
         }else {
             cthddao.save(chitiethoadon);
-            return "redirect:/chitiethoadon/index";
+            return "redirect:/admin/chitiethoadon/index";
         }
     }
 }

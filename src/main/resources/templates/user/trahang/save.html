@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+<main>
+  <div>
+    <form method="post" th:action="${saveth}" th:object="${trahang}">
+      <h1>Vui lòng nhập thông tin</h1>
+      <div>
+      <label>Mã hóa đơn</label>
+
+        <input class="form-control"  th:each="hd : ${hoaDon}" th:value="${hd.mahd}" name="mahd" hidden>
+      <input class="form-control"  th:each="hd : ${hoaDon}" th:value="${hd.mahd}" name="mahd" disabled>
+
+      </div>
+      <div>
+        <label>Lý do:</label>
+        <select class="form-select" th:field="*{mald}" name="mas">
+          <option th:each="ld : ${listld}" th:value="${ld.mald}" th:text="${ld.ten}"></option>
+        </select>
+      </div>
+
+      <div>
+        <label>Ghi chú</label>
+        <input class="form-control"  th:field="*{ghichu}" name="">
+      </div>
+
+
+      <button class="btn btn-primary mt-3" type="submit">Gửi</button>
+    </form>
+  </div>
+</main>
+</body>
+
+</html>

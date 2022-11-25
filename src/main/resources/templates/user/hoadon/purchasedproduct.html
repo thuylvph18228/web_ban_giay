@@ -1,0 +1,32 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+    <main>
+        <div class="container row mt-3">
+            <h1>Chi tiết đơn hàng</h1>
+            <form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Size</th>
+                        <th>Giá</th>
+                        <th>Ảnh</th>
+                        <th>Số lượng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ct:${chiTietGiayList}">
+                        <td th:each="g : ${listg}" th:if="${ct.mag}==${g.mag}" th:text="${g.ten}"/>
+                        <td th:each="s : ${listsize}" th:if="${s.mas}==${ct.mas}" th:text="${s.ten}"/>
+                        <td th:each="g : ${listg}" th:if="${ct.mag}==${g.mag}" th:text="${g.gia}"/>
+                        <td class="text-center" th:each="g : ${listg}" th:if="${ct.mag}==${g.mag}"><img
+                                th:src="@{|/assets/images/${ g.anh}|}" width="200" height="180">
+                        </td>
+                        <td th:each="c : ${chiTietHoaDonList}" th:if="${c.mactg}==${ct.mactg}" th:text="${c.soluong}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
